@@ -7,7 +7,11 @@ import {
 	watch,
 	type ComputedRef,
 	type HTMLAttributes,
-} from "vue";
+} from 'vue';
+
+const collapsedH = 'height: 0px;';
+const overflowH = 'overflow: hidden;';
+const displayN = 'display: none;';
 
 export function useCollapse(isExpanding: ComputedRef<boolean>): HTMLAttributes {
 	const rafId = ref<DOMHighResTimeStamp>();
@@ -15,34 +19,29 @@ export function useCollapse(isExpanding: ComputedRef<boolean>): HTMLAttributes {
 
 	const collapseProps = reactive({
 		ref: (thisRef: HTMLElement) => (collapseRef.value = thisRef),
-		style: !isExpanding.value ? "display: none" : undefined,
+		style: !isExpanding.value ? displayN : undefined,
 	});
 
 	onMounted(() => {
-		collapseRef.value?.addEventListener("transitionend", onTransitionEnd);
+		collapseRef.value?.addEventListener('transitionend', onTransitionEnd);
 	});
 
 	watch(
 		() => isExpanding.value,
-		(isOpening) => {
+		(isExpanding) => {
 			let isFirstFrame = true;
 
 			function collapse() {
 				if (collapseRef.value) {
-					const expandedHeight = `height: ${collapseRef.value.scrollHeight}px;`;
-					const collapsedHeight = `height: 0px;`;
+					const expandedH = `height: ${collapseRef.value.scrollHeight}px;`;
 
 					if (isFirstFrame) {
-						collapseProps.style = `${
-							isOpening ? collapsedHeight : expandedHeight
-						} overflow: hidden;`;
+						collapseProps.style = `${isExpanding ? collapsedH : expandedH} ${overflowH}`;
 						isFirstFrame = false;
 						rafId.value = requestAnimationFrame(collapse);
 					} else {
-						console.log("Next frame");
-						collapseProps.style = `${
-							isOpening ? expandedHeight : collapsedHeight
-						} overflow: hidden;`;
+						console.log('Next frame');
+						collapseProps.style = `${isExpanding ? expandedH : collapsedH} ${overflowH}`;
 					}
 				}
 			}
@@ -52,25 +51,23 @@ export function useCollapse(isExpanding: ComputedRef<boolean>): HTMLAttributes {
 	);
 
 	onBeforeUnmount(() => {
-		collapseRef.value?.removeEventListener("transitionend", onTransitionEnd);
+		collapseRef.value?.removeEventListener('transitionend', onTransitionEnd);
 	});
 
 	onUnmounted(() => (rafId.value ? cancelAnimationFrame(rafId.value) : null));
 
 	function onTransitionEnd(event: TransitionEvent) {
-		if (event.target === collapseRef.value && event.propertyName === "height") {
+		if (event.target === collapseRef.value && event.propertyName === 'height') {
 			if (isExpanding.value) {
 				if (
 					collapseRef.value?.scrollHeight ===
 					parseFloat((event.target as HTMLDivElement).style.height)
 				) {
 					collapseProps.style = undefined;
-				} else {
-					collapseProps.style = `height: ${collapseRef.value?.scrollHeight}px;`;
 				}
 			} else {
-				if (collapseRef.value?.style.height === "0px") {
-					collapseProps.style = "display: none";
+				if (collapseRef.value?.style.height === '0px') {
+					collapseProps.style = displayN;
 				}
 			}
 		}

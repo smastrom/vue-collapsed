@@ -49,22 +49,23 @@ const questions = reactive([
     title: "Question two",
     answer: "Answer two",
     isExpanded: false
+  },
+  {
+    title: "Question three",
+    answer: "Answer three",
+    isExpanded: false
   }
 ])
 
 function handleAccordion(selectedIndex) {
   questions.forEach((_, index) => {
     questions[index].isExpanded = index === selectedIndex ? !questions[index].isExpanded : false
+    /**
+     * To open multiple at once:
+     * questions[index].isExpanded = !questions[index].isExpanded
+     */
   })
 }
-
-/**
- * Or this callback to open multiple collapses:
- *
- * function handleCollapse(index) {
- *    questions[index].isExpanded = !questions[index].isExpanded
- * }
- */
 </script>
 
 <template>
