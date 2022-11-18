@@ -19,7 +19,7 @@ export function useCollapse(isExpanding: ComputedRef<boolean>): HTMLAttributes {
 	});
 
 	onMounted(() => {
-		collapseRef.value?.addEventListener("transitionend", handleTransitionEnd);
+		collapseRef.value?.addEventListener("transitionend", onTransitionEnd);
 	});
 
 	watch(
@@ -52,15 +52,22 @@ export function useCollapse(isExpanding: ComputedRef<boolean>): HTMLAttributes {
 	);
 
 	onBeforeUnmount(() => {
-		collapseRef.value?.removeEventListener("transitionend", handleTransitionEnd);
+		collapseRef.value?.removeEventListener("transitionend", onTransitionEnd);
 	});
 
 	onUnmounted(() => (rafId.value ? cancelAnimationFrame(rafId.value) : null));
 
-	function handleTransitionEnd(event: TransitionEvent) {
+	function onTransitionEnd(event: TransitionEvent) {
 		if (event.target === collapseRef.value && event.propertyName === "height") {
 			if (isExpanding.value) {
-				collapseProps.style = undefined;
+				if (
+					collapseRef.value?.scrollHeight ===
+					parseFloat((event.target as HTMLDivElement).style.height)
+				) {
+					collapseProps.style = undefined;
+				} else {
+					collapseProps.style = `height: ${collapseRef.value?.scrollHeight}px;`;
+				}
 			} else {
 				if (collapseRef.value?.style.height === "0px") {
 					collapseProps.style = "display: none";
