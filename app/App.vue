@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import AccordionElement from "./AccordionElement.vue";
+import { Collapse } from "../src/Collapse";
 
 const data = reactive([
 	{
@@ -56,7 +56,7 @@ function handleAccordionX(selectedIndex: number) {
 <template>
 	<div v-for="(element, index) in data" :key="element.text" class="section">
 		<button @click="() => handleAccordion(index)">{{ element.isOpen }}</button>
-		<AccordionElement :isOpen="element.isOpen" class="collapseElement">
+		<Collapse :when="element.isOpen" class="collapseElement">
 			<p>
 				As an interesting side note, as a head without a body, I envy the dead. Kids don't turn
 				rotten just from watching TV. Bender, I didn't know you liked cooking. That's so cute.
@@ -64,13 +64,13 @@ function handleAccordionX(selectedIndex: number) {
 				anyone pretending to be him! I'll tell them you went down prying the wedding ring off his
 				cold, dead finger.
 			</p>
-		</AccordionElement>
+		</Collapse>
 	</div>
 
 	<div style="height: 100px" />
 	<div v-for="(element, index) in dataX" :key="element.text" class="section">
 		<button @click="() => handleAccordionX(index)">{{ element.isOpen }}</button>
-		<AccordionElement :isOpen="element.isOpen" class="collapseElement">
+		<Collapse :when="element.isOpen" class="collapseElement">
 			<p>
 				As an interesting side note, as a head without a body, I envy the dead. Kids don't turn
 				rotten just from watching TV. Bender, I didn't know you liked cooking. That's so cute.
@@ -78,7 +78,7 @@ function handleAccordionX(selectedIndex: number) {
 				anyone pretending to be him! I'll tell them you went down prying the wedding ring off his
 				cold, dead finger.
 			</p>
-		</AccordionElement>
+		</Collapse>
 	</div>
 </template>
 
