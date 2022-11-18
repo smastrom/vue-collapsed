@@ -56,7 +56,7 @@ function handleAccordionX(selectedIndex: number) {
 <template>
 	<div v-for="(element, index) in data" :key="element.text" class="section">
 		<button @click="() => handleAccordion(index)">{{ element.isOpen }}</button>
-		<Collapse :when="element.isOpen" class="collapseElement">
+		<Collapse as="section" :when="element.isOpen" class="collapseElement">
 			<p>
 				As an interesting side note, as a head without a body, I envy the dead. Kids don't turn
 				rotten just from watching TV. Bender, I didn't know you liked cooking. That's so cute.

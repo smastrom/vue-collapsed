@@ -1,9 +1,9 @@
 {
-	"name": "vue-collapse",
-	"version": "0.0.0",
+	"name": "vue-collapsed",
+	"version": "0.9.0",
 	"scripts": {
 		"dev": "vite",
-		"build": "run-p type-check build-only",
+		"build": "rimraf dist && run-p type-check build-only",
 		"preview": "vite preview",
 		"test:e2e": "start-server-and-test preview :4173 'cypress run --e2e'",
 		"test:e2e:dev": "start-server-and-test 'vite dev --port 4173' :4173 'cypress open --e2e'",
@@ -12,9 +12,6 @@
 		"build-only": "vite build",
 		"type-check": "vue-tsc --noEmit -p tsconfig.cypress-ct.json --composite false",
 		"lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
-	},
-	"dependencies": {
-		"vue": "^3.2.41"
 	},
 	"devDependencies": {
 		"@rushstack/eslint-patch": "^1.1.4",
@@ -34,5 +31,8 @@
 		"typescript": "~4.7.4",
 		"vite": "^3.1.8",
 		"vue-tsc": "^1.0.8"
+	},
+	"peerDependencies": {
+		"vue": ">= 2.7.0"
 	}
 }
