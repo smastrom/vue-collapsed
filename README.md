@@ -2,7 +2,7 @@
 
 Dynamically transition the height _from 0 to auto_ and vice versa.
 
-## Installation
+## Get Started
 
 ```shell
 npm i -S vue-collapsed
@@ -10,17 +10,23 @@ npm i -S vue-collapsed
 # pnpm install vue-collapsed
 ```
 
+```js
+import { Collapse } from 'vue-collapsed'
+```
+
 ## Props
 
-| name    | description                               | type                             | required           |
-| ------- | ----------------------------------------- | -------------------------------- | ------------------ |
-| `when`  | Reactive boolean to control collapse      | ComputedRef\<boolean> \| boolean | :white_check_mark: |
-| `class` | Class with a transition (height) property | HTMLAttributes['class']          | :white_check_mark: |
-| `as`    | Element tag to use instead of `div`       | _keyof_ HTMLElementTagNameMap    | :x:                |
+| name          | description                               | type                             | required           |
+| ------------- | ----------------------------------------- | -------------------------------- | ------------------ |
+| `when`        | Boolean value to control collapse         | ComputedRef\<boolean> \| boolean | :white_check_mark: |
+| `class`       | Class with a transition (height) property | HTMLAttributes['class']          | :white_check_mark: |
+| `as`          | Element tag to use instead of `div`       | _keyof_ HTMLElementTagNameMap    | :x:                |
+| `onExpanded`  | Callback on expand transition completed   | () => void                       | :x:                |
+| `onCollapsed` | Callback on collapse transition completed | () => void                       | :x:                |
 
 ## Auto Duration
 
-You can reference the CSS variable `--vc-auto-duration` in your transition property to use the optimal duration calculated by vue-collapse for each element height:
+You can reference the CSS variable `--vc-auto-duration` in your transition property to use the optimal duration calculated by vue-collapse according to the content height:
 
 ```css
 .collapse {
@@ -89,9 +95,11 @@ function handleAccordion(selectedIndex) {
     questions[index].isExpanded = index === selectedIndex ? !questions[index].isExpanded : false
     /**
      *
-     * To control each item separately use:
+     * To control each collapse individually:
      *
-     * questions[index].isExpanded = !questions[index].isExpanded
+     * function handleMultiple(index) {
+     *   questions[index].isExpanded = !questions[index].isExpanded
+     * }
      */
   })
 }
@@ -115,6 +123,41 @@ function handleAccordion(selectedIndex) {
   transition: height 600ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 </style>
+```
+
+## Callbacks
+
+```vue
+<script setup>
+// ...
+
+const sectionsRef = ref([])
+
+function pushToRef(ref) {
+  sectionsRef.value.push(ref)
+}
+
+function scrollIntoView(index) {
+  sectionsRef.value[index].scrollIntoView({ behavior: 'smooth' })
+}
+</script>
+
+<template>
+  <div v-for="(question, index) in questions" :key="question.title" :ref="pushToRef">
+    <button @click="() => handleAccordion(index)">
+      {{ question.title }}
+    </button>
+    <Collapse
+      :when="questions[index].isExpanded"
+      :onExpanded="() => scrollIntoView(index)"
+      class="collapse"
+    >
+      <p>
+        {{ question.answer }}
+      </p>
+    </Collapse>
+  </div>
+</template>
 ```
 
 ## Make it accessible
@@ -150,10 +193,6 @@ function handleCollapse() {
   </div>
 </template>
 ```
-
-## Rule of thumb
-
-:warning: **Do not add any paddings to the Collapse itself! If you have to, just add them to its children.**
 
 ## License
 
