@@ -9,6 +9,7 @@ import {
 	type HTMLAttributes,
 } from 'vue';
 
+const autoDurationVar = '--vc-auto-duration';
 const collapsedH = 'height: 0px;';
 const overflowH = 'overflow: hidden;';
 const displayN = 'display: none;';
@@ -33,15 +34,21 @@ export function useCollapse(isExpanding: ComputedRef<boolean>): HTMLAttributes {
 
 			function collapse() {
 				if (collapseRef.value) {
-					const expandedH = `height: ${collapseRef.value.scrollHeight}px;`;
+					const { scrollHeight } = collapseRef.value;
+					const autoDuration = getAutoDuration(scrollHeight);
+					const expandedH = `height: ${scrollHeight}px;`;
 
 					if (isFirstFrame) {
-						collapseProps.style = `${isExpanding ? collapsedH : expandedH} ${overflowH}`;
+						collapseProps.style = `${autoDuration} ${
+							isExpanding ? collapsedH : expandedH
+						} ${overflowH}`;
 						isFirstFrame = false;
 						rafId.value = requestAnimationFrame(collapse);
 					} else {
 						console.log('Next frame');
-						collapseProps.style = `${isExpanding ? expandedH : collapsedH} ${overflowH}`;
+						collapseProps.style = `${autoDuration} ${
+							isExpanding ? expandedH : collapsedH
+						} ${overflowH}`;
 					}
 				}
 			}
@@ -74,4 +81,16 @@ export function useCollapse(isExpanding: ComputedRef<boolean>): HTMLAttributes {
 	}
 
 	return collapseProps;
+}
+
+// https://mui.com/material-ui/customization/transitions/#theme-transitions-getautoheightduration-height-duration
+function getAutoDuration(height: number) {
+	if (!height) {
+		return `${autoDurationVar}: 0ms;`;
+	}
+
+	const constant = height / 36;
+	const duration = Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10);
+
+	return `${autoDurationVar}: ${duration}ms;`;
 }
