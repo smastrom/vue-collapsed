@@ -1,26 +1,40 @@
 import {
 	onBeforeUnmount,
 	onMounted,
-	onUnmounted,
 	reactive,
 	ref,
 	watch,
 	type ComputedRef,
+	type CSSProperties,
 	type HTMLAttributes,
+	type VNodeRef,
 } from 'vue';
 
-const autoDurationVar = '--vc-auto-duration';
-const collapsedH = 'height: 0px;';
-const overflowH = 'overflow: hidden;';
-const displayN = 'display: none;';
+const nextFrame = requestAnimationFrame;
 
-export function useCollapse(isExpanding: ComputedRef<boolean>): HTMLAttributes {
-	const rafId = ref<DOMHighResTimeStamp>();
-	const collapseRef = ref<HTMLElement | null>(null);
+const idleStyles: CSSProperties = { padding: 0 };
+const collapsedStyles: CSSProperties = { display: 'none', ...idleStyles };
+const performanceStyles: CSSProperties = {
+	willChange: 'auto',
+	transform: 'translate3d(0, 0, 0)',
+};
+const hiddenStyles: CSSProperties = {
+	overflow: 'hidden',
+	height: 0,
+};
 
-	const collapseProps = reactive({
-		ref: (thisRef: HTMLElement) => (collapseRef.value = thisRef),
-		style: !isExpanding.value ? displayN : undefined,
+type Props = { ref: VNodeRef; style: CSSProperties };
+
+export function useCollapse(
+	isExpanding: ComputedRef<boolean>,
+	onExpanded: () => void = () => {},
+	onCollapsed: () => void = () => {}
+): HTMLAttributes {
+	const collapseRef = ref<VNodeRef | null>(null);
+
+	const collapseProps = reactive<Props>({
+		ref: (thisRef) => (collapseRef.value = thisRef),
+		style: !isExpanding.value ? collapsedStyles : idleStyles,
 	});
 
 	onMounted(() => {
@@ -30,30 +44,53 @@ export function useCollapse(isExpanding: ComputedRef<boolean>): HTMLAttributes {
 	watch(
 		() => isExpanding.value,
 		(isExpanding) => {
-			let isFirstFrame = true;
-
-			function collapse() {
-				if (collapseRef.value) {
-					const { scrollHeight } = collapseRef.value;
-					const autoDuration = getAutoDuration(scrollHeight);
-					const expandedH = `height: ${scrollHeight}px;`;
-
-					if (isFirstFrame) {
-						collapseProps.style = `${autoDuration} ${
-							isExpanding ? collapsedH : expandedH
-						} ${overflowH}`;
-						isFirstFrame = false;
-						rafId.value = requestAnimationFrame(collapse);
+			if (collapseRef.value) {
+				requestAnimationFrame(() => {
+					if (isExpanding) {
+						/**
+						 * At this point CSS height is undefined (auto) and display is set to none.
+						 * In order to get the scrollHeight to trigger the transition,
+						 * we get rid of display: none by replacing the styles.
+						 *
+						 * We set the height to zero as it will be the property we will
+						 * transition from and also to avoid the element being visible for
+						 * the duration of the frame.
+						 */
+						collapseProps.style = {
+							...performanceStyles,
+							...hiddenStyles,
+						};
+						nextFrame(() => {
+							/**
+							 * Set the height to scrollHeight and trigger the transition.
+							 */
+							collapseProps.style = {
+								...collapseProps.style,
+								...getExpandedStyles(collapseRef.value.scrollHeight),
+							};
+						});
 					} else {
-						console.log('Next frame');
-						collapseProps.style = `${autoDuration} ${
-							isExpanding ? expandedH : collapsedH
-						} ${overflowH}`;
+						/**
+						 * At this point CSS height property is undefined (auto).
+						 * Since the element is visible and display property is not set to none
+						 * we get the scrollHeight and set it as height.
+						 */
+						collapseProps.style = {
+							...performanceStyles,
+							...getExpandedStyles(collapseRef.value.scrollHeight),
+						};
+						nextFrame(() => {
+							/**
+							 * Set the height to 0 and trigger the transition.
+							 */
+							collapseProps.style = {
+								...collapseProps.style,
+								...hiddenStyles,
+							};
+						});
 					}
-				}
+				});
 			}
-
-			rafId.value = requestAnimationFrame(collapse);
 		}
 	);
 
@@ -61,20 +98,24 @@ export function useCollapse(isExpanding: ComputedRef<boolean>): HTMLAttributes {
 		collapseRef.value?.removeEventListener('transitionend', onTransitionEnd);
 	});
 
-	onUnmounted(() => (rafId.value ? cancelAnimationFrame(rafId.value) : null));
-
 	function onTransitionEnd(event: TransitionEvent) {
 		if (event.target === collapseRef.value && event.propertyName === 'height') {
+			/**
+			 * Reset styles to the initial state (same as onMounted),
+			 * we also make sure this callback is triggered only when transitions
+			 * are 100% finished.
+			 */
 			if (isExpanding.value) {
 				if (
-					collapseRef.value?.scrollHeight ===
-					parseFloat((event.target as HTMLDivElement).style.height)
+					collapseRef.value.scrollHeight === parseFloat((event.target as HTMLElement).style.height)
 				) {
-					collapseProps.style = undefined;
+					collapseProps.style = idleStyles;
+					onExpanded();
 				}
 			} else {
-				if (collapseRef.value?.style.height === '0px') {
-					collapseProps.style = displayN;
+				if (collapseRef.value.style.height === '0px') {
+					collapseProps.style = collapsedStyles;
+					onCollapsed();
 				}
 			}
 		}
@@ -83,14 +124,19 @@ export function useCollapse(isExpanding: ComputedRef<boolean>): HTMLAttributes {
 	return collapseProps;
 }
 
-// https://mui.com/material-ui/customization/transitions/#theme-transitions-getautoheightduration-height-duration
+function getExpandedStyles(height: number) {
+	return {
+		'--vc-auto-duration': `${getAutoDuration(height)}ms`,
+		height: `${height}px`,
+	};
+}
+
+// https://github.com/mui/material-ui/blob/master/packages/mui-material/src/styles/createTransitions.js#L35
 function getAutoDuration(height: number) {
 	if (!height) {
-		return `${autoDurationVar}: 0ms;`;
+		return 0;
 	}
 
 	const constant = height / 36;
-	const duration = Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10);
-
-	return `${autoDurationVar}: ${duration}ms;`;
+	return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 12.5);
 }
