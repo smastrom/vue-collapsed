@@ -46,6 +46,7 @@
 		"*.{vue,ts,js,cjs,json}": "prettier --write"
 	},
 	"devDependencies": {
+		"@babel/types": "^7.20.2",
 		"@playwright/experimental-ct-vue": "^1.28.0",
 		"@rushstack/eslint-patch": "^1.1.4",
 		"@types/node": "^16.11.68",
