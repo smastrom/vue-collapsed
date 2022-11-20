@@ -19,7 +19,11 @@ function handleIndividual(selectedIndex: number) {
 
 <template>
 	<section class="Wrapper">
-		<ExampleHeader title="Individual Control" href="" hint="Using ref()" />
+		<ExampleHeader
+			title="Individual Control"
+			href="blob/master/app/IndividualControl.vue"
+			hint="Using ref()"
+		/>
 		<div v-for="(question, index) in questions" :key="question.title" class="Section">
 			<button
 				:class="[

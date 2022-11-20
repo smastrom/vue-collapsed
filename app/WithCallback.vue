@@ -29,7 +29,11 @@ function pushToRef(ref: Element) {
 
 <template>
 	<section class="Wrapper">
-		<ExampleHeader title="With Callback" href="" hint="Expand and wait for scroll" />
+		<ExampleHeader
+			title="With Callback"
+			href="blob/master/app/WithCallback.vue"
+			hint="Expand and wait for scroll"
+		/>
 		<div
 			v-for="(question, index) in questions"
 			:key="question.title"
