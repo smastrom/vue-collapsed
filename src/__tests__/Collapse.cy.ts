@@ -47,17 +47,17 @@ it('Should change height if resizing on expanded', () => {
 	cy.get('#TriggerButton').click();
 	cy.wait(300);
 
-	for (let i = 0; i < 100; i++) {
+	for (let i = 0; i < 20; i++) {
 		cy.get('#my-collapse-id')
 			.invoke('height')
 			.then((desktopHeight) => {
 				cy.viewport('iphone-x');
-				cy.wait(100);
+				cy.wait(300);
 				cy.get('#my-collapse-id').invoke('height').should('be.greaterThan', desktopHeight);
 			})
 			.then((mobileHeight) => {
 				cy.viewport('macbook-13');
-				cy.wait(100);
+				cy.wait(300);
 				cy.get('#my-collapse-id').invoke('height').should('be.lessThan', mobileHeight);
 			});
 	}
@@ -67,7 +67,7 @@ describe('Should execute onTransitionEnd callbacks only after transition is fini
 	it('Expand as last action', () => {
 		cy.mount(App);
 
-		for (let i = 0; i < 100; i++) {
+		for (let i = 0; i < 20; i++) {
 			cy.get('#TriggerButton').click();
 			cy.wait(50);
 		}
@@ -82,7 +82,7 @@ describe('Should execute onTransitionEnd callbacks only after transition is fini
 			},
 		});
 
-		for (let i = 0; i < 100; i++) {
+		for (let i = 0; i < 20; i++) {
 			cy.get('#TriggerButton').click();
 			cy.wait(50);
 		}
