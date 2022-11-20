@@ -5,20 +5,24 @@ export const Collapse = defineComponent({
 	name: 'Collapse',
 	inheritAttrs: true,
 	props: {
+		/** Boolean value to control collapse. */
 		when: {
 			type: Boolean as PropType<boolean>,
 			required: true,
 		},
+		/** Element tag to use instead of `div`. */
 		as: {
 			type: String as PropType<keyof HTMLElementTagNameMap>,
 			required: false,
 			default: 'div',
 		},
+		/** Callback on expand transition completed. */
 		onExpanded: {
 			type: Function as PropType<() => void>,
 			required: false,
 			default: () => {},
 		},
+		/** Callback on collapse transition completed. */
 		onCollapsed: {
 			type: Function as PropType<() => void>,
 			required: false,

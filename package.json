@@ -23,8 +23,6 @@
 	],
 	"main": "dist/index.umd.js",
 	"module": "dist/index.mjs",
-	"jsdelivr": "dist/index.mjs",
-	"unpkg": "dist/index.mjs",
 	"types": "dist/index.d.ts",
 	"bugs": {
 		"url": "https://github.com/smastrom/vue-collapsed/issues"
