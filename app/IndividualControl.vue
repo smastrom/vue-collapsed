@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Collapse } from '../src/Collapse';
 import ExampleHeader from './ExampleHeader.vue';
 import fakeData from './fakeData.json';
 

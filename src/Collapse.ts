@@ -1,15 +1,16 @@
-import { computed, defineComponent, h, isRef, type PropType, type Ref } from 'vue';
+import { computed, defineComponent, h, type PropType } from 'vue';
 import { useCollapse } from './useColllapse';
 
 export const Collapse = defineComponent({
 	name: 'Collapse',
+	inheritAttrs: true,
 	props: {
 		when: {
-			type: Boolean as PropType<Ref<boolean> | boolean>,
+			type: Boolean as PropType<boolean>,
 			required: true,
 		},
 		as: {
-			type: String as PropType<keyof Omit<HTMLElementTagNameMap, 'details'>>,
+			type: String as PropType<keyof HTMLElementTagNameMap>,
 			required: false,
 			default: 'div',
 		},
@@ -25,8 +26,8 @@ export const Collapse = defineComponent({
 		},
 	},
 	setup(props) {
-		const isOpen = computed<boolean>(() => (isRef(props.when) ? props.when.value : props.when));
-		const collapseProps = useCollapse(isOpen, props.onExpanded, props.onCollapsed);
+		const isExpanded = computed<boolean>(() => props.when);
+		const collapseProps = useCollapse(isExpanded, props.onExpanded, props.onCollapsed);
 
 		return {
 			collapseProps,
