@@ -1,3 +1,6 @@
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/vue-collapsed?color=success) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/smastrom/vue-collapsed/Tests?label=tests)
+![dependency-count](https://img.shields.io/badge/dependency%20count-0-success)
+
 # Vue Collapsed
 
 Dynamic CSS height transition from _0 to auto_ and vice versa. Accordion ready.
