@@ -48,13 +48,13 @@ export function useCollapse(
 				requestAnimationFrame(() => {
 					if (isExpanding) {
 						/**
-						 * At this point CSS height is undefined (auto) and display is set to none.
+						 * At this point CSS height is set to 'auto' and display to 'none'.
 						 * In order to get the scrollHeight to trigger the transition,
 						 * we get rid of display: none by replacing the styles.
 						 *
 						 * We set the height to zero as it will be the property we will
 						 * transition from and also to avoid the element being visible for
-						 * the duration of the frame.
+						 * the duration of this frame.
 						 */
 						collapseProps.style = {
 							...performanceStyles,
@@ -71,9 +71,9 @@ export function useCollapse(
 						});
 					} else {
 						/**
-						 * At this point CSS height property is undefined (auto).
-						 * Since the element is visible and display property is not set to none
-						 * we get the scrollHeight and set it as height.
+						 * At this point CSS height property is set to 'auto'.
+						 * Since the element is visible we get the scrollHeight
+						 * and set it as height.
 						 */
 						collapseProps.style = {
 							...performanceStyles,
@@ -131,7 +131,12 @@ function getExpandedStyles(height: number) {
 	};
 }
 
-// https://github.com/mui/material-ui/blob/master/packages/mui-material/src/styles/createTransitions.js#L35
+/**
+ * This has been slightly increased from the original implementation
+ *
+ * https://github.com/mui/material-ui/blob/master/packages/mui-material/src/styles/createTransitions.js#L35
+ */
+
 function getAutoDuration(height: number) {
 	if (!height) {
 		return 0;
