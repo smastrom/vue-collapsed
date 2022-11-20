@@ -6,7 +6,8 @@
 		"src/**/*.vue",
 		"cypress/support/component.*",
 		"cypress/support/commands.ts",
-		"app/main.ts"
+		"app/main.ts",
+		"cypress/tests"
 	],
 	"exclude": [],
 	"compilerOptions": {
