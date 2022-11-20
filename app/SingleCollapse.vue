@@ -21,7 +21,11 @@ const collapseAttrs = {
 
 <template>
 	<article class="Wrapper">
-		<ExampleHeader title="Single Collapse" href="blob/main/app/SingleCollapse.vue" />
+		<ExampleHeader
+			title="Single Collapse"
+			href="blob/main/app/SingleCollapse.vue"
+			hint="With Aria attributes"
+		/>
 		<div class="Section">
 			<button
 				:class="[

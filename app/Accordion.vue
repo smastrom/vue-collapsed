@@ -4,7 +4,7 @@ import ExampleHeader from './ExampleHeader.vue';
 import fakeData from './fakeData.json';
 
 const questions = reactive(
-	fakeData.map(({ title, answer }, index) => ({ title, answer, isExpanded: index === 2 || false }))
+	fakeData.map(({ title, answer }, index) => ({ title, answer, isExpanded: index === 2 }))
 );
 
 function handleAccordion(selectedIndex: number) {
