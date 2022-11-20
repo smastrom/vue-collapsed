@@ -5,7 +5,7 @@
 
 Dynamic CSS height transition from _0 to auto_ and vice versa. Accordion ready.
 
-[Examples and Demo](https://vue-collapsed.netlify.com) - [Stackblitz](https://vue-collapsed.netlify.com)
+[Examples and Demo](https://vue-collapsed.netlify.com) - [Stackblitz](https://stackblitz.com/edit/vue-dmjqey?file=src/App.vue)
 
 :bulb: Requires Vue v3.0.0 or above.
 
