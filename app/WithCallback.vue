@@ -30,7 +30,7 @@ function pushToRef(ref: Element) {
 	<section class="Wrapper">
 		<ExampleHeader
 			title="With Callback"
-			href="blob/master/app/WithCallback.vue"
+			href="blob/main/app/WithCallback.vue"
 			hint="Expand and wait for scroll"
 		/>
 		<div

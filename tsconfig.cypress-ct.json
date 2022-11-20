@@ -7,7 +7,7 @@
 		"cypress/support/component.*",
 		"cypress/support/commands.ts",
 		"app/main.ts",
-		"cypress/tests"
+		"src/__tests__/**.*"
 	],
 	"exclude": [],
 	"compilerOptions": {

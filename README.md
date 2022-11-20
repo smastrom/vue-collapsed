@@ -2,9 +2,9 @@
 
 Dynamically transition the height _from 0 to auto_ and vice versa.
 
-[Examples and Demo](https://vue-collapsed.netlify.com) - [Stackblitz Playground](https://vue-collapsed.netlify.com)
+[Examples and Demo](https://vue-collapsed.netlify.com) - [Stackblitz](https://vue-collapsed.netlify.com)
 
-:bulb: **Vue Collapsed** requires Vue v3.0.0 or above.
+:bulb: Requires Vue v3.0.0 or above.
 
 <br />
 

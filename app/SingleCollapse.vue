@@ -21,7 +21,7 @@ const collapseAttrs = {
 
 <template>
 	<article class="Wrapper">
-		<ExampleHeader title="Single Collapse" href="blob/master/app/SingleCollapse.vue" />
+		<ExampleHeader title="Single Collapse" href="blob/main/app/SingleCollapse.vue" />
 		<div class="Section">
 			<button
 				:class="[

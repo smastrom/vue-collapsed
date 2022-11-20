@@ -52,10 +52,12 @@ it('Should change height if resizing on expanded', () => {
 			.invoke('height')
 			.then((desktopHeight) => {
 				cy.viewport('iphone-x');
+				cy.wait(100);
 				cy.get('#my-collapse-id').invoke('height').should('be.greaterThan', desktopHeight);
 			})
 			.then((mobileHeight) => {
 				cy.viewport('macbook-13');
+				cy.wait(100);
 				cy.get('#my-collapse-id').invoke('height').should('be.lessThan', mobileHeight);
 			});
 	}
