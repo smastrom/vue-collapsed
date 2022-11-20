@@ -50,7 +50,7 @@ import WithCallbacks from './WithCallback.vue';
 :root {
 	--AccentColor: rgb(66, 184, 131);
 	--ForegroundColor: rgba(255, 255, 255, 0.75);
-	--ForegroundColorLight: rgba(255, 255, 255, 0.5);
+	--ForegroundColorLight: #929292;
 }
 
 * {
@@ -171,7 +171,7 @@ footer {
 }
 
 .Section {
-	background: #202020;
+	background: #242424;
 	width: 100%;
 	max-width: 600px;
 	border-top: 1px solid var(--ForegroundColorLight);

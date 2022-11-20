@@ -3,6 +3,7 @@ import { Collapse } from '../../src/Collapse';
 import { computed, ref } from 'vue';
 
 const props = withDefaults(
+	// eslint-disable-next-line no-undef
 	defineProps<{ initialValue: boolean; as: keyof HTMLElementTagNameMap }>(),
 	{
 		initialValue: false,
