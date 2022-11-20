@@ -35,19 +35,35 @@ import { Collapse } from 'vue-collapsed'
 | name          | description                               | type                          | required           |
 | ------------- | ----------------------------------------- | ----------------------------- | ------------------ |
 | `when`        | Boolean value to control collapse         | boolean                       | :white_check_mark: |
-| `class`       | Class with a transition (height) property | HTMLAttributes['class']       | :white_check_mark: |
 | `as`          | Element tag to use instead of `div`       | _keyof_ HTMLElementTagNameMap | :x:                |
 | `onExpanded`  | Callback on expand transition completed   | () => void                    | :x:                |
 | `onCollapsed` | Callback on collapse transition completed | () => void                    | :x:                |
 
+## Usage
+
+All you need is to pass a reactive boolean to `when` and add a class with an `height` transition-property:
+
+```vue
+<template>
+  <Collapse :when="isOpen" class="my-class">
+    <p>This is a paragraph.</p>
+  </Collapse>
+</template>
+
+<style>
+.my-class {
+  transition: height 300ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+</style>
+```
+
 ## Auto Duration
 
-You can reference the CSS variable `--vc-auto-duration` in your transition property to use the optimal duration calculated according to the content height:
+Vue Collapsed automatically calculates the optimal duration according to the content height. You can use it by referencing the variable `--vc-auto-duration`:
 
 ```css
 .collapse {
   transition: height var(--vc-auto-duration) ease-out;
-  /* or height 300ms ease-out; */
 }
 ```
 
@@ -109,16 +125,16 @@ const questions = reactive([
 function handleAccordion(selectedIndex) {
   questions.forEach((_, index) => {
     questions[index].isExpanded = index === selectedIndex ? !questions[index].isExpanded : false
-    /**
-     *
-     * For individual control use;
-     *
-     * function handleMultiple(index) {
-     *   questions[index].isExpanded = !questions[index].isExpanded
-     * }
-     */
   })
 }
+
+/**
+ * For individual control you might use:
+ *
+ * function handleMultiple(index) {
+ *   questions[index].isExpanded = !questions[index].isExpanded
+ * }
+ */
 </script>
 
 <template>
@@ -174,6 +190,12 @@ function scrollIntoView(index) {
     </Collapse>
   </div>
 </template>
+
+<style>
+.collapse {
+  transition: height 600ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+</style>
 ```
 
 ## Make it accessible
@@ -208,6 +230,12 @@ function handleCollapse() {
     </Collapse>
   </div>
 </template>
+
+<style>
+.collapse {
+  transition: height 600ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+</style>
 ```
 
 ## License
