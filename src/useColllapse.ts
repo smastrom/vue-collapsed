@@ -101,7 +101,7 @@ export function useCollapse(
 	function onTransitionEnd(event: TransitionEvent) {
 		if (event.target === collapseRef.value && event.propertyName === 'height') {
 			/**
-			 * Reset styles to the initial state (same as onMounted),
+			 * Reset styles to the initial reactive state (same as onMounted),
 			 * we also make sure this callback is triggered only when transitions
 			 * are 100% finished.
 			 */
