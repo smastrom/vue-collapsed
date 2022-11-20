@@ -17,7 +17,7 @@ function handleAccordion(selectedIndex: number) {
 
 <template>
 	<section class="Wrapper">
-		<ExampleHeader title="Accordion" href="" hint="Using reactive()" />
+		<ExampleHeader title="Accordion" href="blob/master/app/Accordion.vue" hint="Using reactive()" />
 		<div v-for="(question, index) in questions" :key="question.title" class="Section">
 			<button
 				:class="[
