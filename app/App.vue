@@ -107,20 +107,20 @@ footer {
 }
 
 .AppHeader svg {
-	fill: rgba(255, 255, 255, 0.75);
+	fill: var(--ForegroundColor);
 	width: 40px;
 	height: 40px;
 }
 
 .AppHeader a:hover svg {
-	fill: rgb(66, 184, 131);
+	fill: var(--AccentColor);
 }
 
 .Header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 
 .HeaderTitle {
@@ -158,6 +158,7 @@ footer {
 }
 
 .CodeLink {
+	font-size: 0.925rem;
 	color: var(--AccentColor);
 }
 
@@ -170,14 +171,15 @@ footer {
 }
 
 .Section {
+	background: #202020;
 	width: 100%;
 	max-width: 600px;
-	border-top: 2px solid var(--ForegroundColorLight);
+	border-top: 1px solid var(--ForegroundColorLight);
 	margin: 0;
 }
 
 .Section:last-of-type {
-	border-bottom: 2px solid var(--ForegroundColorLight);
+	border-bottom: 1px solid var(--ForegroundColorLight);
 }
 
 .Section button {
@@ -209,11 +211,11 @@ footer {
 	}
 
 	footer {
-		font-size: 1rem;
+		font-size: 0.925rem;
 	}
 
 	.Panel {
-		font-size: 1.325rem;
+		font-size: 1.125rem;
 	}
 
 	.Section button {
