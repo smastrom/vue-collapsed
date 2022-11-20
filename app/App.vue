@@ -48,11 +48,12 @@ import WithCallbacks from './WithCallback.vue';
 }
 
 :root {
-	--AccentColor: rgb(66, 184, 131);
-	--ForegroundColor: rgba(255, 255, 255, 0.75);
+	--AccentColor: #41b883;
+	--ForegroundColor: #c5c5c5;
 	--ForegroundColorLight: #929292;
+	--BackgroundColor: #1a1a1a;
+	--BackgroundAlternateColor: #242424;
 }
-
 * {
 	box-sizing: border-box;
 }
@@ -72,7 +73,7 @@ body {
 	text-rendering: optimizeLegibility;
 	line-height: 1.75;
 	-moz-osx-font-smoothing: grayscale;
-	background: #1a1a1a;
+	background: var(--BackgroundColor);
 	color: var(--ForegroundColor);
 	display: flex;
 	flex-direction: column;
@@ -163,7 +164,7 @@ footer {
 }
 
 .CodeLink:hover {
-	color: rgba(255, 255, 255, 0.9);
+	color: var(--ForegroundColor);
 }
 
 .Wrapper {
@@ -171,7 +172,7 @@ footer {
 }
 
 .Section {
-	background: #242424;
+	background: var(--BackgroundAlternateColor);
 	width: 100%;
 	max-width: 600px;
 	border-top: 1px solid var(--ForegroundColorLight);
@@ -191,7 +192,7 @@ footer {
 }
 
 .Collapse {
-	transition: height var(--vc-auto-duration) cubic-bezier(0.4, 0, 0.2, 1);
+	transition: height var(--vc-auto-duration) cubic-bezier(0.37, 0, 0.63, 1);
 }
 
 .Collapse p {

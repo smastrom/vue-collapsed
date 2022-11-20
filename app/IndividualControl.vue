@@ -7,7 +7,7 @@ const questions = ref(
 	fakeData.map(({ title, answer }, index) => ({
 		title,
 		answer,
-		isExpanded: index === 1 || index === 5 || false,
+		isExpanded: index === 1 || index === 5,
 	}))
 );
 

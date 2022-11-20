@@ -132,8 +132,7 @@ function getExpandedStyles(height: number) {
 }
 
 /**
- * This has been slightly increased from the original implementation
- *
+ * Forked from:
  * https://github.com/mui/material-ui/blob/master/packages/mui-material/src/styles/createTransitions.js#L35
  */
 
@@ -143,5 +142,5 @@ function getAutoDuration(height: number) {
 	}
 
 	const constant = height / 36;
-	return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 12.5);
+	return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10);
 }
