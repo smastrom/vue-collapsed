@@ -10,23 +10,33 @@ npm i -S vue-collapsed
 # pnpm install vue-collapsed
 ```
 
+Register it globally:
+
+```js
+import { Collapse } from 'vue-collapsed'
+
+createApp(App).component('Collapse', Collapse).mount('#app')
+```
+
+Or import it locally:
+
 ```js
 import { Collapse } from 'vue-collapsed'
 ```
 
 ## Props
 
-| name          | description                               | type                             | required           |
-| ------------- | ----------------------------------------- | -------------------------------- | ------------------ |
-| `when`        | Boolean value to control collapse         | ComputedRef\<boolean> \| boolean | :white_check_mark: |
-| `class`       | Class with a transition (height) property | HTMLAttributes['class']          | :white_check_mark: |
-| `as`          | Element tag to use instead of `div`       | _keyof_ HTMLElementTagNameMap    | :x:                |
-| `onExpanded`  | Callback on expand transition completed   | () => void                       | :x:                |
-| `onCollapsed` | Callback on collapse transition completed | () => void                       | :x:                |
+| name          | description                               | type                          | required           |
+| ------------- | ----------------------------------------- | ----------------------------- | ------------------ |
+| `when`        | Boolean value to control collapse         | boolean                       | :white_check_mark: |
+| `class`       | Class with a transition (height) property | HTMLAttributes['class']       | :white_check_mark: |
+| `as`          | Element tag to use instead of `div`       | _keyof_ HTMLElementTagNameMap | :x:                |
+| `onExpanded`  | Callback on expand transition completed   | () => void                    | :x:                |
+| `onCollapsed` | Callback on collapse transition completed | () => void                    | :x:                |
 
 ## Auto Duration
 
-You can reference the CSS variable `--vc-auto-duration` in your transition property to use the optimal duration calculated by vue-collapse according to the content height:
+You can reference the CSS variable `--vc-auto-duration` in your transition property to use the optimal duration calculated according to the content height:
 
 ```css
 .collapse {
@@ -95,7 +105,7 @@ function handleAccordion(selectedIndex) {
     questions[index].isExpanded = index === selectedIndex ? !questions[index].isExpanded : false
     /**
      *
-     * To control each collapse individually:
+     * For individual control use;
      *
      * function handleMultiple(index) {
      *   questions[index].isExpanded = !questions[index].isExpanded

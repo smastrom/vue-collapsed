@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { Collapse } from '../src/Collapse';
 import { computed, ref } from 'vue';
 import ExampleHeader from './ExampleHeader.vue';
 

@@ -10,7 +10,7 @@ import {
 	type VNodeRef,
 } from 'vue';
 
-const nextFrame = requestAnimationFrame;
+const nextFrame = typeof window !== 'undefined' ? requestAnimationFrame : () => {};
 
 const idleStyles: CSSProperties = { padding: 0 };
 const collapsedStyles: CSSProperties = { display: 'none', ...idleStyles };
@@ -23,7 +23,7 @@ const hiddenStyles: CSSProperties = {
 	height: 0,
 };
 
-type Props = { ref: VNodeRef; style: CSSProperties };
+type Bindings = { ref: VNodeRef; style: CSSProperties };
 
 export function useCollapse(
 	isExpanding: ComputedRef<boolean>,
@@ -32,7 +32,7 @@ export function useCollapse(
 ): HTMLAttributes {
 	const collapseRef = ref<VNodeRef | null>(null);
 
-	const collapseProps = reactive<Props>({
+	const collapseProps = reactive<Bindings>({
 		ref: (thisRef) => (collapseRef.value = thisRef),
 		style: !isExpanding.value ? collapsedStyles : idleStyles,
 	});

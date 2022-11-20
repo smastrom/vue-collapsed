@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import dts from 'vite-plugin-dts';
+import path from 'path';
 
 export default defineConfig(({ mode }) => {
 	if (mode === 'app') {
@@ -23,6 +25,15 @@ export default defineConfig(({ mode }) => {
 				},
 			},
 		},
-		plugins: [vue()],
+		plugins: [
+			vue(),
+			dts({
+				include: ['src/Collapse.ts'],
+				beforeWriteFile: (_, content) => ({
+					filePath: path.resolve(__dirname, 'dist', 'index.d.ts'),
+					content,
+				}),
+			}),
+		],
 	};
 });
