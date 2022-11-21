@@ -12,11 +12,10 @@ import {
 
 const nextFrame = typeof window !== 'undefined' ? requestAnimationFrame : () => {};
 
-const idleStyles: CSSProperties = { padding: 0 };
-const collapsedStyles: CSSProperties = { display: 'none', ...idleStyles };
+const fixedStyles: CSSProperties = { padding: 0 };
+const collapsedStyles: CSSProperties = { display: 'none', ...fixedStyles };
 const performanceStyles: CSSProperties = {
-	willChange: 'auto',
-	transform: 'translate3d(0, 0, 0)',
+	willChange: 'height',
 };
 const hiddenStyles: CSSProperties = {
 	overflow: 'hidden',
@@ -34,7 +33,7 @@ export function useCollapse(
 
 	const collapseProps = reactive<Bindings>({
 		ref: (thisRef) => (collapseRef.value = thisRef),
-		style: !isExpanding.value ? collapsedStyles : idleStyles,
+		style: !isExpanding.value ? collapsedStyles : fixedStyles,
 	});
 
 	onMounted(() => {
@@ -57,6 +56,7 @@ export function useCollapse(
 						 * the duration of this frame.
 						 */
 						collapseProps.style = {
+							...fixedStyles,
 							...performanceStyles,
 							...hiddenStyles,
 						};
@@ -76,6 +76,7 @@ export function useCollapse(
 						 * and set it as height.
 						 */
 						collapseProps.style = {
+							...collapseProps.style,
 							...performanceStyles,
 							...getExpandedStyles(collapseRef.value.scrollHeight),
 						};
@@ -109,7 +110,7 @@ export function useCollapse(
 				if (
 					collapseRef.value.scrollHeight === parseFloat((event.target as HTMLElement).style.height)
 				) {
-					collapseProps.style = idleStyles;
+					collapseProps.style = fixedStyles;
 					onExpanded();
 				}
 			} else {

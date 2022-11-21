@@ -192,7 +192,7 @@ footer {
 }
 
 .Collapse {
-	transition: height var(--vc-auto-duration) cubic-bezier(0.37, 0, 0.63, 1);
+	transition: height var(--vc-auto-duration) cubic-bezier(0.3, 0, 0.6, 1);
 }
 
 .Collapse p {

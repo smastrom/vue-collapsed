@@ -55,7 +55,7 @@ All you need is to pass a reactive boolean to `when` and add a class with an `h
 
 <style>
 .my-class {
-  transition: height 300ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: height 300ms cubic-bezier(0.3, 0, 0.6, 1);
 }
 </style>
 ```
@@ -95,7 +95,7 @@ function handleCollapse() {
 
 <style>
 .collapse {
-  transition: height var(--vc-auto-duration) cubic-bezier(0.25, 1, 0.5, 1);
+  transition: height var(--vc-auto-duration) cubic-bezier(0.3, 0, 0.6, 1);
 }
 </style>
 ```
@@ -155,7 +155,7 @@ function handleAccordion(selectedIndex) {
 
 <style>
 .collapse {
-  transition: height 600ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: height 600ms cubic-bezier(0.3, 0, 0.6, 1);
 }
 </style>
 ```
@@ -196,7 +196,7 @@ function scrollIntoView(index) {
 
 <style>
 .collapse {
-  transition: height 600ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: height 600ms cubic-bezier(0.3, 0, 0.6, 1);
 }
 </style>
 ```
@@ -236,7 +236,7 @@ function handleCollapse() {
 
 <style>
 .collapse {
-  transition: height 600ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: height 600ms cubic-bezier(0.3, 0, 0.6, 1);
 }
 </style>
 ```

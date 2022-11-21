@@ -1,6 +1,6 @@
 {
 	"name": "vue-collapsed",
-	"version": "0.9.0",
+	"version": "0.9.8",
 	"description": "Dynamic CSS height transition from 0 to auto and vice versa. Accordion ready.",
 	"author": {
 		"name": "Simone Mastromattei",
