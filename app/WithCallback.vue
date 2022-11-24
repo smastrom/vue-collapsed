@@ -26,6 +26,8 @@ function pushToRef(ref: Element) {
 }
 </script>
 
+<!-- Check how to set accessibility attributes in IndividualControl.vue -->
+
 <template>
 	<section class="Wrapper">
 		<ExampleHeader
@@ -64,4 +66,4 @@ function pushToRef(ref: Element) {
 	</section>
 </template>
 
-<!-- Find styles in App.vue -->
+<!-- Check styles in App.vue -->

@@ -4,7 +4,11 @@ import ExampleHeader from './ExampleHeader.vue';
 import fakeData from './fakeData.json';
 
 const questions = reactive(
-	fakeData.map(({ title, answer }, index) => ({ title, answer, isExpanded: index === 2 }))
+	fakeData.map(({ title, answer }, index) => ({
+		title,
+		answer,
+		isExpanded: index === 2, // Initial values, display expanded on mount
+	}))
 );
 
 function handleAccordion(selectedIndex: number) {
@@ -13,6 +17,8 @@ function handleAccordion(selectedIndex: number) {
 	});
 }
 </script>
+
+<!-- Check how to set accessibility attributes in IndividualControl.vue -->
 
 <template>
 	<section class="Wrapper">
@@ -38,4 +44,4 @@ function handleAccordion(selectedIndex: number) {
 	</section>
 </template>
 
-<!-- Find styles in App.vue -->
+<!-- Check styles in App.vue -->

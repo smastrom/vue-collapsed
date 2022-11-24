@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import ExampleHeader from './ExampleHeader.vue';
 import fakeData from './fakeData.json';
 
@@ -7,13 +7,29 @@ const questions = ref(
 	fakeData.map(({ title, answer }, index) => ({
 		title,
 		answer,
-		isExpanded: index === 1 || index === 5,
+		isExpanded: index === 1 || index === 5, // Initial values, display expanded on mount
 	}))
 );
 
 function handleIndividual(selectedIndex: number) {
 	questions.value[selectedIndex].isExpanded = !questions.value[selectedIndex].isExpanded;
 }
+
+/**
+ * Accessibility attributes
+ */
+
+const toggleAttrs = computed(() =>
+	questions.value.map((question, index) => ({
+		'aria-expanded': question.isExpanded,
+		'aria-controls': `my-id_${index}`,
+	}))
+);
+
+const collapseAttrs = questions.value.map((_, index) => ({
+	id: `my-id_${index}`,
+	role: 'region',
+}));
 </script>
 
 <template>
@@ -21,10 +37,11 @@ function handleIndividual(selectedIndex: number) {
 		<ExampleHeader
 			title="Individual Control"
 			href="blob/main/app/IndividualControl.vue"
-			hint="Using ref()"
+			hint="Using ref() — with Aria attributes"
 		/>
 		<div v-for="(question, index) in questions" :key="question.title" class="Section">
 			<button
+				v-bind="toggleAttrs[index]"
 				:class="[
 					'Panel',
 					{
@@ -35,7 +52,7 @@ function handleIndividual(selectedIndex: number) {
 			>
 				{{ question.title }}
 			</button>
-			<Collapse :when="question.isExpanded" class="Collapse">
+			<Collapse :when="question.isExpanded" class="Collapse" v-bind="collapseAttrs[index]">
 				<p>
 					{{ question.answer }}
 				</p>
@@ -44,4 +61,4 @@ function handleIndividual(selectedIndex: number) {
 	</section>
 </template>
 
-<!-- Find styles in App.vue -->
+<!-- Check styles in App.vue -->
