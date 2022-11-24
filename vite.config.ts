@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
 import path from 'path';
+import { terser } from 'rollup-plugin-terser';
 
 export default defineConfig(({ mode }) => {
 	if (mode === 'app') {
@@ -11,6 +12,7 @@ export default defineConfig(({ mode }) => {
 	}
 	return {
 		build: {
+			minify: 'terser',
 			lib: {
 				entry: 'src/Collapse.ts',
 				name: 'VueCollapsed',
@@ -23,6 +25,13 @@ export default defineConfig(({ mode }) => {
 						vue: 'Vue',
 					},
 				},
+				plugins: [
+					terser({
+						compress: {
+							defaults: true,
+						},
+					}),
+				],
 			},
 		},
 		plugins: [
