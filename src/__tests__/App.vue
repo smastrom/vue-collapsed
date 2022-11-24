@@ -11,14 +11,14 @@ const props = withDefaults(
 	}
 );
 
-const isOpen = ref(props.initialValue);
+const isExpanded = ref(props.initialValue);
 
 function handleCollapse() {
-	isOpen.value = !isOpen.value;
+	isExpanded.value = !isExpanded.value;
 }
 
 const toggleAttrs = computed(() => ({
-	'aria-expanded': isOpen.value,
+	'aria-expanded': isExpanded.value,
 	'aria-controls': 'my-collapse-id',
 }));
 
@@ -48,7 +48,7 @@ function onExpanded() {
 				:class="[
 					'Panel',
 					{
-						Active: isOpen,
+						Active: isExpanded,
 					},
 				]"
 				v-bind="toggleAttrs"
@@ -59,7 +59,7 @@ function onExpanded() {
 			<Collapse
 				v-bind="collapseAttrs"
 				:as="as"
-				:when="isOpen"
+				:when="isExpanded"
 				class="Collapse"
 				:onExpanded="onExpanded"
 				:onCollapsed="onCollapsed"

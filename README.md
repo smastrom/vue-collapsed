@@ -48,7 +48,7 @@ All you need is to pass a reactive boolean to `when` and add a class with an `h
 
 ```vue
 <template>
-  <Collapse :when="isOpen" class="my-class">
+  <Collapse :when="isExpanded" class="my-class">
     <p>This is a paragraph.</p>
   </Collapse>
 </template>
@@ -77,17 +77,17 @@ Vue Collapsed automatically calculates the optimal duration according to the con
 import { ref } from 'vue'
 import { Collapse } from 'vue-collapsed'
 
-const isOpen = ref(false) // Initial value
+const isExpanded = ref(false) // Initial value
 
 function handleCollapse() {
-  isOpen.value = !isOpen.value
+  isExpanded.value = !isExpanded.value
 }
 </script>
 
 <template>
   <div>
     <button @click="handleCollapse">This a button.</button>
-    <Collapse :when="isOpen" class="collapse">
+    <Collapse :when="isExpanded" class="collapse">
       <p>This is a paragraph.</p>
     </Collapse>
   </div>
@@ -208,10 +208,10 @@ function scrollIntoView(index) {
 import { ref, computed } from 'vue'
 import { Collapse } from 'vue-collapsed'
 
-const isOpen = ref(false)
+const isExpanded = ref(false)
 
 const toggleAttrs = computed(() => ({
-  'aria-expanded': isOpen.value,
+  'aria-expanded': isExpanded.value,
   'aria-controls': 'my-collapse-id'
 }))
 
@@ -221,14 +221,14 @@ const collapseAttrs = {
 }
 
 function handleCollapse() {
-  isOpen.value = !isOpen.value
+  isExpanded.value = !isExpanded.value
 }
 </script>
 
 <template>
   <div>
     <button v-bind="toggleAttrs" @click="handleCollapse">This a panel.</button>
-    <Collapse v-bind="collapseAttrs" :when="isOpen" class="collapse">
+    <Collapse v-bind="collapseAttrs" :when="isExpanded" class="collapse">
       <p>This is a paragraph.</p>
     </Collapse>
   </div>
