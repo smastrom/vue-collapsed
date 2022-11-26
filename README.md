@@ -1,4 +1,4 @@
-![npm bundle size](https://img.shields.io/bundlephobia/minzip/vue-collapsed?color=success) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/smastrom/vue-collapsed/Tests?label=tests)
+![npm](https://img.shields.io/npm/v/vue-collapsed?color=46c119) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/smastrom/vue-collapsed/Tests?label=tests) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/vue-collapsed?color=success)
 ![dependency-count](https://img.shields.io/badge/dependency%20count-0-success)
 
 # Vue Collapsed
@@ -16,7 +16,7 @@ Dynamic CSS height transition from _0 to auto_ and vice versa. Accordion ready.
 ```shell
 npm i -S vue-collapsed
 # yarn add vue-collapsed
-# pnpm install vue-collapsed
+# pnpm add vue-collapsed
 ```
 
 Register it globally:
@@ -211,11 +211,13 @@ import { Collapse } from 'vue-collapsed'
 const isExpanded = ref(false)
 
 const toggleAttrs = computed(() => ({
+  id: 'my-toggle',
   'aria-expanded': isExpanded.value,
   'aria-controls': 'my-collapse-id'
 }))
 
 const collapseAttrs = {
+  'aria-labelledby': 'my-toggle',
   id: 'my-collapse-id',
   role: 'region'
 }
