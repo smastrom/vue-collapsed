@@ -1,8 +1,10 @@
 {
 	"extends": "./tsconfig.app.json",
-	"include": ["env.d.ts", "src/*.*", "src/**/**.*", "cypress/support/component.*", "app/main.ts"],
-	"exclude": [],
+	"include": ["env.d.ts", "cypress", "src/__tests__"],
 	"compilerOptions": {
-		"composite": true
+		"composite": true,
+		"paths": {
+			"@/*": ["./src/*"]
+		}
 	}
 }

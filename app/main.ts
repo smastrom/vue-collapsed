@@ -1,4 +1,4 @@
-import { Collapse } from '../src/Collapse';
+import { Collapse } from '@/Collapse';
 import { createApp } from 'vue';
 import App from './App.vue';
 

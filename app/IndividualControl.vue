@@ -17,18 +17,22 @@ function handleIndividual(selectedIndex: number) {
 
 /**
  * Accessibility attributes
+ *
+ * https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion
  */
 
 const toggleAttrs = computed(() =>
 	questions.value.map((question, index) => ({
+		id: `toggle_${index}`,
 		'aria-expanded': question.isExpanded,
-		'aria-controls': `my-id_${index}`,
+		'aria-controls': `collapse_${index}`,
 	}))
 );
 
 const collapseAttrs = computed(() =>
 	questions.value.map((_, index) => ({
-		id: `my-id_${index}`,
+		'aria-labelledby': `toggle_${index}`,
+		id: `collapse_id_${index}`,
 		role: 'region',
 	}))
 );
@@ -44,13 +48,13 @@ const collapseAttrs = computed(() =>
 		<div v-for="(question, index) in questions" :key="question.title" class="Section">
 			<button
 				v-bind="toggleAttrs[index]"
+				@click="() => handleIndividual(index)"
 				:class="[
 					'Panel',
 					{
 						Active: question.isExpanded,
 					},
 				]"
-				@click="() => handleIndividual(index)"
 			>
 				{{ question.title }}
 			</button>
