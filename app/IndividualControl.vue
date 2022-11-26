@@ -26,10 +26,12 @@ const toggleAttrs = computed(() =>
 	}))
 );
 
-const collapseAttrs = questions.value.map((_, index) => ({
-	id: `my-id_${index}`,
-	role: 'region',
-}));
+const collapseAttrs = computed(() =>
+	questions.value.map((_, index) => ({
+		id: `my-id_${index}`,
+		role: 'region',
+	}))
+);
 </script>
 
 <template>
