@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Collapse } from '../../src/Collapse';
+import { Collapse } from '@/Collapse';
 import { computed, ref } from 'vue';
 
 const props = withDefaults(

@@ -13,7 +13,7 @@ type UseCollapseReturn = {
 
 const nextFrame = typeof window !== 'undefined' ? requestAnimationFrame : () => {};
 
-const fixedStyles: CSS = { padding: 0, border: 0 };
+const fixedStyles: CSS = { padding: 0, border: 0, margin: 0 };
 const collapsedStyles: CSS = { display: 'none', ...fixedStyles };
 const performanceStyles: CSS = {
 	willChange: 'height',
