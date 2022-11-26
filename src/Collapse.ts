@@ -1,7 +1,7 @@
 import { computed, defineComponent, ref, defineExpose, h, type PropType, type VNodeRef } from 'vue';
 import { useCollapse } from './useColllapse';
 
-const CollapseComponent = defineComponent({
+export const Collapse = defineComponent({
 	name: 'Collapse',
 	inheritAttrs: true,
 	props: {
@@ -58,6 +58,3 @@ const CollapseComponent = defineComponent({
 		);
 	},
 });
-
-export { CollapseComponent as Collapse };
-export { CollapseComponent as Expand };
