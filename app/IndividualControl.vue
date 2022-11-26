@@ -32,7 +32,7 @@ const toggleAttrs = computed(() =>
 const collapseAttrs = computed(() =>
 	questions.value.map((_, index) => ({
 		'aria-labelledby': `toggle_${index}`,
-		id: `collapse_id_${index}`,
+		id: `collapse_${index}`,
 		role: 'region',
 	}))
 );
@@ -43,7 +43,7 @@ const collapseAttrs = computed(() =>
 		<ExampleHeader
 			title="Individual Control"
 			href="blob/main/app/IndividualControl.vue"
-			hint="Using ref() — with Aria attributes"
+			hint="With aria attributes — Using ref()"
 		/>
 		<div v-for="(question, index) in questions" :key="question.title" class="Section">
 			<button

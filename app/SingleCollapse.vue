@@ -15,14 +15,14 @@ function handleCollapse() {
  */
 
 const toggleAttrs = computed(() => ({
-	id: 'single_toggle',
+	id: 'toggle',
 	'aria-expanded': isExpanded.value,
-	'aria-controls': 'my-collapse-id',
+	'aria-controls': 'collapse',
 }));
 
 const collapseAttrs = {
-	'aria-labelledby': 'single_toggle',
-	id: 'my-collapse-id',
+	'aria-labelledby': 'toggle',
+	id: 'collapse',
 	role: 'region',
 };
 </script>
