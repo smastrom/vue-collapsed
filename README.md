@@ -86,7 +86,7 @@ function handleCollapse() {
 
 <template>
   <div>
-    <button @click="handleCollapse">This a button.</button>
+    <button @click="handleCollapse">This a panel.</button>
     <Collapse :when="isExpanded" class="collapse">
       <p>This is a paragraph.</p>
     </Collapse>
@@ -211,15 +211,15 @@ import { Collapse } from 'vue-collapsed'
 const isExpanded = ref(false)
 
 const toggleAttrs = computed(() => ({
-  id: 'my-toggle',
-  'aria-expanded': isExpanded.value,
-  'aria-controls': 'my-collapse-id'
+  id: 'toggle-id',
+  'aria-controls': 'collapse-id',
+  'aria-expanded': isExpanded.value
 }))
 
 const collapseAttrs = {
-  'aria-labelledby': 'my-toggle',
-  id: 'my-collapse-id',
-  role: 'region'
+  role: 'region',
+  id: 'collapse-id',
+  'aria-labelledby': 'toggle-id'
 }
 
 function handleCollapse() {
