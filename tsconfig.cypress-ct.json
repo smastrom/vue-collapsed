@@ -1,15 +1,6 @@
 {
 	"extends": "./tsconfig.app.json",
-	"include": [
-		"env.d.ts",
-		"src/**/*",
-		"src/**/*.vue",
-		"cypress/support/component.*",
-		"cypress/support/commands.ts",
-		"app/main.ts",
-		"src/__tests__/**.*"
-	],
-	"exclude": [],
+	"include": ["env.d.ts", "cypress", "src/__tests__"],
 	"compilerOptions": {
 		"composite": true
 	}

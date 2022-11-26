@@ -8,13 +8,21 @@ function handleCollapse() {
 	isExpanded.value = !isExpanded.value;
 }
 
+/**
+ * Accessibility attributes
+ *
+ * https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion
+ */
+
 const toggleAttrs = computed(() => ({
+	id: 'toggle',
 	'aria-expanded': isExpanded.value,
-	'aria-controls': 'my-collapse-id',
+	'aria-controls': 'collapse',
 }));
 
 const collapseAttrs = {
-	id: 'my-collapse-id',
+	'aria-labelledby': 'toggle',
+	id: 'collapse',
 	role: 'region',
 };
 </script>
@@ -28,14 +36,14 @@ const collapseAttrs = {
 		/>
 		<div class="Section">
 			<button
+				v-bind="toggleAttrs"
+				@click="handleCollapse"
 				:class="[
 					'Panel',
 					{
 						Active: isExpanded,
 					},
 				]"
-				v-bind="toggleAttrs"
-				@click="handleCollapse"
 			>
 				Hello buddy, how are you today?
 			</button>
