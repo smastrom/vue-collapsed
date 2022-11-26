@@ -2,9 +2,6 @@
 	"extends": "./tsconfig.app.json",
 	"include": ["env.d.ts", "cypress", "src/__tests__"],
 	"compilerOptions": {
-		"composite": true,
-		"paths": {
-			"@/*": ["./src/*"]
-		}
+		"composite": true
 	}
 }
