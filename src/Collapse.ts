@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, defineExpose, h, type PropType, type VNodeRef } from 'vue';
+import { computed, defineComponent, ref, h, type PropType, type VNodeRef } from 'vue';
 import { useCollapse } from './useColllapse';
 
 export const Collapse = defineComponent({
@@ -31,7 +31,6 @@ export const Collapse = defineComponent({
 	},
 	setup(props) {
 		const collapseRef = ref<HTMLElement | null>(null);
-		defineExpose({ collapseRef });
 
 		const { style, onTransitionEnd } = useCollapse(collapseRef, {
 			isExpanded: computed(() => props.when),
