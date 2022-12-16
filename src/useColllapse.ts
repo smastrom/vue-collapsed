@@ -112,7 +112,7 @@ export function useCollapse(
 
 	watch(
 		() => baseHeight.value,
-		(newbaseHeight) => {
+		(newBaseHeight) => {
 			if (!isExpanded.value) {
 				style.value = {
 					...style.value,
@@ -124,7 +124,7 @@ export function useCollapse(
 					 * Below styles are going to be replaced on next expand.
 					 */
 					transitionDuration: '0s',
-					height: `${newbaseHeight}px`,
+					height: `${newBaseHeight}px`,
 				};
 			}
 		}
