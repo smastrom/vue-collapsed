@@ -28,12 +28,8 @@ const collapseAttrs = {
 </script>
 
 <template>
-	<article class="Wrapper">
-		<ExampleHeader
-			title="Single Collapse"
-			href="blob/main/app/SingleCollapse.vue"
-			hint="With Aria attributes"
-		/>
+	<section class="Wrapper">
+		<ExampleHeader title="Single Collapse" href="SingleCollapse.vue" hint="With Aria attributes" />
 		<div class="Section">
 			<button
 				v-bind="toggleAttrs"
@@ -57,7 +53,7 @@ const collapseAttrs = {
 				</p>
 			</Collapse>
 		</div>
-	</article>
+	</section>
 </template>
 
 <!-- Check styles in App.vue -->

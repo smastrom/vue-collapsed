@@ -2,7 +2,8 @@
 import SingleCollapse from './SingleCollapse.vue';
 import Accordion from './Accordion.vue';
 import IndividualControl from './IndividualControl.vue';
-import WithCallbacks from './WithCallback.vue';
+import WithCallbacks from './WithCallbacks.vue';
+import AdvancedControl from './AdvancedControl.vue';
 </script>
 
 <template>
@@ -31,6 +32,7 @@ import WithCallbacks from './WithCallback.vue';
 		<SingleCollapse />
 		<Accordion />
 		<WithCallbacks />
+		<AdvancedControl />
 		<IndividualControl />
 	</main>
 
@@ -159,6 +161,7 @@ footer {
 }
 
 .CodeLink {
+	white-space: nowrap;
 	font-size: 0.925rem;
 	color: var(--AccentColor);
 }
