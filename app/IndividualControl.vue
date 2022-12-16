@@ -39,10 +39,10 @@ const collapseAttrs = computed(() =>
 </script>
 
 <template>
-	<section class="Wrapper">
+	<article class="Wrapper">
 		<ExampleHeader
 			title="Individual Control"
-			href="blob/main/app/IndividualControl.vue"
+			href="IndividualControl.vue"
 			hint="With aria attributes — Using ref()"
 		/>
 		<div v-for="(question, index) in questions" :key="question.title" class="Section">
@@ -64,7 +64,7 @@ const collapseAttrs = computed(() =>
 				</p>
 			</Collapse>
 		</div>
-	</section>
+	</article>
 </template>
 
 <!-- Check styles in App.vue -->
