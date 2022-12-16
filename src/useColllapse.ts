@@ -18,9 +18,7 @@ type UseCollapseReturn = {
 };
 
 const fixedStyles: CSS = { padding: 0, border: 0, margin: 0 };
-const performanceStyles: CSS = {
-	willChange: 'height',
-};
+const perfStyles: CSS = { willChange: 'height' };
 
 export function useCollapse(
 	collapseRef: Ref<HTMLElement | null>,
@@ -66,7 +64,7 @@ export function useCollapse(
 					 */
 					style.value = {
 						...fixedStyles,
-						...performanceStyles,
+						...perfStyles,
 						...collapseStyles.value.visible,
 					};
 					requestAnimationFrame(() => {
@@ -88,7 +86,7 @@ export function useCollapse(
 					 */
 					style.value = {
 						...style.value,
-						...performanceStyles,
+						...perfStyles,
 						...getHeightStyles(collapseRef.value?.scrollHeight, baseHeight.value),
 					};
 					requestAnimationFrame(() => {
