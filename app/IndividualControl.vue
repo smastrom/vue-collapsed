@@ -42,7 +42,7 @@ const collapseAttrs = computed(() =>
 	<section class="Wrapper">
 		<ExampleHeader
 			title="Individual Control"
-			href="blob/main/app/IndividualControl.vue"
+			href="IndividualControl.vue"
 			hint="With aria attributes — Using ref()"
 		/>
 		<div v-for="(question, index) in questions" :key="question.title" class="Section">

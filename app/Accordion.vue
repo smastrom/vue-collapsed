@@ -22,7 +22,7 @@ function handleAccordion(selectedIndex: number) {
 
 <template>
 	<section class="Wrapper">
-		<ExampleHeader title="Accordion" href="blob/main/app/Accordion.vue" hint="Using reactive()" />
+		<ExampleHeader title="Accordion" href="Accordion.vue" hint="Using reactive()" />
 		<div v-for="(question, index) in questions" :key="question.title" class="Section">
 			<button
 				:class="[
@@ -35,6 +35,7 @@ function handleAccordion(selectedIndex: number) {
 			>
 				{{ question.title }}
 			</button>
+
 			<Collapse as="section" :when="question.isExpanded" class="Collapse">
 				<p>
 					{{ question.answer }}

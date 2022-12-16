@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { reactive, ref, type VNodeRef } from 'vue';
+import { reactive, ref } from 'vue';
 import ExampleHeader from './ExampleHeader.vue';
 import fakeData from './fakeData.json';
 
 const collapseRefs = ref<Element[]>([]);
+const indexToScroll = ref(-1);
+const isBusy = ref(false);
 
 const questions = reactive(
 	fakeData.map(({ title, answer }) => ({ title, answer, isExpanded: false }))
@@ -15,14 +17,28 @@ function handleAccordion(selectedIndex: number) {
 	});
 }
 
-async function scrollIntoView(index: number) {
+function scrollIntoView(index: number) {
 	collapseRefs.value[index].scrollIntoView({
 		behavior: 'smooth',
 	});
 }
 
-function pushToRef(ref: Element) {
-	collapseRefs.value.push(ref);
+function onExpanded(index: number) {
+	indexToScroll.value = index;
+	if (!isBusy.value) {
+		scrollIntoView(index);
+	}
+}
+
+function onCollapse() {
+	isBusy.value = true;
+}
+
+function onCollapsed() {
+	if (isBusy.value && indexToScroll.value !== -1) {
+		scrollIntoView(indexToScroll.value);
+		isBusy.value = false;
+	}
 }
 </script>
 
@@ -31,15 +47,15 @@ function pushToRef(ref: Element) {
 <template>
 	<section class="Wrapper">
 		<ExampleHeader
-			title="With Callback"
-			href="blob/main/app/WithCallback.vue"
+			title="With Callbacks"
+			href="WithCallbacks.vue"
 			hint="Expand and wait for scroll"
 		/>
 		<div
 			v-for="(question, index) in questions"
 			:key="question.title"
 			class="Section"
-			:ref="pushToRef as VNodeRef"
+			ref="collapseRefs"
 		>
 			<button
 				:class="[
@@ -56,7 +72,9 @@ function pushToRef(ref: Element) {
 				as="section"
 				:when="question.isExpanded"
 				class="Collapse"
-				:onExpanded="() => scrollIntoView(index)"
+				:onExpanded="() => onExpanded(index)"
+				:onCollapse="onCollapse"
+				:onCollapsed="onCollapsed"
 			>
 				<p>
 					{{ question.answer }}
