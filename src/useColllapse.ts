@@ -54,16 +54,16 @@ export function useCollapse(
 			requestAnimationFrame(() => {
 				if (isExpanding) {
 					/**
-					 * When baseHeight > 0, this step doesn't do anythings pecial
+					 * When baseHeight > 0, this step doesn't do anything special
 					 * as the height is already set and the element is visible.
 					 *
-					 * At this point if baseHeight === 0, CSS height equals to
+					 * If baseHeight === 0, at this point CSS height equals to
 					 * 'auto' and display to 'none'.
 					 *
 					 * In order to get the scrollHeight to trigger the transition,
 					 * we must get rid of display: none by replacing the styles.
 					 *
-					 * We set the height to 0 (baseHeight) as this is the 'current' height
+					 * We set the height to 0 (baseHeight) as it is the 'current' height
 					 * we are transition from. Overflow is hidden so users won't see any
 					 * layout difference for the duration of this frame.
 					 */
@@ -86,8 +86,8 @@ export function useCollapse(
 				} else {
 					/**
 					 * At this point CSS height property is set to 'auto'.
-					 * Since the element is visible we get the current height
-					 * (scrollHeight) and set it as height.
+					 * Since the element is visible we get the 'current'
+					 * expanded height (scrollHeight) and set it as height.
 					 */
 					style.value = {
 						...style.value,
@@ -112,19 +112,19 @@ export function useCollapse(
 
 	watch(
 		() => baseHeight.value,
-		(newbaseHeight) => {
+		(newBaseHeight) => {
 			if (!isExpanded.value) {
 				style.value = {
 					...style.value,
 					/**
-					 * Disable transitions when baseHeight on collapsed state
-					 * changes, to give a native responsive feel if using
-					 * reactive baseHeight on window resize.
+					 * Disable transitions when baseHeight changes on
+					 * collapsed state to give a native responsive feel if using
+					 * reactive value on resize.
 					 *
 					 * Below styles are going to be replaced on next expand.
 					 */
 					transitionDuration: '0s',
-					height: `${newbaseHeight}px`,
+					height: `${newBaseHeight}px`,
 				};
 			}
 		}
