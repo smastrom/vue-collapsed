@@ -14,7 +14,7 @@ function capitalize(string: string) {
 </script>
 
 <template>
-	<section class="Wrapper">
+	<article class="Wrapper">
 		<ExampleHeader
 			title="Advanced Control"
 			href="AdvancedControl.vue"
@@ -28,7 +28,7 @@ function capitalize(string: string) {
 				{{ capitalize(state) }}{{ state.endsWith('ing') ? '...' : '.' }}
 			</div>
 		</Collapse>
-	</section>
+	</article>
 </template>
 
 <style>
@@ -41,7 +41,7 @@ function capitalize(string: string) {
 .AdvancedCollapse[data-collapse='collapsed'],
 .AdvancedCollapse[data-collapse='collapsing'] {
 	background-color: #34ebff;
-	border-radius: 30px;
+	border-radius: 45px;
 }
 
 .AdvancedCollapse[data-collapse='expanded'],
@@ -59,7 +59,7 @@ function capitalize(string: string) {
 	align-items: center;
 	font-size: 1.75rem;
 	color: var(--BackgroundColor);
-	height: 300px;
+	height: 400px;
 }
 
 .InnerElement button {

@@ -28,7 +28,7 @@ const collapseAttrs = {
 </script>
 
 <template>
-	<section class="Wrapper">
+	<article class="Wrapper">
 		<ExampleHeader title="Single Collapse" href="SingleCollapse.vue" hint="With Aria attributes" />
 		<div class="Section">
 			<button
@@ -53,7 +53,7 @@ const collapseAttrs = {
 				</p>
 			</Collapse>
 		</div>
-	</section>
+	</article>
 </template>
 
 <!-- Check styles in App.vue -->
