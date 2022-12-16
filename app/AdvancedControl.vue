@@ -21,7 +21,7 @@ function capitalize(string: string) {
 			hint="BaseHeight, state and data-collapse"
 		/>
 
-		<Collapse :when="isExpanded" class="AdvancedCollapse" v-slot="{ state }" :baseHeight="120">
+		<Collapse :when="isExpanded" class="AdvancedCollapse" v-slot="{ state }" :baseHeight="140">
 			<div class="InnerElement">
 				<button @click="handleCollapse">Toggle</button>
 

@@ -111,6 +111,13 @@ export function useCollapse(
 			if (!isExpanded.value) {
 				style.value = {
 					...style.value,
+					/**
+					 * Disable transitions when baseHeight on collapsed changes, to give
+					 * a native responsive feel if resizing the window.
+					 *
+					 * Styles are going to be replaced when expanding again.
+					 */
+					transitionDuration: '0s',
 					height: `${newbaseHeight}px`,
 				};
 			}
