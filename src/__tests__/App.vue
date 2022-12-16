@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Collapse } from '../Collapse';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
 const props = withDefaults(
 	// eslint-disable-next-line no-undef
@@ -14,31 +14,32 @@ const props = withDefaults(
 
 const isExpanded = ref(props.initialValue);
 
+const baseHeight = ref(props.baseHeight);
+
+const countExpand = ref(0);
+const countExpanded = ref(0);
+const countCollapse = ref(0);
+const countCollapsed = ref(0);
+
 function handleCollapse() {
 	isExpanded.value = !isExpanded.value;
 }
 
-const toggleAttrs = computed(() => ({
-	'aria-expanded': isExpanded.value,
-	'aria-controls': 'my-collapse-id',
-}));
-
-const collapseAttrs = {
-	id: 'my-collapse-id',
-	role: 'region',
-};
-
-const countCollapsed = ref(0);
 function onCollapsed() {
 	countCollapsed.value++;
 }
 
-const countExpanded = ref(0);
 function onExpanded() {
 	countExpanded.value++;
 }
 
-const baseHeight = ref(props.baseHeight);
+function onExpand() {
+	countExpand.value++;
+}
+
+function onCollapse() {
+	countCollapse.value++;
+}
 
 function increaseBaseHeight() {
 	baseHeight.value += 10;
@@ -51,10 +52,14 @@ function decreaseBaseHeight() {
 
 <template>
 	<section class="Wrapper">
-		<div id="CountCollapsed">{{ countCollapsed }}</div>
+		<div id="CountExpand">{{ countExpand }}</div>
 		<div id="CountExpanded">{{ countExpanded }}</div>
+		<div id="CountCollapse">{{ countCollapse }}</div>
+		<div id="CountCollapsed">{{ countCollapsed }}</div>
+
 		<button @click="increaseBaseHeight" id="BaseHeightIncr">Increase BaseHeight</button>
 		<button @click="decreaseBaseHeight" id="BaseHeightDecr">Decrease BaseHeight</button>
+
 		<div class="Section">
 			<button
 				id="TriggerButton"
@@ -64,17 +69,18 @@ function decreaseBaseHeight() {
 						Active: isExpanded,
 					},
 				]"
-				v-bind="toggleAttrs"
 				@click="handleCollapse"
 			>
 				Hello buddy, how are you today?
 			</button>
 			<Collapse
-				v-bind="collapseAttrs"
+				id="Collapse"
+				class="Collapse"
 				:as="as"
 				:when="isExpanded"
-				class="Collapse"
+				:onExpand="onExpand"
 				:onExpanded="onExpanded"
+				:onCollapse="onCollapse"
 				:onCollapsed="onCollapsed"
 				:baseHeight="baseHeight"
 			>
