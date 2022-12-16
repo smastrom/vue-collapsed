@@ -1,9 +1,9 @@
-![npm](https://img.shields.io/npm/v/vue-collapsed?color=46c119) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/smastrom/vue-collapsed/Tests?label=tests) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/vue-collapsed?color=success)
+![npm](https://img.shields.io/npm/v/vue-collapsed?color=46c119) ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/smastrom/vue-collapsed/tests.yml?branch=main) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/vue-collapsed?color=success)
 ![dependency-count](https://img.shields.io/badge/dependency%20count-0-success)
 
 # Vue Collapsed
 
-Dynamic CSS height transition from _0 to auto_ and vice versa. Accordion ready.
+Dynamic CSS height transition from _any to auto_ and vice versa. Accordion ready.
 
 [Examples and Demo](https://vue-collapsed.netlify.com) - [Stackblitz](https://stackblitz.com/edit/vue-dmjqey?file=src/App.vue)
 
@@ -37,17 +37,26 @@ import { Collapse } from 'vue-collapsed'
 
 | name          | description                               | type                          | required           |
 | ------------- | ----------------------------------------- | ----------------------------- | ------------------ |
-| `when`        | Boolean value to control collapse         | boolean                       | :white_check_mark: |
-| `as`          | Element tag to use instead of `div`       | _keyof_ HTMLElementTagNameMap | :x:                |
+| `when`        | Value to control collapse                 | boolean                       | :white_check_mark: |
+| `baseHeight`  | Collapsed height in px, defaults to `0`.  | number                        | :x:                |
+| `as`          | Tag to use instead of `div`               | _keyof_ HTMLElementTagNameMap | :x:                |
+| `onExpand`    | Callback on expand transition start       | () => void                    | :x:                |
 | `onExpanded`  | Callback on expand transition completed   | () => void                    | :x:                |
+| `onCollapse`  | Callback on collapse transition start     | () => void                    | :x:                |
 | `onCollapsed` | Callback on collapse transition completed | () => void                    | :x:                |
 
 ## Usage
 
-All you need is to pass a reactive boolean to `when` and add a class with an `height` transition-property:
-
 ```vue
+<script setup>
+import { ref } from 'vue'
+import { Collapse } from 'vue-collapsed'
+
+const isExpanded = ref(false)
+</script>
+
 <template>
+  <button @click="isExpanded = !isExpanded">This a panel.</button>
   <Collapse :when="isExpanded" class="my-class">
     <p>This is a paragraph.</p>
   </Collapse>
@@ -62,7 +71,7 @@ All you need is to pass a reactive boolean to `when` and add a class with an `h
 
 ## Auto Duration
 
-Vue Collapsed automatically calculates the optimal duration according to the content height. You can use it by referencing the variable `--vc-auto-duration`:
+Vue Collapsed automatically calculates the optimal duration according to the content height. Use it by referencing the variable `--vc-auto-duration`:
 
 ```css
 .collapse {
@@ -70,34 +79,40 @@ Vue Collapsed automatically calculates the optimal duration according to the con
 }
 ```
 
-## Example - Single Element
+:bulb: Use [calc()](https://developer.mozilla.org/en-US/docs/Web/CSS/calc) to control the speed, _e.g. `calc(var(--vc-auto-duration) * 0.75)`_.
+
+## Additional transitions/styles
+
+To transition other properties or add granular styles use the attribute `data-collapse`:
+
+| Transition | From        | Enter        | Leave       |
+| ---------- | ----------- | ------------ | ----------- |
+| Expand     | `collapsed` | `expanding`  | `expanded`  |
+| Collapse   | `expanded`  | `collapsing` | `collapsed` |
+
+```css
+.collapse {
+  --dur-easing: var(--vc-auto-duration) cubic-bezier(0.3, 0, 0.6, 1);
+  transition: height var(--dur-easing), opacity var(--dur-easing);
+}
+
+.collapse[data-collapse='expanded'],
+.collapse[data-collapse='expanding'] {
+  opacity: 1;
+}
+
+.collapse[data-collapse='collapsed'],
+.collapse[data-collapse='collapsing'] {
+  opacity: 0;
+}
+```
+
+Above values can also be accessed using `v-slot`:
 
 ```vue
-<script setup>
-import { ref } from 'vue'
-import { Collapse } from 'vue-collapsed'
-
-const isExpanded = ref(false) // Initial value
-
-function handleCollapse() {
-  isExpanded.value = !isExpanded.value
-}
-</script>
-
-<template>
-  <div>
-    <button @click="handleCollapse">This a panel.</button>
-    <Collapse :when="isExpanded" class="collapse">
-      <p>This is a paragraph.</p>
-    </Collapse>
-  </div>
-</template>
-
-<style>
-.collapse {
-  transition: height var(--vc-auto-duration) cubic-bezier(0.3, 0, 0.6, 1);
-}
-</style>
+<Collapse :when="isExpanded" class="collapse" v-slot="{ state }">
+  {{ state === 'collapsing' ? 'Collapsing...' : null }}
+</Collapse>
 ```
 
 ## Example - Accordion
@@ -155,7 +170,7 @@ function handleAccordion(selectedIndex) {
 
 <style>
 .collapse {
-  transition: height 600ms cubic-bezier(0.3, 0, 0.6, 1);
+  transition: height var(--vc-auto-duration) cubic-bezier(0.3, 0, 0.6, 1);
 }
 </style>
 ```
@@ -168,17 +183,13 @@ function handleAccordion(selectedIndex) {
 
 const sectionsRef = ref([])
 
-function pushToRef(ref) {
-  sectionsRef.value.push(ref)
-}
-
 function scrollIntoView(index) {
   sectionsRef.value[index].scrollIntoView({ behavior: 'smooth' })
 }
 </script>
 
 <template>
-  <div v-for="(question, index) in questions" :key="question.title" :ref="pushToRef">
+  <div v-for="(question, index) in questions" :key="question.title" ref="sectionsRef">
     <button @click="() => handleAccordion(index)">
       {{ question.title }}
     </button>
@@ -196,7 +207,7 @@ function scrollIntoView(index) {
 
 <style>
 .collapse {
-  transition: height 600ms cubic-bezier(0.3, 0, 0.6, 1);
+  transition: height var(--vc-auto-duration) cubic-bezier(0.3, 0, 0.6, 1);
 }
 </style>
 ```
@@ -238,7 +249,7 @@ function handleCollapse() {
 
 <style>
 .collapse {
-  transition: height 600ms cubic-bezier(0.3, 0, 0.6, 1);
+  transition: height var(--vc-auto-duration) cubic-bezier(0.3, 0, 0.6, 1);
 }
 </style>
 ```

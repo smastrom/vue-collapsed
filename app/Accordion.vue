@@ -21,8 +21,8 @@ function handleAccordion(selectedIndex: number) {
 <!-- Check how to set accessibility attributes in IndividualControl.vue -->
 
 <template>
-	<section class="Wrapper">
-		<ExampleHeader title="Accordion" href="blob/main/app/Accordion.vue" hint="Using reactive()" />
+	<article class="Wrapper">
+		<ExampleHeader title="Accordion" href="Accordion.vue" hint="Using reactive()" />
 		<div v-for="(question, index) in questions" :key="question.title" class="Section">
 			<button
 				:class="[
@@ -35,13 +35,14 @@ function handleAccordion(selectedIndex: number) {
 			>
 				{{ question.title }}
 			</button>
+
 			<Collapse as="section" :when="question.isExpanded" class="Collapse">
 				<p>
 					{{ question.answer }}
 				</p>
 			</Collapse>
 		</div>
-	</section>
+	</article>
 </template>
 
 <!-- Check styles in App.vue -->
