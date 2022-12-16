@@ -67,7 +67,7 @@ export const Collapse = defineComponent({
 			{
 				ref: this.pushRef as VNodeRef,
 				style: this.style,
-				ontransitionend: this.onTransitionEnd,
+				onTransitionend: this.onTransitionEnd, // https://vuejs.org/guide/extras/render-function.html#v-on
 				'data-collapse': this.state,
 			},
 			this.$slots.default?.({ state: this.state })

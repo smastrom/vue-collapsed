@@ -45,7 +45,7 @@ function onCollapsed() {
 <!-- Check how to set accessibility attributes in IndividualControl.vue -->
 
 <template>
-	<section class="Wrapper">
+	<article class="Wrapper">
 		<ExampleHeader
 			title="With Callbacks"
 			href="WithCallbacks.vue"
@@ -81,7 +81,7 @@ function onCollapsed() {
 				</p>
 			</Collapse>
 		</div>
-	</section>
+	</article>
 </template>
 
 <!-- Check styles in App.vue -->

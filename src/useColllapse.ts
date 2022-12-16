@@ -50,17 +50,22 @@ export function useCollapse(
 
 	watch(
 		() => isExpanded.value,
-		(isExpanded) => {
+		(isExpanding) => {
 			requestAnimationFrame(() => {
-				if (isExpanded) {
+				if (isExpanding) {
 					/**
-					 * At this point CSS height is set to 'auto' and display to 'none'.
-					 * In order to get the scrollHeight to trigger the transition,
-					 * we get rid of display: none by replacing the styles.
+					 * When baseHeight > 0, this step doesn't do anythings pecial
+					 * as the height is already set and the element is visible.
 					 *
-					 * We set the height to baseHeight as it will be the property we will
-					 * transition from and also to avoid the element being visible for
-					 * the duration of this frame in case baseHeight equals to 0.
+					 * At this point if baseHeight === 0, CSS height equals to
+					 * 'auto' and display to 'none'.
+					 *
+					 * In order to get the scrollHeight to trigger the transition,
+					 * we must get rid of display: none by replacing the styles.
+					 *
+					 * We set the height to 0 (baseHeight) as this is the 'current' height
+					 * we are transition from. Overflow is hidden so users won't see any
+					 * layout difference for the duration of this frame.
 					 */
 					style.value = {
 						...fixedStyles,
@@ -69,7 +74,7 @@ export function useCollapse(
 					};
 					requestAnimationFrame(() => {
 						/**
-						 * Set the height to scrollHeight and trigger the transition.
+						 * Set height to scrollHeight and trigger the transition.
 						 */
 						style.value = {
 							...style.value,
@@ -81,8 +86,8 @@ export function useCollapse(
 				} else {
 					/**
 					 * At this point CSS height property is set to 'auto'.
-					 * Since the element is visible we get the scrollHeight
-					 * and set it as height.
+					 * Since the element is visible we get the current height
+					 * (scrollHeight) and set it as height.
 					 */
 					style.value = {
 						...style.value,
@@ -91,7 +96,7 @@ export function useCollapse(
 					};
 					requestAnimationFrame(() => {
 						/**
-						 * Set the height to baseHeight and trigger the transition.
+						 * Set height to baseHeight and trigger the transition.
 						 */
 						style.value = {
 							...style.value,
@@ -112,10 +117,11 @@ export function useCollapse(
 				style.value = {
 					...style.value,
 					/**
-					 * Disable transitions when baseHeight on collapsed changes, to give
-					 * a native responsive feel if resizing the window.
+					 * Disable transitions when baseHeight on collapsed state
+					 * changes, to give a native responsive feel if using
+					 * reactive baseHeight on window resize.
 					 *
-					 * Styles are going to be replaced when expanding again.
+					 * Below styles are going to be replaced on next expand.
 					 */
 					transitionDuration: '0s',
 					height: `${newbaseHeight}px`,
