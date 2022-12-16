@@ -1,12 +1,8 @@
 {
 	"extends": "@vue/tsconfig/tsconfig.web.json",
-	"include": ["env.d.ts", "src", "app"],
-	"exclude": ["src/__tests__"],
+	"include": ["env.d.ts", "cypress", "src", "app"],
 	"compilerOptions": {
 		"composite": true,
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["./src/*"]
-		}
+		"types": ["cypress"]
 	}
 }

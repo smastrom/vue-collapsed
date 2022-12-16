@@ -4,10 +4,11 @@ import { computed, ref } from 'vue';
 
 const props = withDefaults(
 	// eslint-disable-next-line no-undef
-	defineProps<{ initialValue: boolean; as: keyof HTMLElementTagNameMap }>(),
+	defineProps<{ initialValue: boolean; as: keyof HTMLElementTagNameMap; baseHeight: number }>(),
 	{
 		initialValue: false,
 		as: 'div',
+		baseHeight: 0,
 	}
 );
 
@@ -36,12 +37,24 @@ const countExpanded = ref(0);
 function onExpanded() {
 	countExpanded.value++;
 }
+
+const baseHeight = ref(props.baseHeight);
+
+function increaseBaseHeight() {
+	baseHeight.value += 10;
+}
+
+function decreaseBaseHeight() {
+	baseHeight.value -= 10;
+}
 </script>
 
 <template>
 	<section class="Wrapper">
 		<div id="CountCollapsed">{{ countCollapsed }}</div>
 		<div id="CountExpanded">{{ countExpanded }}</div>
+		<button @click="increaseBaseHeight" id="BaseHeightIncr">Increase BaseHeight</button>
+		<button @click="decreaseBaseHeight" id="BaseHeightDecr">Decrease BaseHeight</button>
 		<div class="Section">
 			<button
 				id="TriggerButton"
@@ -63,6 +76,7 @@ function onExpanded() {
 				class="Collapse"
 				:onExpanded="onExpanded"
 				:onCollapsed="onCollapsed"
+				:baseHeight="baseHeight"
 			>
 				<p>
 					As an interesting side note, as a head without a body, I envy the dead. Kids don't turn
