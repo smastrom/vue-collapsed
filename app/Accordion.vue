@@ -31,7 +31,7 @@ function handleAccordion(selectedIndex: number) {
 						Active: question.isExpanded,
 					},
 				]"
-				@click="() => handleAccordion(index)"
+				@click="handleAccordion(index)"
 			>
 				{{ question.title }}
 			</button>

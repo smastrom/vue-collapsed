@@ -157,7 +157,7 @@ function handleAccordion(selectedIndex) {
 
 <template>
   <div v-for="(question, index) in questions" :key="question.title">
-    <button @click="() => handleAccordion(index)">
+    <button @click="handleAccordion(index)">
       {{ question.title }}
     </button>
     <Collapse :when="questions[index].isExpanded" class="collapse">
@@ -190,7 +190,7 @@ function scrollIntoView(index) {
 
 <template>
   <div v-for="(question, index) in questions" :key="question.title" ref="sectionsRef">
-    <button @click="() => handleAccordion(index)">
+    <button @click="handleAccordion(index)">
       {{ question.title }}
     </button>
     <Collapse
@@ -254,6 +254,10 @@ function handleCollapse() {
 </style>
 ```
 
+## Credits
+
+[@roginfarrer](https://github.com/roginfarrer) — For the sweetest implementation of a 0 to auto height transition using _requestAnimationFrame_ I've ever seen and on which this package has been based.
+
 ## License
 
-MIT Licensed. (c) Simone Mastromattei 2022.
+MIT
