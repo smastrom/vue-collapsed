@@ -17,6 +17,7 @@ export default defineConfig(({ mode }) => {
 				entry: 'src/Collapse.ts',
 				name: 'VueCollapsed',
 				fileName: 'index',
+				formats: ['es', 'cjs'],
 			},
 			rollupOptions: {
 				external: ['vue'],

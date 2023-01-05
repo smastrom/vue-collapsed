@@ -125,7 +125,7 @@ function decreaseBaseHeight() {
 }
 
 .Collapse {
-	transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1);
+	transition: height 300ms cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .Collapse p {

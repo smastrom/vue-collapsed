@@ -1,6 +1,14 @@
-import { computed, defineComponent, ref, h, watch, toRef, type PropType, type VNodeRef } from 'vue';
-// Workaround for ts(2742) on { import type CSSProperties from 'vue' }
-import type { Properties as CSS } from 'csstype';
+import {
+	computed,
+	defineComponent,
+	ref,
+	h,
+	watch,
+	toRef,
+	type PropType,
+	type VNodeRef,
+	type CSSProperties as CSS,
+} from 'vue';
 
 const callback = {
 	type: Function as PropType<() => void>,
@@ -19,12 +27,12 @@ export const Collapse = defineComponent({
 	props: {
 		/** Boolean value to control collapse. */
 		when: {
-			type: Boolean as PropType<boolean>,
+			type: Boolean,
 			required: true,
 		},
 		/** Collapsed state height in px, defaults to `0`. */
 		baseHeight: {
-			type: Number as PropType<number>,
+			type: Number,
 			required: false,
 			default: 0,
 		},
@@ -43,7 +51,7 @@ export const Collapse = defineComponent({
 		/** Callback on collapse transition completed. */
 		onCollapsed: callback,
 	},
-	setup(props) {
+	setup(props, { slots }) {
 		const isExpanded = toRef(props, 'when');
 		const baseHeight = toRef(props, 'baseHeight');
 
@@ -141,7 +149,8 @@ export const Collapse = defineComponent({
 			}
 		});
 
-		function onTransitionEnd(event: TransitionEvent) {
+		// "e" of "end" must be lowercase - https://vuejs.org/guide/extras/render-function.html#v-on
+		function onTransitionend(event: TransitionEvent) {
 			if (event.target === collapseRef.value && event.propertyName === 'height') {
 				/**
 				 * Reset styles to the initial ref state,
@@ -167,30 +176,17 @@ export const Collapse = defineComponent({
 			}
 		}
 
-		function pushRef(ref: VNodeRef | null) {
-			collapseRef.value = ref;
-		}
-
-		return {
-			pushRef,
-			collapseRef,
-			style,
-			onTransitionEnd,
-			state,
-		};
-	},
-
-	render() {
-		return h(
-			this.$props.as,
-			{
-				ref: this.pushRef as VNodeRef,
-				style: this.style,
-				onTransitionend: this.onTransitionEnd, // https://vuejs.org/guide/extras/render-function.html#v-on
-				'data-collapse': this.state,
-			},
-			this.$slots.default?.({ state: this.state })
-		);
+		return () =>
+			h(
+				props.as,
+				{
+					ref: (ref) => (collapseRef.value = ref),
+					style: style.value,
+					onTransitionend,
+					'data-collapse': state.value,
+				},
+				slots.default?.({ state: state.value })
+			);
 	},
 });
 
