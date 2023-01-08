@@ -71,7 +71,7 @@ function onCollapsed() {
 			<Collapse
 				as="section"
 				:when="question.isExpanded"
-				class="Collapse"
+				class="v-collapse"
 				:onExpanded="() => onExpanded(index)"
 				:onCollapse="onCollapse"
 				:onCollapsed="onCollapsed"

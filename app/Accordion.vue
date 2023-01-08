@@ -36,7 +36,7 @@ function handleAccordion(selectedIndex: number) {
 				{{ question.title }}
 			</button>
 
-			<Collapse as="section" :when="question.isExpanded" class="Collapse">
+			<Collapse as="section" :when="question.isExpanded" class="v-collapse">
 				<p>
 					{{ question.answer }}
 				</p>

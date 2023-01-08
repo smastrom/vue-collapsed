@@ -194,11 +194,11 @@ footer {
 	cursor: pointer;
 }
 
-.Collapse {
+.v-collapse {
 	transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-.Collapse p {
+.v-collapse p {
 	padding: 0 10px 10px;
 	margin: 0;
 	color: var(--ForegroundColorLight);
@@ -226,7 +226,7 @@ footer {
 		padding: 20px 10px;
 	}
 
-	.Collapse p {
+	.v-collapse p {
 		padding: 0 20px 20px;
 		margin: 0;
 		color: var(--ForegroundColorLight);

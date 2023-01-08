@@ -75,7 +75,7 @@ function decreaseBaseHeight() {
 			</button>
 			<Collapse
 				id="Collapse"
-				class="Collapse"
+				class="v-collapse"
 				:as="as"
 				:when="isExpanded"
 				:onExpand="onExpand"
@@ -124,11 +124,11 @@ function decreaseBaseHeight() {
 	cursor: pointer;
 }
 
-.Collapse {
+.v-collapse {
 	transition: height 300ms cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-.Collapse p {
+.v-collapse p {
 	padding: 0 10px 10px;
 	margin: 0;
 	color: var(--ForegroundColorLight);

@@ -57,13 +57,13 @@ const isExpanded = ref(false)
 
 <template>
   <button @click="isExpanded = !isExpanded">This a panel.</button>
-  <Collapse :when="isExpanded" class="my-class">
+  <Collapse :when="isExpanded" class="v-collapse">
     <p>This is a paragraph.</p>
   </Collapse>
 </template>
 
 <style>
-.my-class {
+.v-collapse {
   transition: height 300ms cubic-bezier(0.33, 1, 0.68, 1);
 }
 </style>
@@ -74,14 +74,14 @@ const isExpanded = ref(false)
 Vue Collapsed automatically calculates the optimal duration according to the content height. Use it by referencing the variable `--vc-auto-duration`:
 
 ```css
-.collapse {
+.v-collapse {
   transition: height var(--vc-auto-duration) ease-out;
 }
 ```
 
 :bulb: Use [calc()](https://developer.mozilla.org/en-US/docs/Web/CSS/calc) to control the speed, _e.g. `calc(var(--vc-auto-duration) * 0.75)`_.
 
-:bulb: You can find a full list of easings at [easings.net](https://easings.net).
+:bulb: Find a full list of easings at [easings.net](https://easings.net).
 
 ## Additional transitions/styles
 
@@ -93,18 +93,18 @@ To transition other properties or add granular styles use the attribute `data-co
 | Collapse   | `expanded`  | `collapsing` | `collapsed` |
 
 ```css
-.collapse {
+.v-collapse {
   --dur-easing: var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
   transition: height var(--dur-easing), opacity var(--dur-easing);
 }
 
-.collapse[data-collapse='expanded'],
-.collapse[data-collapse='expanding'] {
+.v-collapse[data-collapse='expanded'],
+.v-collapse[data-collapse='expanding'] {
   opacity: 1;
 }
 
-.collapse[data-collapse='collapsed'],
-.collapse[data-collapse='collapsing'] {
+.v-collapse[data-collapse='collapsed'],
+.v-collapse[data-collapse='collapsing'] {
   opacity: 0;
 }
 ```
@@ -112,7 +112,7 @@ To transition other properties or add granular styles use the attribute `data-co
 Above values can also be accessed using `v-slot`:
 
 ```vue
-<Collapse :when="isExpanded" class="collapse" v-slot="{ state }">
+<Collapse :when="isExpanded" class="v-collapse" v-slot="{ state }">
   {{ state === 'collapsing' ? 'Collapsing...' : null }}
 </Collapse>
 ```
@@ -162,7 +162,7 @@ function handleAccordion(selectedIndex) {
     <button @click="handleAccordion(index)">
       {{ question.title }}
     </button>
-    <Collapse :when="questions[index].isExpanded" class="collapse">
+    <Collapse :when="questions[index].isExpanded" class="v-collapse">
       <p>
         {{ question.answer }}
       </p>
@@ -171,7 +171,7 @@ function handleAccordion(selectedIndex) {
 </template>
 
 <style>
-.collapse {
+.v-collapse {
   transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
 }
 </style>
@@ -198,7 +198,7 @@ function scrollIntoView(index) {
     <Collapse
       :when="questions[index].isExpanded"
       :onExpanded="() => scrollIntoView(index)"
-      class="collapse"
+      class="v-collapse"
     >
       <p>
         {{ question.answer }}
@@ -208,7 +208,7 @@ function scrollIntoView(index) {
 </template>
 
 <style>
-.collapse {
+.v-collapse {
   transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
 }
 </style>
@@ -243,14 +243,14 @@ function handleCollapse() {
 <template>
   <div>
     <button v-bind="toggleAttrs" @click="handleCollapse">This a panel.</button>
-    <Collapse v-bind="collapseAttrs" :when="isExpanded" class="collapse">
+    <Collapse v-bind="collapseAttrs" :when="isExpanded" class="v-collapse">
       <p>This is a paragraph.</p>
     </Collapse>
   </div>
 </template>
 
 <style>
-.collapse {
+.v-collapse {
   transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
 }
 </style>

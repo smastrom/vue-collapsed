@@ -58,7 +58,7 @@ const collapseAttrs = computed(() =>
 			>
 				{{ question.title }}
 			</button>
-			<Collapse :when="question.isExpanded" class="Collapse" v-bind="collapseAttrs[index]">
+			<Collapse :when="question.isExpanded" class="v-collapse" v-bind="collapseAttrs[index]">
 				<p>
 					{{ question.answer }}
 				</p>
