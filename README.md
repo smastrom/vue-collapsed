@@ -64,7 +64,7 @@ const isExpanded = ref(false)
 
 <style>
 .my-class {
-  transition: height 300ms cubic-bezier(0.3, 0, 0.6, 1);
+  transition: height 300ms cubic-bezier(0.33, 1, 0.68, 1);
 }
 </style>
 ```
@@ -81,6 +81,8 @@ Vue Collapsed automatically calculates the optimal duration according to the con
 
 :bulb: Use [calc()](https://developer.mozilla.org/en-US/docs/Web/CSS/calc) to control the speed, _e.g. `calc(var(--vc-auto-duration) * 0.75)`_.
 
+:bulb: You can find a full list of easings at [easings.net](https://easings.net).
+
 ## Additional transitions/styles
 
 To transition other properties or add granular styles use the attribute `data-collapse`:
@@ -92,7 +94,7 @@ To transition other properties or add granular styles use the attribute `data-co
 
 ```css
 .collapse {
-  --dur-easing: var(--vc-auto-duration) cubic-bezier(0.3, 0, 0.6, 1);
+  --dur-easing: var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
   transition: height var(--dur-easing), opacity var(--dur-easing);
 }
 
@@ -157,7 +159,7 @@ function handleAccordion(selectedIndex) {
 
 <template>
   <div v-for="(question, index) in questions" :key="question.title">
-    <button @click="() => handleAccordion(index)">
+    <button @click="handleAccordion(index)">
       {{ question.title }}
     </button>
     <Collapse :when="questions[index].isExpanded" class="collapse">
@@ -170,7 +172,7 @@ function handleAccordion(selectedIndex) {
 
 <style>
 .collapse {
-  transition: height var(--vc-auto-duration) cubic-bezier(0.3, 0, 0.6, 1);
+  transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
 }
 </style>
 ```
@@ -190,7 +192,7 @@ function scrollIntoView(index) {
 
 <template>
   <div v-for="(question, index) in questions" :key="question.title" ref="sectionsRef">
-    <button @click="() => handleAccordion(index)">
+    <button @click="handleAccordion(index)">
       {{ question.title }}
     </button>
     <Collapse
@@ -207,7 +209,7 @@ function scrollIntoView(index) {
 
 <style>
 .collapse {
-  transition: height var(--vc-auto-duration) cubic-bezier(0.3, 0, 0.6, 1);
+  transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
 }
 </style>
 ```
@@ -249,11 +251,15 @@ function handleCollapse() {
 
 <style>
 .collapse {
-  transition: height var(--vc-auto-duration) cubic-bezier(0.3, 0, 0.6, 1);
+  transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
 }
 </style>
 ```
 
+## Credits
+
+[@roginfarrer](https://github.com/roginfarrer) — For the sweetest implementation of a 0 to auto height transition using _requestAnimationFrame_ I've ever seen.
+
 ## License
 
-MIT Licensed. (c) Simone Mastromattei 2022.
+MIT

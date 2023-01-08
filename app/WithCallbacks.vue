@@ -64,7 +64,7 @@ function onCollapsed() {
 						Active: question.isExpanded,
 					},
 				]"
-				@click="() => handleAccordion(index)"
+				@click="handleAccordion(index)"
 			>
 				{{ question.title }}
 			</button>
