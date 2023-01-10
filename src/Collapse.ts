@@ -24,6 +24,7 @@ const perfStyles: CSS = { willChange: 'height' };
 export const Collapse = defineComponent({
 	name: 'Collapse',
 	inheritAttrs: true,
+	emits: ['expand', 'expanded', 'collapse', 'collapsed'],
 	props: {
 		/** Boolean value to control collapse. */
 		when: {
@@ -105,6 +106,7 @@ export const Collapse = defineComponent({
 						};
 						state.value = 'expanding';
 						props.onExpand();
+						this.$emit('expand');
 					});
 				} else {
 					/**
@@ -127,6 +129,7 @@ export const Collapse = defineComponent({
 						};
 						state.value = 'collapsing';
 						props.onCollapse();
+						this.$emit('collapse');
 					});
 				}
 			});
@@ -165,12 +168,14 @@ export const Collapse = defineComponent({
 						style.value = fixedStyles;
 						state.value = 'expanded';
 						props.onExpanded();
+						this.$emit('expanded');
 					}
 				} else {
 					if (collapseRef.value?.style.height === `${baseHeight.value}px`) {
 						style.value = collapseStyles.value.collapsed;
 						state.value = 'collapsed';
 						props.onCollapsed();
+						this.$emit('collapsed');
 					}
 				}
 			}
