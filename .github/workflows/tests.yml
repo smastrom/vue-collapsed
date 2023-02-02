@@ -26,9 +26,3 @@ jobs:
           install: false
           component: true
           browser: webkit
-      - name: Cypress Firefox
-        uses: cypress-io/github-action@v5
-        with:
-          install: false
-          component: true
-          browser: firefox
