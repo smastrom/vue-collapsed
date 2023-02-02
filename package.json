@@ -35,9 +35,11 @@
 		"build": "rimraf dist && vite build",
 		"build:app": "vite build --mode app",
 		"dev": "vite",
-		"lint": "eslint . --ext .vue,.js,.ts, --fix --ignore-path .gitignore",
 		"prepare": "husky install",
-		"test": "cypress run --component",
+		"test:chrome": "cypress run --component --browser chrome",
+		"test:firefox": "cypress run --component --browser firefox",
+		"test:webkit": "cypress run --component --browser webkit",
+		"test": "test:chrome && test:firefox && test:webkit",
 		"test:gui": "cypress open --component"
 	},
 	"lint-staged": {
