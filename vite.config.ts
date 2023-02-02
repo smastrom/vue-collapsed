@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
 		build: {
 			minify: 'terser',
 			lib: {
-				entry: 'src/Collapse.ts',
+				entry: 'src/index.ts',
 				name: 'VueCollapsed',
 				fileName: 'index',
 				formats: ['es', 'cjs'],
@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => {
 		plugins: [
 			vue(),
 			dts({
-				include: ['src/Collapse.ts'],
+				include: ['src/index.ts'],
 				beforeWriteFile: (_, content) => ({
 					filePath: path.resolve(__dirname, 'dist', 'index.d.ts'),
 					content,

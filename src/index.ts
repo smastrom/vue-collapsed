@@ -87,8 +87,7 @@ export const Collapse = defineComponent({
 					 * we must get rid of display: none by replacing the styles.
 					 *
 					 * We set the height to 0 (baseHeight) as it is the 'current' height
-					 * we are transition from. Overflow is hidden so users won't see any
-					 * layout difference for the duration of this frame.
+					 * we are transition from.
 					 */
 					style.value = {
 						...fixedStyles,

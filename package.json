@@ -1,15 +1,15 @@
 {
 	"name": "vue-collapsed",
-	"version": "1.1.1",
+	"version": "1.1.2",
+	"private": false,
 	"description": "Dynamic CSS height transition from any to auto and vice versa for Vue 3. Accordion ready.",
 	"keywords": [
-		"vue collapse",
+		"vue",
+		"vue-3",
 		"vue-collapse",
-		"vue accordion",
 		"vue-accordion",
 		"collapse",
 		"accordion",
-		"vue component",
 		"vue-component"
 	],
 	"homepage": "https://vue-collapsed.netlify.app/",
@@ -32,47 +32,39 @@
 		"dist/*"
 	],
 	"scripts": {
-		"dev": "vite",
-		"build": "rimraf dist && run-p type-check build-only",
+		"build": "rimraf dist && vite build",
 		"build:app": "vite build --mode app",
-		"preview": "vite preview",
-		"test": "cypress run --component",
-		"test:dev": "cypress open --component",
-		"build-only": "vite build",
-		"type-check": "vue-tsc --noEmit -p tsconfig.cypress-ct.json --composite false",
+		"dev": "vite",
 		"lint": "eslint . --ext .vue,.js,.ts, --fix --ignore-path .gitignore",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"test": "cypress run --component",
+		"test:gui": "cypress open --component"
 	},
 	"lint-staged": {
-		"*.{vue,ts,js,cjs,json}": "prettier --write"
+		"*.{ts,vue}": "eslint --cache --fix",
+		"*.{ts,vue,md}": "prettier --write"
 	},
 	"devDependencies": {
 		"@babel/types": "^7.20.7",
-		"@rollup/plugin-terser": "^0.2.1",
+		"@rollup/plugin-terser": "^0.4.0",
 		"@types/node": "^18.11.18",
-		"@typescript-eslint/eslint-plugin": "^5.48.0",
-		"@typescript-eslint/parser": "^5.48.0",
+		"@typescript-eslint/eslint-plugin": "^5.50.0",
+		"@typescript-eslint/parser": "^5.50.0",
 		"@vitejs/plugin-vue": "^4.0.0",
-		"@vue/eslint-config-prettier": "^7.0.0",
-		"@vue/eslint-config-typescript": "^11.0.2",
 		"@vue/tsconfig": "^0.1.3",
-		"csstype": "^3.1.1",
-		"cypress": "^12.3.0",
-		"eslint": "^8.31.0",
+		"cypress": "^12.5.0",
+		"eslint": "^8.33.0",
 		"eslint-plugin-cypress": "^2.12.1",
-		"eslint-plugin-vue": "^9.8.0",
+		"eslint-plugin-vue": "^9.9.0",
 		"husky": "^8.0.3",
 		"lint-staged": "^13.1.0",
-		"npm-run-all": "^4.1.5",
-		"prettier": "^2.8.1",
-		"rimraf": "^3.0.2",
-		"typescript": "^4.9.4",
-		"vite": "^4.0.4",
-		"vite-plugin-dts": "^1.7.1",
-		"vue": "^3.2.45",
-		"vue-tsc": "^1.0.22"
-	},
-	"peerDependencies": {
-		"vue": ">=3.0.0"
+		"playwright-webkit": "^1.30.0",
+		"prettier": "^2.8.3",
+		"rimraf": "^4.1.2",
+		"typescript": "^4.9.5",
+		"vite": "^4.1.0",
+		"vite-plugin-dts": "^1.7.2",
+		"vue": "^3.2.47",
+		"vue-tsc": "^1.0.24"
 	}
 }

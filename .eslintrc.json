@@ -22,8 +22,17 @@
 	},
 	"plugins": ["vue", "@typescript-eslint"],
 	"rules": {
+		"curly": ["error", "all"],
+		"no-useless-return": "error",
+		"no-else-return": "error",
+		"nonblock-statement-body-position": ["error", "below"],
 		"vue/multi-word-component-names": "off",
-		"no-empty-function": "off",
-		"@typescript-eslint/no-empty-function": "off"
+		"@typescript-eslint/no-empty-function": "off",
+		"@typescript-eslint/ban-ts-comment": [
+			"error",
+			{
+				"ts-ignore": "allow-with-description"
+			}
+		]
 	}
 }

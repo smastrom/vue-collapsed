@@ -1,8 +1,7 @@
-
 name: Tests
 
-on: [push]
-    
+on: [push, pull_request]
+
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
@@ -13,8 +12,23 @@ jobs:
           node-version: '14.x'
       - name: Install dependencies
         run: yarn
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
+      - name: Install Linux Webkit deps
+        run: npx playwright install-deps webkit
+      - name: Cypress Chrome
+        uses: cypress-io/github-action@v5
         with:
           install: false
           component: true
+          browser: chrome
+      - name: Cypress Firefox
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          component: true
+          browser: firefox
+      - name: Cypress Webkit
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          component: true
+          browser: webkit
