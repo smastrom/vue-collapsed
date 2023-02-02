@@ -84,10 +84,24 @@ it('Should update data-collapse attribute properly', () => {
 	for (let i = 0; i < randomIter; i++) {
 		cy.get('#TriggerButton').click();
 		cy.get('#Collapse').should('have.attr', 'data-collapse', 'expanding');
+
+		cy.waitFrames({
+			subject: () => cy.get('#Collapse'),
+			property: 'clientHeight',
+			frames: 10,
+		});
+
 		cy.get('#Collapse').should('have.attr', 'data-collapse', 'expanded');
 
 		cy.get('#TriggerButton').click();
 		cy.get('#Collapse').should('have.attr', 'data-collapse', 'collapsing');
+
+		cy.waitFrames({
+			subject: () => cy.get('#Collapse'),
+			property: 'clientHeight',
+			frames: 10,
+		});
+
 		cy.get('#Collapse').should('have.attr', 'data-collapse', 'collapsed');
 	}
 });
@@ -98,7 +112,7 @@ describe('Should execute callbacks properly', () => {
 
 		const repeatEven = getRandomIntInclusive(10, 20) * 2;
 		for (let i = 0; i < repeatEven; i++) {
-			cy.get('#TriggerButton').click();
+			cy.get('#TriggerButton').click().wait(50);
 		}
 
 		cy.get('#CountExpand').should('have.text', `${repeatEven / 2}`);
@@ -116,7 +130,7 @@ describe('Should execute callbacks properly', () => {
 
 		const repeatEven = getRandomIntInclusive(10, 20) * 2;
 		for (let i = 0; i < repeatEven; i++) {
-			cy.get('#TriggerButton').click();
+			cy.get('#TriggerButton').click().wait(50);
 		}
 
 		cy.get('#CountExpand').should('have.text', `${repeatEven / 2}`);
