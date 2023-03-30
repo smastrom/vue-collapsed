@@ -1,5 +1,5 @@
 import App from './App.vue';
-import { getRandomIntInclusive } from '../../cypress/support/component';
+import { getRandomIntInclusive } from '../cypress/support/component';
 
 it('Should be able to set different tag name', () => {
 	cy.mount(App, {
@@ -48,23 +48,31 @@ it('Should have correct styles if expanded on mount', () => {
 
 it('Should change height if resizing on expanded', () => {
 	cy.mount(App).viewport('macbook-13');
-
 	cy.get('#TriggerButton').click();
-	cy.wait(300);
 
-	for (let i = 0; i < 20; i++) {
-		cy.get('#Collapse')
-			.invoke('height')
-			.then((desktopHeight) => {
-				cy.viewport('iphone-x');
-				cy.wait(300);
-				cy.get('#Collapse').invoke('height').should('be.greaterThan', desktopHeight);
-			})
-			.then((mobileHeight) => {
-				cy.viewport('macbook-13');
-				cy.wait(300);
-				cy.get('#Collapse').invoke('height').should('be.lessThan', mobileHeight);
-			});
+	for (let i = 0; i < 10; i++) {
+		cy.waitFrames({
+			subject: () => cy.get('#Collapse'),
+			property: 'clientHeight',
+			frames: 30,
+		});
+
+		cy.get('#Collapse').invoke('height').as('desktopHeight');
+
+		cy.get('@desktopHeight').then((desktopHeight) => {
+			cy.viewport('iphone-x');
+
+			cy.get('#Collapse')
+				.invoke('height')
+				.should('be.greaterThan', desktopHeight)
+				.as('mobileHeight');
+		});
+
+		cy.get('@mobileHeight').then((mobileHeight) => {
+			cy.viewport('macbook-13');
+
+			cy.get('#Collapse').invoke('height').should('be.lessThan', mobileHeight);
+		});
 	}
 });
 
@@ -76,11 +84,24 @@ it('Should update data-collapse attribute properly', () => {
 	for (let i = 0; i < randomIter; i++) {
 		cy.get('#TriggerButton').click();
 		cy.get('#Collapse').should('have.attr', 'data-collapse', 'expanding');
-		cy.wait(500);
+
+		cy.waitFrames({
+			subject: () => cy.get('#Collapse'),
+			property: 'clientHeight',
+			frames: 10,
+		});
+
 		cy.get('#Collapse').should('have.attr', 'data-collapse', 'expanded');
+
 		cy.get('#TriggerButton').click();
 		cy.get('#Collapse').should('have.attr', 'data-collapse', 'collapsing');
-		cy.wait(500);
+
+		cy.waitFrames({
+			subject: () => cy.get('#Collapse'),
+			property: 'clientHeight',
+			frames: 10,
+		});
+
 		cy.get('#Collapse').should('have.attr', 'data-collapse', 'collapsed');
 	}
 });
@@ -91,8 +112,7 @@ describe('Should execute callbacks properly', () => {
 
 		const repeatEven = getRandomIntInclusive(10, 20) * 2;
 		for (let i = 0; i < repeatEven; i++) {
-			cy.get('#TriggerButton').click();
-			cy.wait(50);
+			cy.get('#TriggerButton').click().wait(50);
 		}
 
 		cy.get('#CountExpand').should('have.text', `${repeatEven / 2}`);
@@ -110,8 +130,7 @@ describe('Should execute callbacks properly', () => {
 
 		const repeatEven = getRandomIntInclusive(10, 20) * 2;
 		for (let i = 0; i < repeatEven; i++) {
-			cy.get('#TriggerButton').click();
-			cy.wait(50);
+			cy.get('#TriggerButton').click().wait(50);
 		}
 
 		cy.get('#CountExpand').should('have.text', `${repeatEven / 2}`);
@@ -159,34 +178,43 @@ describe('With baseHeight > 0', () => {
 		});
 
 		cy.get('#TriggerButton').click();
-		cy.wait(300);
-
 		cy.get('#Collapse').should('have.css', 'height', '100px').and('have.css', 'overflow', 'hidden');
 	});
 
-	it('Should change height if expanded', () => {
+	it('Should change height if resizing on expanded', () => {
 		cy.mount(App, {
 			props: {
 				initialValue: false,
 				baseHeight: 100,
 			},
-		});
+		}).viewport('macbook-13');
 
 		cy.get('#TriggerButton').click();
-		cy.wait(300);
 
-		cy.get('#Collapse')
-			.invoke('height')
-			.then((desktopHeight) => {
+		cy.waitFrames({
+			subject: () => cy.get('#Collapse'),
+			property: 'clientHeight',
+			frames: 30,
+		});
+
+		for (let i = 0; i < 10; i++) {
+			cy.get('#Collapse').invoke('height').as('desktopHeight');
+
+			cy.get('@desktopHeight').then((desktopHeight) => {
 				cy.viewport('iphone-x');
-				cy.wait(300);
-				cy.get('#Collapse').invoke('height').should('be.greaterThan', desktopHeight);
-			})
-			.then((mobileHeight) => {
+
+				cy.get('#Collapse')
+					.invoke('height')
+					.should('be.greaterThan', desktopHeight)
+					.as('mobileHeight');
+			});
+
+			cy.get('@mobileHeight').then((mobileHeight) => {
 				cy.viewport('macbook-13');
-				cy.wait(300);
+
 				cy.get('#Collapse').invoke('height').should('be.lessThan', mobileHeight);
 			});
+		}
 	});
 
 	it('Should update collapsed height if editing value', () => {

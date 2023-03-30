@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Collapse } from '../Collapse';
+import { Collapse } from '../src';
 import { ref } from 'vue';
 
 const props = withDefaults(
@@ -75,7 +75,7 @@ function decreaseBaseHeight() {
 			</button>
 			<Collapse
 				id="Collapse"
-				class="Collapse"
+				class="v-collapse"
 				:as="as"
 				:when="isExpanded"
 				:onExpand="onExpand"
@@ -93,7 +93,15 @@ function decreaseBaseHeight() {
 					Kids don't turn rotten just from watching TV. Bender, I didn't know you liked cooking.
 					That's so cute. That's right, baby. I ain't your loverboy Flexo, the guy you love so much.
 					You even love anyone pretending to be him! I'll tell them you went down prying the wedding
-					ring off his cold, dead finger.
+					ring off his cold, dead finger. As an interesting side note, as a head without a body, I
+					envy the dead. Kids don't turn rotten just from watching TV. Bender, I didn't know you
+					liked cooking. That's so cute. That's right, baby. I ain't your loverboy Flexo, the guy
+					you love so much. You even love anyone pretending to be him! I'll tell them you went down
+					prying the wedding ring off his cold, dead finger. As an interesting side note, as a head
+					without a body, I envy the dead. Kids don't turn rotten just from watching TV. Bender, I
+					didn't know you liked cooking. That's so cute. That's right, baby. I ain't your loverboy
+					Flexo, the guy you love so much. You even love anyone pretending to be him! I'll tell them
+					you went down prying the wedding ring off his cold, dead finger.
 				</p>
 			</Collapse>
 		</div>
@@ -124,11 +132,11 @@ function decreaseBaseHeight() {
 	cursor: pointer;
 }
 
-.Collapse {
-	transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1);
+.v-collapse {
+	transition: height 300ms cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-.Collapse p {
+.v-collapse p {
 	padding: 0 10px 10px;
 	margin: 0;
 	color: var(--ForegroundColorLight);

@@ -31,12 +31,12 @@ function handleAccordion(selectedIndex: number) {
 						Active: question.isExpanded,
 					},
 				]"
-				@click="() => handleAccordion(index)"
+				@click="handleAccordion(index)"
 			>
 				{{ question.title }}
 			</button>
 
-			<Collapse as="section" :when="question.isExpanded" class="Collapse">
+			<Collapse as="section" :when="question.isExpanded" class="v-collapse">
 				<p>
 					{{ question.answer }}
 				</p>

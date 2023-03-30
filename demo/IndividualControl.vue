@@ -48,7 +48,7 @@ const collapseAttrs = computed(() =>
 		<div v-for="(question, index) in questions" :key="question.title" class="Section">
 			<button
 				v-bind="toggleAttrs[index]"
-				@click="() => handleIndividual(index)"
+				@click="handleIndividual(index)"
 				:class="[
 					'Panel',
 					{
@@ -58,7 +58,7 @@ const collapseAttrs = computed(() =>
 			>
 				{{ question.title }}
 			</button>
-			<Collapse :when="question.isExpanded" class="Collapse" v-bind="collapseAttrs[index]">
+			<Collapse :when="question.isExpanded" class="v-collapse" v-bind="collapseAttrs[index]">
 				<p>
 					{{ question.answer }}
 				</p>

@@ -33,7 +33,7 @@ function capitalize(string: string) {
 
 <style>
 .AdvancedCollapse {
-	--easing-dur: calc(var(--vc-auto-duration) * 1.5) cubic-bezier(0.3, 0, 0.6, 1);
+	--easing-dur: calc(var(--vc-auto-duration) * 1.5) cubic-bezier(0.33, 1, 0.68, 1);
 	transition: height var(--easing-dur), background-color var(--easing-dur),
 		border-radius var(--easing-dur);
 }

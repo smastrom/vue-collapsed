@@ -2,7 +2,8 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
 	component: {
-		specPattern: 'src/__tests__/*.{cy,spec}.{js,ts,jsx,tsx}',
+		video: false,
+		experimentalWebKitSupport: true,
 		devServer: {
 			framework: 'vue',
 			bundler: 'vite',

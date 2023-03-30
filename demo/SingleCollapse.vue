@@ -43,7 +43,7 @@ const collapseAttrs = {
 			>
 				Hello buddy, how are you today?
 			</button>
-			<Collapse v-bind="collapseAttrs" :when="isExpanded" class="Collapse">
+			<Collapse v-bind="collapseAttrs" :when="isExpanded" class="v-collapse">
 				<p>
 					As an interesting side note, as a head without a body, I envy the dead. Kids don't turn
 					rotten just from watching TV. Bender, I didn't know you liked cooking. That's so cute.
