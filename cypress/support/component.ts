@@ -1,5 +1,7 @@
 import { mount } from 'cypress/vue';
 
+import 'cypress-wait-frames';
+
 declare global {
 	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace Cypress {

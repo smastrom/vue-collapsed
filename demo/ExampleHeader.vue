@@ -25,7 +25,7 @@ defineProps<{ title: string; href: string; hint?: string }>();
 			</p>
 		</div>
 		<a
-			:href="`https://github.com/smastrom/vue-collapsed/blob/main/app/${href}`"
+			:href="`https://github.com/smastrom/vue-collapsed/blob/main/demo/${href}`"
 			class="CodeLink"
 			target="_blank"
 			>View Code</a

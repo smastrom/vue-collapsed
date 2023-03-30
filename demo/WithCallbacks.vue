@@ -64,14 +64,14 @@ function onCollapsed() {
 						Active: question.isExpanded,
 					},
 				]"
-				@click="() => handleAccordion(index)"
+				@click="handleAccordion(index)"
 			>
 				{{ question.title }}
 			</button>
 			<Collapse
 				as="section"
 				:when="question.isExpanded"
-				class="Collapse"
+				class="v-collapse"
 				:onExpanded="() => onExpanded(index)"
 				:onCollapse="onCollapse"
 				:onCollapsed="onCollapsed"
