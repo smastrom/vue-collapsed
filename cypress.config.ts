@@ -1,12 +1,12 @@
-import { defineConfig } from 'cypress';
+import { defineConfig } from 'cypress'
 
 export default defineConfig({
-	component: {
-		video: false,
-		experimentalWebKitSupport: true,
-		devServer: {
-			framework: 'vue',
-			bundler: 'vite',
-		},
-	},
-});
+   component: {
+      video: false,
+      experimentalWebKitSupport: true,
+      devServer: {
+         framework: 'vue',
+         bundler: 'vite',
+      },
+   },
+})
