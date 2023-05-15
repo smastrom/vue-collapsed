@@ -7,30 +7,28 @@ Dynamic CSS height transition from _any to auto_ and vice versa. Accordion ready
 
 [Examples and Demo](https://vue-collapsed.netlify.com) - [Stackblitz](https://stackblitz.com/edit/vue-dmjqey?file=src/App.vue)
 
-:bulb: Requires Vue v3.0.0 or above.
+> :bulb: Requires Vue v3.0.0 or above.
 
 <br />
 
-## Get Started
+Check out my other packages for Vue 3:
+
+> 🔔 **Notivue**  
+> _Fully-featured notification system for Vue 3._  
+> [Visit repo ➔ ](https://github.com/smastrom/notivue)
+
+> 👌 **Vue Use Active Scroll**  
+> _Accurate TOC/sidebar links without compromises._  
+> [Visit repo ➔ ](https://github.com/smastrom/vue-use-active-scroll)
+
+<br />
+
+## Installation
 
 ```shell
 npm i -S vue-collapsed
 # yarn add vue-collapsed
 # pnpm add vue-collapsed
-```
-
-Register it globally:
-
-```js
-import { Collapse } from 'vue-collapsed'
-
-createApp(App).component('Collapse', Collapse).mount('#app')
-```
-
-Or import it locally:
-
-```js
-import { Collapse } from 'vue-collapsed'
 ```
 
 ## Props
