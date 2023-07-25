@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
+
 import ExampleHeader from './ExampleHeader.vue'
+
 import fakeData from './fakeData.json'
 
 const questions = reactive(
@@ -36,8 +38,8 @@ function handleAccordion(selectedIndex: number) {
             {{ question.title }}
          </button>
 
-         <Collapse as="section" :when="question.isExpanded" class="v-collapse">
-            <p>
+         <Collapse as="section" :when="question.isExpanded">
+            <p class="CollapseContent">
                {{ question.answer }}
             </p>
          </Collapse>

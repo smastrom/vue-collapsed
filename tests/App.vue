@@ -3,7 +3,6 @@ import { Collapse } from '../src'
 import { ref } from 'vue'
 
 const props = withDefaults(
-   // eslint-disable-next-line no-undef
    defineProps<{ initialValue: boolean; as: keyof HTMLElementTagNameMap; baseHeight: number }>(),
    {
       initialValue: false,
@@ -78,11 +77,11 @@ function decreaseBaseHeight() {
             class="v-collapse"
             :as="as"
             :when="isExpanded"
-            :onExpand="onExpand"
-            :onExpanded="onExpanded"
-            :onCollapse="onCollapse"
-            :onCollapsed="onCollapsed"
             :baseHeight="baseHeight"
+            @expand="onExpand"
+            @expanded="onExpanded"
+            @collapse="onCollapse"
+            @collapsed="onCollapsed"
          >
             <p>
                As an interesting side note, as a head without a body, I envy the dead. Kids don't
