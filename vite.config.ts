@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import path from 'path'
+
 import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
 import terser from '@rollup/plugin-terser'
@@ -12,10 +12,9 @@ export default defineConfig(({ mode }) => {
    }
    return {
       build: {
-         minify: 'terser',
          lib: {
             entry: 'src/index.ts',
-            name: 'VueCollapsed',
+            name: 'vue-collapsed',
             fileName: 'index',
             formats: ['es', 'cjs'],
          },
@@ -38,11 +37,9 @@ export default defineConfig(({ mode }) => {
       plugins: [
          vue(),
          dts({
-            include: ['src/index.ts'],
-            beforeWriteFile: (_, content) => ({
-               filePath: path.resolve(__dirname, 'dist', 'index.d.ts'),
-               content,
-            }),
+            staticImport: true,
+            insertTypesEntry: true,
+            rollupTypes: true,
          }),
       ],
    }
