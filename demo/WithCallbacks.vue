@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
+
 import ExampleHeader from './ExampleHeader.vue'
+
 import fakeData from './fakeData.json'
 
 const collapseRefs = ref<Element[]>([])
 const indexToScroll = ref(-1)
-const isBusy = ref(false)
+
+let isBusy = false
 
 const questions = reactive(
    fakeData.map(({ title, answer }) => ({ title, answer, isExpanded: false }))
@@ -25,19 +28,19 @@ function scrollIntoView(index: number) {
 
 function onExpanded(index: number) {
    indexToScroll.value = index
-   if (!isBusy.value) {
+   if (!isBusy) {
       scrollIntoView(index)
    }
 }
 
 function onCollapse() {
-   isBusy.value = true
+   isBusy = true
 }
 
 function onCollapsed() {
-   if (isBusy.value && indexToScroll.value !== -1) {
+   if (isBusy && indexToScroll.value !== -1) {
       scrollIntoView(indexToScroll.value)
-      isBusy.value = false
+      isBusy = false
    }
 }
 </script>
@@ -71,12 +74,11 @@ function onCollapsed() {
          <Collapse
             as="section"
             :when="question.isExpanded"
-            class="v-collapse"
             :onExpanded="() => onExpanded(index)"
             :onCollapse="onCollapse"
             :onCollapsed="onCollapsed"
          >
-            <p>
+            <p class="CollapseContent">
                {{ question.answer }}
             </p>
          </Collapse>
