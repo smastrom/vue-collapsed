@@ -69,21 +69,17 @@ const isExpanded = ref(false)
 </template>
 ```
 
-## Automatic transition
+## Automatic transition (default behavior)
 
-By default, as long as **no class** is added to the `Collapse` element, this transition is automatically added to the element:
+By default, if no height transition is specified the following one is automatically added to the Collapse element:
 
 `height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1)`
 
-`var(--vc-auto-duration)` corresponds to the optimal transition duration which is automatically calculated according to the content height.
+`--vc-auto-duration` is calculated in background and corresponds to an optimal transition duration based on your content height.
 
-<br />
+This is the recommended way to use this package unless you want to customize the transition.
 
-This is the usage I recommend: keep Collapse clean without any class and forget about it. Instead focus on styling its content and wrapper.
-
-> :warning: If you really want to add classes to Collapse, you will have to add the height transition manually as displayed below.
-
-## Custom Transition / Duration
+## Custom transition
 
 If you prefer to use a custom duration or easing, add a class to Collapse that transitions the `height` property:
 
@@ -104,7 +100,7 @@ If you prefer to use a custom duration or easing, add a class to Collapse that t
 
 :bulb: Find a full list of easings at [easings.net](https://easings.net).
 
-## Multiple transitions
+### Multiple transitions
 
 To transition other properties use the attribute `data-collapse`:
 
@@ -219,7 +215,11 @@ function scrollIntoView(index) {
 </template>
 ```
 
-## Make it accessible
+## Accessibility
+
+`vue-collapsed` automatically detects if users prefer reduced motion and will disable transitions accordingly while keeping the same API behavior (emitting events and post-transition styles).
+
+You should only add `aria` attributes to the Collapse element according to your use case.
 
 ```vue
 <script setup>
@@ -253,6 +253,22 @@ function handleCollapse() {
     </Collapse>
   </div>
 </template>
+```
+
+## Manually disable transitions
+
+```vue
+<template>
+  <Collapse :when="isExpanded" class="instant-collapse">
+    <p>This is a paragraph.</p>
+  </Collapse>
+</template>
+
+<style>
+.instant-collapse {
+  transition: none;
+}
+</style>
 ```
 
 ## License

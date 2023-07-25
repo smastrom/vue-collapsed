@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
+
 import ExampleHeader from './ExampleHeader.vue'
 
 const isExpanded = ref(false)
@@ -38,12 +39,7 @@ const collapseAttrs = {
          <button
             v-bind="toggleAttrs"
             @click="handleCollapse"
-            :class="[
-               'Panel',
-               {
-                  Active: isExpanded,
-               },
-            ]"
+            :class="['Panel', { Active: isExpanded }]"
          >
             Hello buddy, how are you today?
          </button>

@@ -27,12 +27,7 @@ function handleAccordion(selectedIndex: number) {
       <ExampleHeader title="Accordion" href="Accordion.vue" hint="Using reactive()" />
       <div v-for="(question, index) in questions" :key="question.title" class="Section">
          <button
-            :class="[
-               'Panel',
-               {
-                  Active: question.isExpanded,
-               },
-            ]"
+            :class="['Panel', { Active: question.isExpanded }]"
             @click="handleAccordion(index)"
          >
             {{ question.title }}

@@ -6,9 +6,9 @@ import ExampleHeader from './ExampleHeader.vue'
 import fakeData from './fakeData.json'
 
 const collapseRefs = ref<Element[]>([])
-const indexToScroll = ref(-1)
 
-let isBusy = false
+let indexToScroll = -1
+let isCollapsing = false
 
 const questions = reactive(
    fakeData.map(({ title, answer }) => ({ title, answer, isExpanded: false }))
@@ -27,20 +27,20 @@ function scrollIntoView(index: number) {
 }
 
 function onExpanded(index: number) {
-   indexToScroll.value = index
-   if (!isBusy) {
+   indexToScroll = index
+   if (!isCollapsing) {
       scrollIntoView(index)
    }
 }
 
 function onCollapse() {
-   isBusy = true
+   isCollapsing = true
 }
 
 function onCollapsed() {
-   if (isBusy && indexToScroll.value !== -1) {
-      scrollIntoView(indexToScroll.value)
-      isBusy = false
+   if (isCollapsing && indexToScroll !== -1) {
+      scrollIntoView(indexToScroll)
+      isCollapsing = false
    }
 }
 </script>
@@ -61,12 +61,7 @@ function onCollapsed() {
          ref="collapseRefs"
       >
          <button
-            :class="[
-               'Panel',
-               {
-                  Active: question.isExpanded,
-               },
-            ]"
+            :class="['Panel', { Active: question.isExpanded }]"
             @click="handleAccordion(index)"
          >
             {{ question.title }}
@@ -74,9 +69,9 @@ function onCollapsed() {
          <Collapse
             as="section"
             :when="question.isExpanded"
-            :onExpanded="() => onExpanded(index)"
-            :onCollapse="onCollapse"
-            :onCollapsed="onCollapsed"
+            @expanded="() => onExpanded(index)"
+            @collapse="onCollapse"
+            @collapsed="onCollapsed"
          >
             <p class="CollapseContent">
                {{ question.answer }}

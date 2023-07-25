@@ -51,12 +51,7 @@ const collapseAttrs = computed(() =>
          <button
             v-bind="toggleAttrs[index]"
             @click="handleIndividual(index)"
-            :class="[
-               'Panel',
-               {
-                  Active: question.isExpanded,
-               },
-            ]"
+            :class="['Panel', { Active: question.isExpanded }]"
          >
             {{ question.title }}
          </button>

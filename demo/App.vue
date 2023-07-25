@@ -4,6 +4,7 @@ import Accordion from './Accordion.vue'
 import IndividualControl from './IndividualControl.vue'
 import WithCallbacks from './WithCallbacks.vue'
 import AdvancedControl from './AdvancedControl.vue'
+import NestedCollapse from './NestedCollapse.vue'
 </script>
 
 <template>
@@ -31,9 +32,10 @@ import AdvancedControl from './AdvancedControl.vue'
    <main>
       <SingleCollapse />
       <Accordion />
+      <IndividualControl />
       <WithCallbacks />
       <AdvancedControl />
-      <IndividualControl />
+      <NestedCollapse />
    </main>
 
    <footer>
@@ -55,6 +57,7 @@ import AdvancedControl from './AdvancedControl.vue'
    --ForegroundColorLight: #929292;
    --BackgroundColor: #1a1a1a;
    --BackgroundAlternateColor: #242424;
+   --ArticleBorder: 1px solid var(--ForegroundColorLight);
 }
 * {
    box-sizing: border-box;
@@ -178,12 +181,12 @@ footer {
    background: var(--BackgroundAlternateColor);
    width: 100%;
    max-width: 600px;
-   border-top: 1px solid var(--ForegroundColorLight);
+   border-top: var(--ArticleBorder);
    margin: 0;
 }
 
 .Section:last-of-type {
-   border-bottom: 1px solid var(--ForegroundColorLight);
+   border-bottom: var(--ArticleBorder);
 }
 
 .Section button {
@@ -192,6 +195,12 @@ footer {
    border: none;
    background: none;
    cursor: pointer;
+}
+
+.NestedCollapse {
+   margin: 0 20px 20px;
+   border-top: var(--ArticleBorder);
+   border-bottom: var(--ArticleBorder);
 }
 
 .CollapseContent {
