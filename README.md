@@ -7,8 +7,6 @@ Dynamic CSS height transition from _any to auto_ and vice versa. Accordion ready
 
 [Examples and Demo](https://vue-collapsed.netlify.com) - [Stackblitz](https://stackblitz.com/edit/vue-dmjqey?file=src/App.vue)
 
-> :bulb: Requires Vue v3.0.0 or above.
-
 <br />
 
 Check out my other packages for Vue 3:
@@ -37,15 +35,20 @@ npm i -S vue-collapsed
 
 ## Props
 
-| name          | description                               | type                          | required           |
-| ------------- | ----------------------------------------- | ----------------------------- | ------------------ |
-| `when`        | Value to control collapse                 | boolean                       | :white_check_mark: |
-| `baseHeight`  | Collapsed height in px, defaults to `0`.  | number                        | :x:                |
-| `as`          | Tag to use instead of `div`               | _keyof_ HTMLElementTagNameMap | :x:                |
-| `onExpand`    | Callback on expand transition start       | () => void                    | :x:                |
-| `onExpanded`  | Callback on expand transition completed   | () => void                    | :x:                |
-| `onCollapse`  | Callback on collapse transition start     | () => void                    | :x:                |
-| `onCollapsed` | Callback on collapse transition completed | () => void                    | :x:                |
+| name         | description                              | type                          | required           |
+| ------------ | ---------------------------------------- | ----------------------------- | ------------------ |
+| `when`       | Value to control collapse                | boolean                       | :white_check_mark: |
+| `baseHeight` | Collapsed height in px, defaults to `0`. | number                        | :x:                |
+| `as`         | Tag to use instead of `div`              | _keyof_ HTMLElementTagNameMap | :x:                |
+
+## Emits
+
+| name         | description                           | type       |
+| ------------ | ------------------------------------- | ---------- |
+| `@expand`    | Emit on expand transition start       | () => void |
+| `@expanded`  | Emit on expand transition completed   | () => void |
+| `@collapse`  | Emit on collapse transition start     | () => void |
+| `@collapsed` | Emit on collapse transition completed | () => void |
 
 ## Usage
 
@@ -58,26 +61,33 @@ const isExpanded = ref(false)
 </script>
 
 <template>
-  <button @click="isExpanded = !isExpanded">This a panel.</button>
-  <Collapse :when="isExpanded" class="v-collapse">
+  <button @click="isExpanded = !isExpanded">Trigger</button>
+
+  <Collapse :when="isExpanded">
     <p>This is a paragraph.</p>
   </Collapse>
 </template>
-
-<style>
-.v-collapse {
-  transition: height 300ms cubic-bezier(0.33, 1, 0.68, 1);
-}
-</style>
 ```
 
-## Auto Duration
+## Automatic Transition / Duration
 
-Vue Collapsed automatically calculates the optimal duration according to the content height. Use it by referencing the variable `--vc-auto-duration`:
+By default, as long as no class is added to the `Collapse` element, `vue-collapsed` will add this transition for you:
+
+`transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1)`
+
+`var(--vc-auto-duration)` corresponds to the optimal transition duration which is automatically calculated according to the content height.
+
+If you wish to use a custom duration or easing, simply add a class to Collapse that transitions the `height` property:
+
+```vue
+<Collapse :when="isExpanded" class="v-collapse">
+  <p>This is a paragraph.</p>
+</Collapse>
+```
 
 ```css
 .v-collapse {
-  transition: height var(--vc-auto-duration) ease-out;
+  transition: height 300ms ease-out;
 }
 ```
 
@@ -85,9 +95,9 @@ Vue Collapsed automatically calculates the optimal duration according to the con
 
 :bulb: Find a full list of easings at [easings.net](https://easings.net).
 
-## Additional transitions/styles
+## Multiple transitions
 
-To transition other properties or add granular styles use the attribute `data-collapse`:
+To transition other properties use the attribute `data-collapse`:
 
 | Transition | From        | Enter        | Leave       |
 | ---------- | ----------- | ------------ | ----------- |
@@ -115,7 +125,7 @@ Above values can also be accessed using `v-slot`:
 
 ```vue
 <Collapse :when="isExpanded" class="v-collapse" v-slot="{ state }">
-  {{ state === 'collapsing' ? 'Collapsing...' : null }}
+  {{ state === 'collapsing' ? 'Collapsing the content...' : null }}
 </Collapse>
 ```
 
@@ -164,19 +174,13 @@ function handleAccordion(selectedIndex) {
     <button @click="handleAccordion(index)">
       {{ question.title }}
     </button>
-    <Collapse :when="questions[index].isExpanded" class="v-collapse">
+    <Collapse :when="questions[index].isExpanded">
       <p>
         {{ question.answer }}
       </p>
     </Collapse>
   </div>
 </template>
-
-<style>
-.v-collapse {
-  transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
-}
-</style>
 ```
 
 ## Example - Callbacks
@@ -197,23 +201,13 @@ function scrollIntoView(index) {
     <button @click="handleAccordion(index)">
       {{ question.title }}
     </button>
-    <Collapse
-      :when="questions[index].isExpanded"
-      :onExpanded="() => scrollIntoView(index)"
-      class="v-collapse"
-    >
+    <Collapse :when="questions[index].isExpanded" @expanded="() => scrollIntoView(index)">
       <p>
         {{ question.answer }}
       </p>
     </Collapse>
   </div>
 </template>
-
-<style>
-.v-collapse {
-  transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
-}
-</style>
 ```
 
 ## Make it accessible
@@ -245,17 +239,11 @@ function handleCollapse() {
 <template>
   <div>
     <button v-bind="toggleAttrs" @click="handleCollapse">This a panel.</button>
-    <Collapse v-bind="collapseAttrs" :when="isExpanded" class="v-collapse">
+    <Collapse v-bind="collapseAttrs" :when="isExpanded">
       <p>This is a paragraph.</p>
     </Collapse>
   </div>
 </template>
-
-<style>
-.v-collapse {
-  transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
-}
-</style>
 ```
 
 ## License
