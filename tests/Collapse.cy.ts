@@ -62,7 +62,7 @@ it('Should change height if resizing on expanded', () => {
       cy.get('@desktopHeight').then((desktopHeight) => {
          cy.viewport('iphone-x')
 
-         cy.get('#Collapse')
+            .get('#Collapse')
             .invoke('height')
             .should('be.greaterThan', desktopHeight)
             .as('mobileHeight')
@@ -71,7 +71,9 @@ it('Should change height if resizing on expanded', () => {
       cy.get('@mobileHeight').then((mobileHeight) => {
          cy.viewport('macbook-13')
 
-         cy.get('#Collapse').invoke('height').should('be.lessThan', mobileHeight)
+            .get('#Collapse')
+            .invoke('height')
+            .should('be.lessThan', mobileHeight)
       })
    }
 })
@@ -82,27 +84,33 @@ it('Should update data-collapse attribute properly', () => {
    const randomIter = getRandomIntInclusive(5, 20)
 
    for (let i = 0; i < randomIter; i++) {
-      cy.get('#TriggerButton').click()
-      cy.get('#Collapse').should('have.attr', 'data-collapse', 'expanding')
+      cy.get('#TriggerButton')
+         .click()
+         .get('#Collapse')
+         .should('have.attr', 'data-collapse', 'expanding')
 
-      cy.waitFrames({
-         subject: () => cy.get('#Collapse'),
-         property: 'clientHeight',
-         frames: 10,
-      })
+         .waitFrames({
+            subject: () => cy.get('#Collapse'),
+            property: 'clientHeight',
+            frames: 10,
+         })
 
-      cy.get('#Collapse').should('have.attr', 'data-collapse', 'expanded')
+         .get('#Collapse')
+         .should('have.attr', 'data-collapse', 'expanded')
 
-      cy.get('#TriggerButton').click()
-      cy.get('#Collapse').should('have.attr', 'data-collapse', 'collapsing')
+         .get('#TriggerButton')
+         .click()
+         .get('#Collapse')
+         .should('have.attr', 'data-collapse', 'collapsing')
 
-      cy.waitFrames({
-         subject: () => cy.get('#Collapse'),
-         property: 'clientHeight',
-         frames: 10,
-      })
+         .waitFrames({
+            subject: () => cy.get('#Collapse'),
+            property: 'clientHeight',
+            frames: 10,
+         })
 
-      cy.get('#Collapse').should('have.attr', 'data-collapse', 'collapsed')
+         .get('#Collapse')
+         .should('have.attr', 'data-collapse', 'collapsed')
    }
 })
 
@@ -115,10 +123,14 @@ describe('Should execute callbacks properly', () => {
          cy.get('#TriggerButton').click().wait(50)
       }
 
-      cy.get('#CountExpand').should('have.text', `${repeatEven / 2}`)
-      cy.get('#CountExpanded').should('have.text', '0')
-      cy.get('#CountCollapse').should('have.text', `${repeatEven / 2}`)
-      cy.get('#CountCollapsed').should('have.text', '1')
+      cy.get('#CountExpand')
+         .should('have.text', `${repeatEven / 2}`)
+         .get('#CountExpanded')
+         .should('have.text', '0')
+         .get('#CountCollapse')
+         .should('have.text', `${repeatEven / 2}`)
+         .get('#CountCollapsed')
+         .should('have.text', '1')
    })
 
    it('Collapse as last action', () => {
@@ -133,10 +145,14 @@ describe('Should execute callbacks properly', () => {
          cy.get('#TriggerButton').click().wait(50)
       }
 
-      cy.get('#CountExpand').should('have.text', `${repeatEven / 2}`)
-      cy.get('#CountExpanded').should('have.text', '1')
-      cy.get('#CountCollapse').should('have.text', `${repeatEven / 2}`)
-      cy.get('#CountCollapsed').should('have.text', '0')
+      cy.get('#CountExpand')
+         .should('have.text', `${repeatEven / 2}`)
+         .get('#CountExpanded')
+         .should('have.text', '1')
+         .get('#CountCollapse')
+         .should('have.text', `${repeatEven / 2}`)
+         .get('#CountCollapsed')
+         .should('have.text', '0')
    })
 })
 
@@ -193,31 +209,37 @@ describe('With baseHeight > 0', () => {
          },
       }).viewport('macbook-13')
 
-      cy.get('#TriggerButton').click()
-
-      cy.waitFrames({
-         subject: () => cy.get('#Collapse'),
-         property: 'clientHeight',
-         frames: 30,
-      })
+      cy.get('#TriggerButton')
+         .click()
+         .waitFrames({
+            subject: () => cy.get('#Collapse'),
+            property: 'clientHeight',
+            frames: 30,
+         })
 
       for (let i = 0; i < 10; i++) {
-         cy.get('#Collapse').invoke('height').as('desktopHeight')
+         cy.get('#Collapse')
+            .invoke('height')
+            .as('desktopHeight')
 
-         cy.get('@desktopHeight').then((desktopHeight) => {
-            cy.viewport('iphone-x')
+            .get('@desktopHeight')
+            .then((desktopHeight) => {
+               cy.viewport('iphone-x')
 
-            cy.get('#Collapse')
-               .invoke('height')
-               .should('be.greaterThan', desktopHeight)
-               .as('mobileHeight')
-         })
+                  .get('#Collapse')
+                  .invoke('height')
+                  .should('be.greaterThan', desktopHeight)
+                  .as('mobileHeight')
+            })
 
-         cy.get('@mobileHeight').then((mobileHeight) => {
-            cy.viewport('macbook-13')
+            .get('@mobileHeight')
+            .then((mobileHeight) => {
+               cy.viewport('macbook-13')
 
-            cy.get('#Collapse').invoke('height').should('be.lessThan', mobileHeight)
-         })
+                  .get('#Collapse')
+                  .invoke('height')
+                  .should('be.lessThan', mobileHeight)
+            })
       }
    })
 
@@ -234,8 +256,9 @@ describe('With baseHeight > 0', () => {
 
       const randomClicks = getRandomIntInclusive(5, 25)
       for (let i = 1; i < randomClicks + 1; i++) {
-         cy.get('#BaseHeightIncr').click()
-         cy.get('#Collapse')
+         cy.get('#BaseHeightIncr')
+            .click()
+            .get('#Collapse')
             .should('have.css', 'height', `${BASE_HEIGHT + INCREMENT * i}px`)
             .and('have.css', 'overflow', 'hidden')
       }
