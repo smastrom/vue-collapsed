@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import Collapse from '../src/Collapse.vue'
 import ExampleHeader from './ExampleHeader.vue'
 
 const isExpanded = ref(true)

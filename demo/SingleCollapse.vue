@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import ExampleHeader from './ExampleHeader.vue'
-import Collapse from '../src/Collapse.vue'
 
 const isExpanded = ref(false)
 

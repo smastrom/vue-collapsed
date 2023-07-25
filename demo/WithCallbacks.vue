@@ -2,7 +2,6 @@
 import { reactive, ref } from 'vue'
 
 import ExampleHeader from './ExampleHeader.vue'
-import Collapse from '../src/Collapse.vue'
 
 import fakeData from './fakeData.json'
 
