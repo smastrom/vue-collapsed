@@ -75,7 +75,9 @@ By default, if no height transition is specified the following one is automatica
 
 `height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1)`
 
-`--vc-auto-duration` is calculated in background and corresponds to an optimal transition duration according to your content height.
+`--vc-auto-duration` is calculated in background and corresponds to an optimal transition duration based on your content height.
+
+This is the recommended way to use this package unless you need something more specific.
 
 ## Custom transition
 
@@ -242,11 +244,19 @@ function handleCollapse() {
 <template>
   <div>
     <button v-bind="toggleAttrs" @click="handleCollapse">This a panel.</button>
-    <Collapse v-bind="collapseAttrs" :when="isExpanded">
+    <Collapse v-bind="collapseAttrs" :when="isExpanded" class="collapse-reduced">
       <p>This is a paragraph.</p>
     </Collapse>
   </div>
 </template>
+
+<style>
+@media (prefers-reduced-motion: reduce) {
+  .collapse-reduced {
+    transition-duration: 1ms !important;
+  }
+}
+</style>
 ```
 
 ## License

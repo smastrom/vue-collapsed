@@ -60,7 +60,7 @@ const collapseAttrs = computed(() =>
          >
             {{ question.title }}
          </button>
-         <Collapse :when="question.isExpanded" v-bind="collapseAttrs[index]">
+         <Collapse :when="question.isExpanded" v-bind="collapseAttrs[index]" class="c">
             <p class="CollapseContent">
                {{ question.answer }}
             </p>
@@ -68,5 +68,11 @@ const collapseAttrs = computed(() =>
       </div>
    </article>
 </template>
+
+<style>
+.c {
+   transition-duration: 0.1ms !important;
+}
+</style>
 
 <!-- Check styles in App.vue -->
