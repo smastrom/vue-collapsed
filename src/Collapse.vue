@@ -135,6 +135,23 @@ watch(isExpanded, (isExpanding) => {
    })
 })
 
+watch(baseHeight, (newBaseHeight) => {
+   if (!isExpanded.value) {
+      style.value = {
+         ...style.value,
+         /**
+          * Disable transitions when baseHeight changes on
+          * collapsed state to give a native responsive feel if using
+          * reactive value on resize.
+          *
+          * Below styles are going to be replaced on next expand.
+          */
+         transitionDuration: '0s',
+         height: `${newBaseHeight}px`,
+      }
+   }
+})
+
 function onTransitionEnd(event: TransitionEvent) {
    if (event.target === collapseRef.value && event.propertyName === 'height') {
       /**
