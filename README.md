@@ -35,7 +35,7 @@ npm i -S vue-collapsed
 
 ## Props
 
-| name         | description                              | type                          | required           |
+| Name         | Description                              | Type                          | Required           |
 | ------------ | ---------------------------------------- | ----------------------------- | ------------------ |
 | `when`       | Value to control collapse                | boolean                       | :white_check_mark: |
 | `baseHeight` | Collapsed height in px, defaults to `0`. | number                        | :x:                |
@@ -43,12 +43,12 @@ npm i -S vue-collapsed
 
 ## Emits
 
-| name         | description                           | type       |
-| ------------ | ------------------------------------- | ---------- |
-| `@expand`    | Emit on expand transition start       | () => void |
-| `@expanded`  | Emit on expand transition completed   | () => void |
-| `@collapse`  | Emit on collapse transition start     | () => void |
-| `@collapsed` | Emit on collapse transition completed | () => void |
+| Name         | Description                   | Type       |
+| ------------ | ----------------------------- | ---------- |
+| `@expand`    | Expand transition start       | () => void |
+| `@expanded`  | Expand transition completed   | () => void |
+| `@collapse`  | Collapse transition start     | () => void |
+| `@collapsed` | Collapse transition completed | () => void |
 
 ## Usage
 
@@ -73,11 +73,11 @@ const isExpanded = ref(false)
 
 By default, as long as no class is added to the `Collapse` element, `vue-collapsed` will add this transition for you:
 
-`transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1)`
+`height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1)`
 
 `var(--vc-auto-duration)` corresponds to the optimal transition duration which is automatically calculated according to the content height.
 
-If you wish to use a custom duration or easing, simply add a class to Collapse that transitions the `height` property:
+If you prefer to use a custom duration or easing, add a class to Collapse that transitions the `height` property:
 
 ```vue
 <Collapse :when="isExpanded" class="v-collapse">
