@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+
 import ExampleHeader from './ExampleHeader.vue'
+import Collapse from '../src/Collapse.vue'
+
 import fakeData from './fakeData.json'
 
 const questions = ref(
@@ -58,8 +61,8 @@ const collapseAttrs = computed(() =>
          >
             {{ question.title }}
          </button>
-         <Collapse :when="question.isExpanded" class="v-collapse" v-bind="collapseAttrs[index]">
-            <p>
+         <Collapse :when="question.isExpanded" v-bind="collapseAttrs[index]">
+            <p class="CollapseContent">
                {{ question.answer }}
             </p>
          </Collapse>

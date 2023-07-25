@@ -1,15 +1,13 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
+
+import Collapse from '../src/Collapse.vue'
 import ExampleHeader from './ExampleHeader.vue'
 
 const isExpanded = ref(true)
 
 function handleCollapse() {
    isExpanded.value = !isExpanded.value
-}
-
-function capitalize(string: string) {
-   return string && string[0].toUpperCase() + string.slice(1)
 }
 </script>
 
@@ -25,7 +23,7 @@ function capitalize(string: string) {
          <div class="InnerElement">
             <button @click="handleCollapse">Toggle</button>
 
-            {{ capitalize(state) }}{{ state.endsWith('ing') ? '...' : '.' }}
+            {{ state }}{{ state.endsWith('ing') ? '...' : '.' }}
          </div>
       </Collapse>
    </article>
@@ -34,6 +32,7 @@ function capitalize(string: string) {
 <style>
 .AdvancedCollapse {
    --easing-dur: calc(var(--vc-auto-duration) * 1.5) cubic-bezier(0.33, 1, 0.68, 1);
+
    transition: height var(--easing-dur), background-color var(--easing-dur),
       border-radius var(--easing-dur);
 }
@@ -60,6 +59,7 @@ function capitalize(string: string) {
    font-size: 1.75rem;
    color: var(--BackgroundColor);
    height: 400px;
+   text-transform: capitalize;
 }
 
 .InnerElement button {
