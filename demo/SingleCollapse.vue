@@ -61,3 +61,9 @@ const collapseAttrs = {
 </template>
 
 <!-- Check styles in App.vue -->
+
+<style>
+.transition {
+   transition: height 1000ms ease-in-out;
+}
+</style>

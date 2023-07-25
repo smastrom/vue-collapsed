@@ -18,8 +18,8 @@ import {
    type CSSProperties as CSS,
 } from 'vue'
 
-import { DEFAULT_TRANSITION, BASE_STYLES } from './constants'
-import { getHeightStyles } from './utils'
+import { BASE_STYLES } from './constants'
+import { getTransition, getHeight, getAutoDuration } from './utils'
 
 type TransitionState = 'expanding' | 'expanded' | 'collapsing' | 'collapsed'
 
@@ -46,33 +46,27 @@ defineSlots<{
 const isExpanded = toRef(props, 'when')
 const baseHeight = toRef(props, 'baseHeight')
 
-const collapseStyles = computed<Record<'visible' | 'collapsed', CSS>>(() => {
-   const visible = {
-      overflow: 'hidden',
-      height: `${baseHeight.value}px`,
-   }
-
-   return {
-      visible,
-      collapsed: {
-         ...BASE_STYLES,
-         ...(baseHeight.value === 0 ? { display: 'none' } : visible),
-      },
-   }
-})
+const idleStyles = computed(() => ({ overflow: 'hidden', height: `${baseHeight.value}px` }))
+const collapsedStyles = computed(() => ({
+   ...BASE_STYLES,
+   ...(baseHeight.value === 0 ? { display: 'none' } : idleStyles.value),
+}))
 
 const collapseRef = ref<HTMLElement | null>(null)
-const style = shallowRef<CSS>(isExpanded.value ? BASE_STYLES : collapseStyles.value.collapsed)
+const autoDuration = ref(0)
 
 const state = ref<TransitionState>(isExpanded.value ? 'expanded' : 'collapsed')
+const style = shallowRef<CSS>(isExpanded.value ? BASE_STYLES : collapsedStyles.value)
 
-onMounted(() => {
+function setAutoDuration() {
    if (!collapseRef.value) return
 
-   if (collapseRef.value.classList.length === 0) {
-      collapseRef.value.style.transition = DEFAULT_TRANSITION
+   if (isExpanded.value || baseHeight.value > 0) {
+      autoDuration.value = getAutoDuration(collapseRef.value.scrollHeight - baseHeight.value)
    }
-})
+}
+
+onMounted(setAutoDuration)
 
 watch(isExpanded, (isExpanding) => {
    requestAnimationFrame(() => {
@@ -90,22 +84,30 @@ watch(isExpanded, (isExpanding) => {
           * We set the height to 0 (baseHeight) as it is the 'current' height
           * we are transition from.
           */
+
          style.value = {
             ...BASE_STYLES,
+            ...idleStyles.value,
+            '--vc-auto-duration': `${autoDuration.value}ms`,
             willChange: 'height',
-            ...collapseStyles.value.visible,
          }
+
+         state.value = 'expanding'
+         emit('expand')
+
          requestAnimationFrame(() => {
             /**
              * Set height to scrollHeight and trigger the transition.
              */
+
+            if (autoDuration.value === 0) setAutoDuration() // If was hidden on mount, get auto duration...
+
             style.value = {
                ...style.value,
-               ...getHeightStyles(collapseRef.value?.scrollHeight, baseHeight.value),
+               '--vc-auto-duration': `${autoDuration.value}ms`, // ...and set it again.
+               ...getHeight(collapseRef.value),
+               ...getTransition(collapseRef.value),
             }
-
-            state.value = 'expanding'
-            emit('expand')
          })
       } else {
          /**
@@ -114,22 +116,26 @@ watch(isExpanded, (isExpanding) => {
           * Since the element is visible we get the 'current'
           * expanded height (scrollHeight) and set it as height.
           */
+
          style.value = {
             ...style.value,
+            ...getHeight(collapseRef.value),
+            '--vc-auto-duration': `${autoDuration.value}ms`,
             willChange: 'height',
-            ...getHeightStyles(collapseRef.value?.scrollHeight, baseHeight.value),
          }
+
+         state.value = 'collapsing'
+         emit('collapse')
+
          requestAnimationFrame(() => {
             /**
              * Set height to baseHeight and trigger the transition.
              */
             style.value = {
                ...style.value,
-               ...collapseStyles.value.visible,
+               ...idleStyles.value,
+               ...getTransition(collapseRef.value),
             }
-
-            state.value = 'collapsing'
-            emit('collapse')
          })
       }
    })
@@ -171,7 +177,7 @@ function onTransitionEnd(event: TransitionEvent) {
          }
       } else {
          if (collapseRef.value?.style.height === `${baseHeight.value}px`) {
-            style.value = collapseStyles.value.collapsed
+            style.value = collapsedStyles.value
 
             state.value = 'collapsed'
             emit('collapsed')
