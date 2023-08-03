@@ -18,10 +18,10 @@ import {
    type CSSProperties as CSS,
 } from 'vue'
 
-import { SAFE_STYLES as safeStyles, AUTO_DUR_VAR } from './constants'
+import { SAFE_STYLES as safeStyles, VISUALLY_HIDDEN, AUTO_DUR_VAR } from './constants'
 import { getTransition, getHeight, getAutoDuration, isReducedOrDisaled } from './utils'
 
-type TransitionState = 'expanding' | 'expanded' | 'collapsing' | 'collapsed'
+export type TransitionState = 'expanding' | 'expanded' | 'collapsing' | 'collapsed'
 
 const props = withDefaults(
    defineProps<{
@@ -61,18 +61,10 @@ const collapsedStyles = computed(() => ({
 const collapseRef = ref<HTMLElement | null>(null)
 
 const state = ref<TransitionState>(isExpanded.value ? 'expanded' : 'collapsed')
-const style = shallowRef<CSS>(isExpanded.value ? safeStyles : collapsedStyles.value)
+const style = shallowRef<CSS>({})
 
-const autoDuration = ref(0)
+const autoDuration = ref(300)
 const autoDurationVar = computed(() => ({ [AUTO_DUR_VAR]: `${autoDuration.value}ms` }))
-
-function setAutoDuration() {
-   if (!collapseRef.value) return
-
-   if (isExpanded.value || baseHeight.value > 0) {
-      autoDuration.value = getAutoDuration(collapseRef.value.scrollHeight - baseHeight.value)
-   }
-}
 
 function onExpanded() {
    style.value = safeStyles
@@ -88,7 +80,13 @@ function onCollapsed() {
 
 // Lifecycle / Watchers
 
-onMounted(setAutoDuration)
+onMounted(() => {
+   if (!collapseRef.value) return
+   if (!isExpanded.value && baseHeight.value === 0) style.value = VISUALLY_HIDDEN
+
+   autoDuration.value = getAutoDuration(collapseRef.value.scrollHeight - baseHeight.value)
+   style.value = isExpanded.value ? safeStyles : collapsedStyles.value
+})
 
 watch(isExpanded, (isExpanding) => {
    if (isExpanding) {
@@ -104,28 +102,23 @@ watch(isExpanded, (isExpanding) => {
        * We set the height to baseHeight as it is the 'current' height
        * we are transitioning from.
        */
+      state.value = 'expanding'
+      emit('expand')
+
       style.value = {
          ...safeStyles,
          ...baseHeightStyles.value,
+         ...autoDurationVar.value,
          willChange: 'height',
       }
 
       requestAnimationFrame(() => {
-         /** Get auto duration in once scrollHeight is available. */
-         setAutoDuration()
-         style.value = { ...style.value, ...autoDurationVar.value }
-
-         requestAnimationFrame(() => {
-            /** Set height to scrollHeight and trigger the transition. */
-            style.value = {
-               ...style.value,
-               ...getHeight(collapseRef.value),
-               ...getTransition(collapseRef.value),
-            }
-
-            state.value = 'expanding'
-            emit('expand')
-         })
+         /** Set height to scrollHeight and trigger the transition. */
+         style.value = {
+            ...style.value,
+            ...getHeight(collapseRef.value),
+            ...getTransition(collapseRef.value),
+         }
       })
    } else {
       if (isReducedOrDisaled(collapseRef.value)) return onCollapsed()
@@ -136,31 +129,24 @@ watch(isExpanded, (isExpanding) => {
        *
        * Since the element is visible we get the 'current'
        * expanded height (scrollHeight) and set it as height.
-       *
-       * We could use only one raf call, but we must use the
-       * same number of raf calls of the previous condition (2) to make
-       * sure accordion transitions (collapse/expand at the same time)
-       * are perfectly in sync.
        */
+      state.value = 'collapsing'
+      emit('collapse')
+
+      style.value = {
+         ...style.value,
+         ...autoDurationVar.value,
+         ...getHeight(collapseRef.value),
+         willChange: 'height',
+      }
+
       requestAnimationFrame(() => {
+         /** Set height to baseHeight and trigger the transition. */
          style.value = {
             ...style.value,
-            ...autoDurationVar.value,
-            ...getHeight(collapseRef.value),
-            willChange: 'height',
+            ...baseHeightStyles.value,
+            ...getTransition(collapseRef.value),
          }
-
-         requestAnimationFrame(() => {
-            /** Set height to baseHeight and trigger the transition. */
-            style.value = {
-               ...style.value,
-               ...baseHeightStyles.value,
-               ...getTransition(collapseRef.value),
-            }
-
-            state.value = 'collapsing'
-            emit('collapse')
-         })
       })
    }
 })
@@ -175,13 +161,14 @@ watch(baseHeight, (newBaseHeight) => {
           *
           * Below styles are going to be replaced on next expand.
           */
-         transitionDuration: '0s',
-         height: `${newBaseHeight}px`,
+         ...(newBaseHeight === 0
+            ? { display: 'none' }
+            : { transition: 'none', height: `${newBaseHeight}px` }),
       }
    }
 })
 
-// Callbacks
+// Event handlers
 
 function onTransitionEnd(event: TransitionEvent) {
    if (event.target === collapseRef.value && event.propertyName === 'height') {

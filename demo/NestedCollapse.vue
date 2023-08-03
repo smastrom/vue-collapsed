@@ -7,7 +7,6 @@ const nested = reactive({
    first: true, // Initial value
    second: false,
    third: false,
-   fourth: false,
 })
 
 const innerText = `

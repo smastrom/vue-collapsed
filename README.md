@@ -1,5 +1,4 @@
-![npm](https://img.shields.io/npm/v/vue-collapsed?color=46c119) ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/smastrom/vue-collapsed/tests.yml?branch=main&label=tests) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/vue-collapsed?color=success)
-![dependency-count](https://img.shields.io/badge/dependency%20count-0-success)
+![npm](https://img.shields.io/npm/v/vue-collapsed?color=46c119) ![dependencies](https://img.shields.io/badge/dependencies-0-success) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/vue-collapsed?color=success) ![downloads](https://img.shields.io/npm/dm/vue-collapsed) ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/smastrom/vue-collapsed/tests.yml?branch=main&label=tests)
 
 # Vue Collapsed
 
@@ -126,6 +125,18 @@ To transition other properties use the attribute `data-collapse`:
 }
 ```
 
+Or to use different easings/durations for expand and collapse:
+
+```css
+.v-collapse[data-collapse='expanding'] {
+  transition: height 600ms ease-in-out;
+}
+
+.v-collapse[data-collapse='collapsing'] {
+  transition: height 300ms ease-out;
+}
+```
+
 Above values can also be accessed using `v-slot`:
 
 ```vue
@@ -188,33 +199,6 @@ function handleAccordion(selectedIndex) {
 </template>
 ```
 
-## Example - Callbacks
-
-```vue
-<script setup>
-// ...
-
-const sectionsRef = ref([])
-
-function scrollIntoView(index) {
-  sectionsRef.value[index].scrollIntoView({ behavior: 'smooth' })
-}
-</script>
-
-<template>
-  <div v-for="(question, index) in questions" :key="question.title" ref="sectionsRef">
-    <button @click="handleAccordion(index)">
-      {{ question.title }}
-    </button>
-    <Collapse :when="questions[index].isExpanded" @expanded="() => scrollIntoView(index)">
-      <p>
-        {{ question.answer }}
-      </p>
-    </Collapse>
-  </div>
-</template>
-```
-
 ## Accessibility
 
 `vue-collapsed` automatically detects if users prefer reduced motion and will disable transitions accordingly while keeping the same API behavior (emitting events and post-transition styles).
@@ -255,7 +239,7 @@ function handleCollapse() {
 </template>
 ```
 
-## Manually disable transitions
+## Manually disabling transitions
 
 ```vue
 <template>
