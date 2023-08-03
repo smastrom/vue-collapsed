@@ -126,6 +126,18 @@ To transition other properties use the attribute `data-collapse`:
 }
 ```
 
+Or to use different easings/durations for expand and collapse:
+
+```css
+.v-collapse[data-collapse='expanding'] {
+  transition: height 600ms ease-in-out;
+}
+
+.v-collapse[data-collapse='collapsing'] {
+  transition: height 300ms ease-out;
+}
+```
+
 Above values can also be accessed using `v-slot`:
 
 ```vue
