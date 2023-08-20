@@ -18,3 +18,5 @@ export function getRandomIntInclusive(min: number, max: number) {
 }
 
 Cypress.Commands.add('mount', mount)
+
+export const isFirefox = Cypress.isBrowser('firefox')

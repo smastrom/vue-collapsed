@@ -1,0 +1,22 @@
+name: Webkit Tests
+
+on: [push]
+
+jobs:
+   cypress-ct:
+      runs-on: macos-latest
+      steps:
+         - uses: actions/checkout@v3
+         - uses: actions/setup-node@v3
+           with:
+              node-version: '18'
+         - uses: pnpm/action-setup@v2
+           name: Install pnpm
+           id: pnpm-install
+           with:
+              version: 8
+              run_install: false
+         - name: Install dependencies
+           run: pnpm install
+         - name: Webkit tests
+           run: pnpm run test:webkit

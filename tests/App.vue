@@ -1,11 +1,17 @@
 <script lang="ts" setup>
 import { Collapse } from '../src'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const props = withDefaults(
-   defineProps<{ initialValue: boolean; as: keyof HTMLElementTagNameMap; baseHeight: number }>(),
+   defineProps<{
+      initialValue: boolean
+      as: keyof HTMLElementTagNameMap
+      baseHeight: number
+      hiddenOnMount: boolean
+   }>(),
    {
       initialValue: false,
+      hiddenOnMount: false,
       as: 'div',
       baseHeight: 0,
    }
@@ -14,6 +20,16 @@ const props = withDefaults(
 const isExpanded = ref(props.initialValue)
 
 const baseHeight = ref(props.baseHeight)
+
+const isHiddenOnMount = ref(props.hiddenOnMount)
+
+onMounted(() => {
+   if (props.hiddenOnMount) {
+      setTimeout(() => {
+         isHiddenOnMount.value = false
+      }, 1000)
+   }
+})
 
 const countExpand = ref(0)
 const countExpanded = ref(0)
@@ -50,7 +66,12 @@ function decreaseBaseHeight() {
 </script>
 
 <template>
-   <section class="Wrapper">
+   <section
+      class="Wrapper"
+      :style="{
+         display: isHiddenOnMount ? 'none' : 'block',
+      }"
+   >
       <div id="CountExpand">{{ countExpand }}</div>
       <div id="CountExpanded">{{ countExpanded }}</div>
       <div id="CountCollapse">{{ countCollapse }}</div>

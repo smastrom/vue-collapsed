@@ -1,9 +1,9 @@
-name: Tests
+name: Chrome Tests
 
 on: [push]
 
 jobs:
-   cypress-run:
+   cypress-ct:
       runs-on: ubuntu-latest
       steps:
          - uses: actions/checkout@v3
@@ -18,8 +18,5 @@ jobs:
               run_install: false
          - name: Install dependencies
            run: pnpm install
-         - name: Tests
-           uses: cypress-io/github-action@v5
-           with:
-              install: false
-              component: true
+         - name: Chrome tests
+           run: pnpm run test:chrome

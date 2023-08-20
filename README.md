@@ -1,4 +1,4 @@
-![npm](https://img.shields.io/npm/v/vue-collapsed?color=46c119) ![dependencies](https://img.shields.io/badge/dependencies-0-success) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/vue-collapsed?color=success) ![downloads](https://img.shields.io/npm/dm/vue-collapsed) ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/smastrom/vue-collapsed/tests.yml?branch=main&label=tests)
+![npm](https://img.shields.io/npm/v/vue-collapsed?color=46c119) ![dependencies](https://img.shields.io/badge/dependencies-0-success) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/vue-collapsed?color=success) ![downloads](https://img.shields.io/npm/dm/vue-collapsed) ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/smastrom/vue-collapsed/chrome.yml?branch=main&label=tests)
 
 # Vue Collapsed
 

@@ -84,7 +84,13 @@ onMounted(() => {
    if (!collapseRef.value) return
    if (!isExpanded.value && baseHeight.value === 0) style.value = VISUALLY_HIDDEN
 
-   autoDuration.value = getAutoDuration(collapseRef.value.scrollHeight - baseHeight.value)
+   const _autoDuration = getAutoDuration(collapseRef.value.scrollHeight - baseHeight.value)
+
+   /**
+    * Autoduration cannot be calculated if collapseRef or any ancestors
+    * have 'display:none' on mount. In this case we cast it to 300ms.
+    */
+   autoDuration.value = _autoDuration <= 0 ? 300 : _autoDuration
    style.value = isExpanded.value ? safeStyles : collapsedStyles.value
 })
 
