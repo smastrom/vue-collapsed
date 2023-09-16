@@ -37,5 +37,7 @@ export function getAutoDuration(height = 0) {
    if (height === 0) return 0
 
    const constant = height / 36
-   return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10)
+   const autoDuration = Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10)
+
+   return Number.isFinite(autoDuration) ? autoDuration : 0
 }

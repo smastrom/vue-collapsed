@@ -4,6 +4,8 @@ export const DEFAULT_TRANSITION = `height var(${AUTO_DUR_VAR}) cubic-bezier(0.33
 
 export const SAFE_STYLES = { padding: 0 } as const
 
+export const FALLBACK_DURATION = 300
+
 export const VISUALLY_HIDDEN = {
    position: 'absolute',
    width: '1px',

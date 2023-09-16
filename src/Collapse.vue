@@ -18,7 +18,12 @@ import {
    type CSSProperties as CSS,
 } from 'vue'
 
-import { SAFE_STYLES as safeStyles, VISUALLY_HIDDEN, AUTO_DUR_VAR } from './constants'
+import {
+   SAFE_STYLES as safeStyles,
+   VISUALLY_HIDDEN,
+   AUTO_DUR_VAR,
+   FALLBACK_DURATION,
+} from './constants'
 import { getTransition, getHeight, getAutoDuration, isReducedOrDisaled } from './utils'
 
 export type TransitionState = 'expanding' | 'expanded' | 'collapsing' | 'collapsed'
@@ -63,7 +68,7 @@ const collapseRef = ref<HTMLElement | null>(null)
 const state = ref<TransitionState>(isExpanded.value ? 'expanded' : 'collapsed')
 const style = shallowRef<CSS>({})
 
-const autoDuration = ref(300)
+const autoDuration = ref(FALLBACK_DURATION)
 const autoDurationVar = computed(() => ({ [AUTO_DUR_VAR]: `${autoDuration.value}ms` }))
 
 function onExpanded() {
@@ -90,7 +95,8 @@ onMounted(() => {
     * Autoduration cannot be calculated if collapseRef or any ancestors
     * have 'display:none' on mount. In this case we cast it to 300ms.
     */
-   autoDuration.value = _autoDuration <= 0 ? 300 : _autoDuration
+   autoDuration.value = _autoDuration <= 0 ? FALLBACK_DURATION : _autoDuration
+
    style.value = isExpanded.value ? safeStyles : collapsedStyles.value
 })
 
