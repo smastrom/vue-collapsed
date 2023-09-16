@@ -1,6 +1,6 @@
 {
    "name": "vue-collapsed",
-   "version": "1.2.7",
+   "version": "1.2.8",
    "private": false,
    "description": "Dynamic CSS height transition from any to auto and vice versa for Vue 3. Accordion ready.",
    "keywords": [
@@ -43,6 +43,7 @@
       "postbuild": "pnpm pack",
       "build:app": "vite build --mode app",
       "dev": "vite",
+      "preview": "vite build --mode app && vite preview",
       "prepare": "husky install",
       "test:chrome": "cypress run --component --browser chrome",
       "test:firefox": "cypress run --component --browser firefox",
