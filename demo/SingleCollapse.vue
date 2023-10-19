@@ -15,15 +15,18 @@ function handleCollapse() {
  * https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion
  */
 
+const TOGGLE_ID = 'toggle'
+const COLLAPSE_ID = 'collapse'
+
 const toggleAttrs = computed(() => ({
-   id: 'toggle',
+   id: TOGGLE_ID,
+   'aria-controls': COLLAPSE_ID,
    'aria-expanded': isExpanded.value,
-   'aria-controls': 'collapse',
 }))
 
 const collapseAttrs = {
-   'aria-labelledby': 'toggle',
-   id: 'collapse',
+   'aria-labelledby': TOGGLE_ID,
+   id: COLLAPSE_ID,
    role: 'region',
 }
 </script>

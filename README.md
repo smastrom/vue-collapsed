@@ -1,4 +1,4 @@
-![npm](https://img.shields.io/npm/v/vue-collapsed?color=46c119) ![dependencies](https://img.shields.io/badge/dependencies-0-success) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/vue-collapsed?color=success) ![downloads](https://img.shields.io/npm/dm/vue-collapsed) ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/smastrom/vue-collapsed/chrome.yml?branch=main&label=tests)
+![npm](https://img.shields.io/npm/v/vue-collapsed?color=46c119) ![dependencies](https://img.shields.io/badge/dependencies-0-success) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/vue-collapsed?color=success) ![downloads](https://img.shields.io/npm/dm/vue-collapsed) ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/smastrom/vue-collapsed/chrome-tests.yml?branch=main&label=tests)
 
 # Vue Collapsed
 
@@ -14,10 +14,6 @@ Check out my other packages for Vue 3:
 > _Fully-featured notification system for Vue and Nuxt._  
 > [Visit repo ➔ ](https://github.com/smastrom/notivue)
 
-> 🔥 **Vue Use Fixed Header**  
-> _Turn your boring fixed header into a smart one with one line of code._  
-> [Visit repo ➔ ](https://github.com/smastrom/vue-use-fixed-header)
-
 > 👌 **Vue Use Active Scroll**  
 > _Accurate TOC/sidebar links without compromises._  
 > [Visit repo ➔ ](https://github.com/smastrom/vue-use-active-scroll)
@@ -27,9 +23,10 @@ Check out my other packages for Vue 3:
 ## Installation
 
 ```shell
-npm i -S vue-collapsed
+npm i vue-collapsed
 # yarn add vue-collapsed
 # pnpm add vue-collapsed
+# bun add vue-collapsed
 ```
 
 ## Props
@@ -63,7 +60,7 @@ const isExpanded = ref(false)
   <button @click="isExpanded = !isExpanded">Trigger</button>
 
   <Collapse :when="isExpanded">
-    <p>This is a paragraph.</p>
+    <p>{{ 'Collapsed '.repeat(100) }}</p>
   </Collapse>
 </template>
 ```
@@ -84,7 +81,7 @@ If you prefer to use a custom duration or easing, add a class to Collapse that t
 
 ```vue
 <Collapse :when="isExpanded" class="v-collapse">
-  <p>This is a paragraph.</p>
+  <p>{{ 'Collapsed '.repeat(100) }}</p>
 </Collapse>
 ```
 
@@ -94,10 +91,6 @@ If you prefer to use a custom duration or easing, add a class to Collapse that t
   /* or transition: height var(--vc-auto-duration) ease-in-out */
 }
 ```
-
-:bulb: Use [calc()](https://developer.mozilla.org/en-US/docs/Web/CSS/calc) to control the speed while keeping the ratio, _e.g. `calc(var(--vc-auto-duration) * 0.75)`_.
-
-:bulb: Find a full list of easings at [easings.net](https://easings.net).
 
 ### Multiple transitions
 
@@ -111,7 +104,9 @@ To transition other properties use the attribute `data-collapse`:
 ```css
 .v-collapse {
   --dur-easing: var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
-  transition: height var(--dur-easing), opacity var(--dur-easing);
+  transition:
+    height var(--dur-easing),
+    opacity var(--dur-easing);
 }
 
 .v-collapse[data-collapse='expanded'],
@@ -141,7 +136,7 @@ Above values can also be accessed using `v-slot`:
 
 ```vue
 <Collapse :when="isExpanded" class="v-collapse" v-slot="{ state }">
-  {{ state === 'collapsing' ? 'Collapsing the content...' : null }}
+  {{ state === 'collapsing' ? 'Collapsing content...' : null }}
 </Collapse>
 ```
 
@@ -212,16 +207,19 @@ import { Collapse } from 'vue-collapsed'
 
 const isExpanded = ref(false)
 
+const TOGGLE_ID = 'toggle-id'
+const COLLAPSE_ID = 'collapse-id'
+
 const toggleAttrs = computed(() => ({
-  id: 'toggle-id',
-  'aria-controls': 'collapse-id',
+  id: TOGGLE_ID,
+  'aria-controls': COLLAPSE_ID,
   'aria-expanded': isExpanded.value
 }))
 
 const collapseAttrs = {
   role: 'region',
-  id: 'collapse-id',
-  'aria-labelledby': 'toggle-id'
+  id: COLLAPSE_ID,
+  'aria-labelledby': TOGGLE_ID
 }
 
 function handleCollapse() {
@@ -233,7 +231,7 @@ function handleCollapse() {
   <div>
     <button v-bind="toggleAttrs" @click="handleCollapse">This a panel.</button>
     <Collapse v-bind="collapseAttrs" :when="isExpanded">
-      <p>This is a paragraph.</p>
+      <p>{{ 'Collapsed '.repeat(100) }}</p>
     </Collapse>
   </div>
 </template>
@@ -244,7 +242,7 @@ function handleCollapse() {
 ```vue
 <template>
   <Collapse :when="isExpanded" class="instant-collapse">
-    <p>This is a paragraph.</p>
+    <p>{{ 'Collapsed '.repeat(100) }}</p>
   </Collapse>
 </template>
 

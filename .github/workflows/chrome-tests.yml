@@ -1,6 +1,8 @@
 name: Chrome Tests
 
-on: [push]
+on:
+   push:
+   workflow_call:
 
 jobs:
    cypress-ct:
@@ -15,8 +17,6 @@ jobs:
            id: pnpm-install
            with:
               version: 8
-              run_install: false
-         - name: Install dependencies
-           run: pnpm install
+              run_install: true
          - name: Chrome tests
            run: pnpm run test:chrome

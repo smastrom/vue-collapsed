@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Collapse } from '../src'
+import { Collapse } from '../dist'
 import { onMounted, ref } from 'vue'
 
 const props = withDefaults(

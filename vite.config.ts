@@ -4,6 +4,8 @@ import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
 import terser from '@rollup/plugin-terser'
 
+const isWatch = process.argv.includes('--watch')
+
 export default defineConfig(({ mode }) => {
    if (mode === 'app') {
       return {
@@ -12,6 +14,7 @@ export default defineConfig(({ mode }) => {
    }
    return {
       build: {
+         emptyOutDir: !isWatch,
          lib: {
             entry: 'src/index.ts',
             name: 'vue-collapsed',
@@ -37,8 +40,6 @@ export default defineConfig(({ mode }) => {
       plugins: [
          vue(),
          dts({
-            staticImport: true,
-            insertTypesEntry: true,
             rollupTypes: true,
          }),
       ],

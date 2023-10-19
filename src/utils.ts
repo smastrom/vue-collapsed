@@ -1,15 +1,24 @@
 import { DEFAULT_TRANSITION } from './constants'
 
-export function getHeight(el: HTMLElement | null) {
+import type { Ref } from 'vue'
+
+type RefEl = Ref<HTMLElement | null>
+
+export function getComputedHeight(el: RefEl) {
+   if (!el.value) return 0
+   return parseFloat(getComputedStyle(el.value).height)
+}
+
+export function getHeightProp(el: RefEl) {
    return {
-      height: `${el?.scrollHeight ?? 0}px`,
+      height: `${el.value?.scrollHeight ?? 0}px`,
    }
 }
 
-export function getTransition(el: HTMLElement | null) {
-   if (!el) return {}
+export function getTransitionProp(el: RefEl) {
+   if (!el.value) return {}
 
-   const { transition } = getComputedStyle(el)
+   const { transition } = getComputedStyle(el.value)
 
    // If transition is not defined, return the default one
    if (transition === 'all 0s ease 0s') return { transition: DEFAULT_TRANSITION }
@@ -17,13 +26,13 @@ export function getTransition(el: HTMLElement | null) {
    return { transition }
 }
 
-export function isReducedOrDisaled(el: HTMLElement | null) {
-   if (!el) return true
+export function isReducedOrDisabled(el: RefEl) {
+   if (!el.value) return true
 
-   const { transition } = getComputedStyle(el)
+   const { transition } = getComputedStyle(el.value)
 
    return (
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      matchMedia('(prefers-reduced-motion: reduce)').matches ||
       transition.includes('none') ||
       transition.includes('height 0s')
    )
