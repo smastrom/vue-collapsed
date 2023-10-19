@@ -1,4 +1,4 @@
-name: Webkit Tests
+name: Firefox Tests
 
 on: [push]
 
@@ -15,8 +15,6 @@ jobs:
            id: pnpm-install
            with:
               version: 8
-              run_install: false
-         - name: Install dependencies
-           run: pnpm install
-         - name: Webkit tests
-           run: pnpm run test:webkit
+              run_install: true
+         - name: Firefox tests
+           run: pnpm run test:firefox
