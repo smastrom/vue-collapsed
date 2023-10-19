@@ -92,10 +92,6 @@ If you prefer to use a custom duration or easing, add a class to Collapse that t
 }
 ```
 
-:bulb: Use [calc()](https://developer.mozilla.org/en-US/docs/Web/CSS/calc) to control the speed while keeping the ratio, _e.g. `calc(var(--vc-auto-duration) * 0.75)`_.
-
-:bulb: Find a full list of easings at [easings.net](https://easings.net).
-
 ### Multiple transitions
 
 To transition other properties use the attribute `data-collapse`:
@@ -235,7 +231,7 @@ function handleCollapse() {
   <div>
     <button v-bind="toggleAttrs" @click="handleCollapse">This a panel.</button>
     <Collapse v-bind="collapseAttrs" :when="isExpanded">
-      <p>{{ 'Collapsed'.repeat(100) }}</p>
+      <p>{{ 'Collapsed '.repeat(100) }}</p>
     </Collapse>
   </div>
 </template>
