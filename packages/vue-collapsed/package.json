@@ -1,0 +1,62 @@
+{
+   "name": "vue-collapsed",
+   "version": "1.2.9",
+   "private": false,
+   "description": "Dynamic CSS height transition from any to auto and vice versa for Vue 3. Accordion ready.",
+   "keywords": [
+      "vue",
+      "vue-3",
+      "vue-collapse",
+      "vue-accordion",
+      "collapse",
+      "accordion",
+      "vue-component"
+   ],
+   "homepage": "https://vue-collapsed.netlify.app/",
+   "bugs": {
+      "url": "https://github.com/smastrom/vue-collapsed/issues"
+   },
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/smastrom/vue-collapsed.git"
+   },
+   "license": "MIT",
+   "author": {
+      "name": "Simone Mastromattei",
+      "email": "smastrom@proton.me"
+   },
+   "main": "dist/index.js",
+   "module": "dist/index.mjs",
+   "types": "dist/index.d.ts",
+   "exports": {
+      ".": {
+         "import": "./dist/index.mjs",
+         "require": "./dist/index.js",
+         "types": "./dist/index.d.ts"
+      }
+   },
+   "files": [
+      "dist/*"
+   ],
+   "scripts": {
+      "watch": "rm -rf dist && vite build --watch",
+      "build": "cp ../../README.md ../../LICENSE . && vite build",
+      "postbuild": "pnpm pack",
+      "test:chrome": "vite build && cypress run --component --browser chrome",
+      "test:firefox": "vite build && cypress run --component --browser firefox",
+      "test:gui": "concurrently \"pnpm watch\" \"cypress open --component\""
+   },
+   "devDependencies": {
+      "@types/node": "^20.8.7",
+      "@vitejs/plugin-vue": "^4.4.0",
+      "concurrently": "^8.2.2",
+      "cypress": "^13.3.2",
+      "cypress-wait-frames": "^0.9.4",
+      "husky": "^8.0.3",
+      "typescript": "^5.2.2",
+      "vite": "^4.5.0",
+      "vite-plugin-dts": "^3.6.0",
+      "vue": "^3.3.4",
+      "vue-tsc": "^1.8.19"
+   }
+}

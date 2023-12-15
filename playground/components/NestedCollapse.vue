@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { reactive } from 'vue'
-
-import ExampleHeader from './ExampleHeader.vue'
+import { Collapse } from 'vue-collapsed'
 
 const nested = reactive({
    first: true, // Initial value

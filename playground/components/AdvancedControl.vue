@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-
-import ExampleHeader from './ExampleHeader.vue'
+import { Collapse } from 'vue-collapsed'
 
 const isExpanded = ref(true)
 
@@ -32,7 +30,9 @@ function handleCollapse() {
 .AdvancedCollapse {
    --easing-dur: calc(var(--vc-auto-duration) * 1.5) cubic-bezier(0.33, 1, 0.68, 1);
 
-   transition: height var(--easing-dur), background-color var(--easing-dur),
+   transition:
+      height var(--easing-dur),
+      background-color var(--easing-dur),
       border-radius var(--easing-dur);
 }
 

@@ -1,12 +1,3 @@
-<script setup lang="ts">
-import SingleCollapse from './SingleCollapse.vue'
-import Accordion from './Accordion.vue'
-import IndividualControl from './IndividualControl.vue'
-import WithCallbacks from './WithCallbacks.vue'
-import AdvancedControl from './AdvancedControl.vue'
-import NestedCollapse from './NestedCollapse.vue'
-</script>
-
 <template>
    <header class="AppHeader">
       <h1>Vue Collapsed</h1>
@@ -84,8 +75,19 @@ body {
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-      Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+   font-family:
+      Inter,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      'Fira Sans',
+      'Droid Sans',
+      'Helvetica Neue',
+      sans-serif;
 }
 
 main {

@@ -88,6 +88,10 @@ function onCollapsed() {
 
 // Lifecycle / Watchers
 
+function initStyles() {
+   if (!isExpanded.value && baseHeight.value === 0) return VISUALLY_HIDDEN
+}
+
 onMounted(() => {
    if (!collapseRef.value) return
    if (!isExpanded.value && baseHeight.value === 0) replaceStyles(VISUALLY_HIDDEN)

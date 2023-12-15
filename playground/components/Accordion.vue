@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
-
-import ExampleHeader from './ExampleHeader.vue'
-
-import fakeData from './fakeData.json'
+import { Collapse } from 'vue-collapsed'
 
 const questions = reactive(
    fakeData.map(({ title, answer }, index) => ({
