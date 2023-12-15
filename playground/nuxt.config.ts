@@ -5,4 +5,5 @@ export default defineNuxtConfig({
    app: {
       head: getHead(),
    },
+   css: ['@/assets/style.css'],
 })
