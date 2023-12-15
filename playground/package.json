@@ -1,10 +1,10 @@
 {
-   "name": "nuxt-app",
+   "name": "vue-collapsed-playground",
    "private": true,
    "type": "module",
    "scripts": {
       "build": "nuxt build",
-      "dev": "nuxt dev",
+      "dev": "npx nuxi cleanup && nuxt dev",
       "generate": "nuxt generate",
       "preview": "nuxt preview",
       "postinstall": "nuxt prepare"
