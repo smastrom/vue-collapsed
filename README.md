@@ -4,7 +4,7 @@
 
 Dynamic CSS height transition from _any to auto_ and vice versa. Accordion ready.
 
-[Examples and Demo](https://vue-collapsed.netlify.com) - [Stackblitz](https://stackblitz.com/edit/vue-dmjqey?file=src/App.vue)
+[Examples and Demo](https://vue-collapsed.pages.dev) - [Stackblitz](https://stackblitz.com/edit/vue-dmjqey?file=src/App.vue)
 
 <br />
 

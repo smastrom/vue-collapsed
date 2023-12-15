@@ -6,7 +6,7 @@ export default defineNuxtConfig({
       head: getHead(),
    },
    nitro: {
-      preset: 'netlify',
+      preset: 'cloudflare-pages',
    },
    css: ['@/assets/style.css'],
 })
