@@ -1,0 +1,21 @@
+{
+   "name": "vue-collapsed-playground",
+   "private": true,
+   "type": "module",
+   "scripts": {
+      "build": "nuxt build",
+      "dev": "npx nuxi cleanup && nuxt dev",
+      "generate": "nuxt generate",
+      "preview": "nuxt preview",
+      "postinstall": "nuxt prepare"
+   },
+   "dependencies": {
+      "vue-collapsed": "workspace:*"
+   },
+   "devDependencies": {
+      "@nuxt/devtools": "latest",
+      "nuxt": "^3.8.2",
+      "vue": "^3.3.10",
+      "vue-router": "^4.2.5"
+   }
+}

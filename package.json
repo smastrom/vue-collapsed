@@ -1,71 +1,26 @@
 {
-   "name": "vue-collapsed",
-   "version": "1.2.9",
-   "private": false,
-   "description": "Dynamic CSS height transition from any to auto and vice versa for Vue 3. Accordion ready.",
-   "keywords": [
-      "vue",
-      "vue-3",
-      "vue-collapse",
-      "vue-accordion",
-      "collapse",
-      "accordion",
-      "vue-component"
-   ],
-   "homepage": "https://vue-collapsed.netlify.app/",
-   "bugs": {
-      "url": "https://github.com/smastrom/vue-collapsed/issues"
+   "name": "vue-collapsed-monorepo",
+   "private": true,
+   "packageManager": "pnpm@8.12.1",
+   "engines": {
+      "node": ">=20.0.0"
    },
-   "repository": {
-      "type": "git",
-      "url": "https://github.com/smastrom/vue-collapsed.git"
-   },
-   "license": "MIT",
-   "author": {
-      "name": "Simone Mastromattei",
-      "email": "smastrom@proton.me"
-   },
-   "main": "dist/index.js",
-   "module": "dist/index.mjs",
-   "types": "dist/index.d.ts",
-   "exports": {
-      ".": {
-         "import": "./dist/index.mjs",
-         "require": "./dist/index.js",
-         "types": "./dist/index.d.ts"
-      }
-   },
-   "files": [
-      "dist/*"
-   ],
    "scripts": {
-      "build": "vite build",
-      "postbuild": "pnpm pack",
-      "build:app": "vite build && vite build --mode app",
-      "dev": "concurrently \"vite\" \"vite build --watch\"",
-      "preview": "vite build:app && vite preview",
-      "prepare": "husky install",
-      "test:chrome": "pnpm build && cypress run --component --browser chrome",
-      "test:firefox": "pnpm build && cypress run --component --browser firefox",
-      "test:gui": "concurrently \"vite build --watch\" \"cypress open --component\""
-   },
-   "lint-staged": {
-      "*.{ts,vue,md}": "prettier --write"
+      "dev": "pnpm build && concurrently \"pnpm -C packages/vue-collapsed run watch\" \"pnpm -C playground install && pnpm -C playground run dev --host\"",
+      "build": "pnpm -C packages/vue-collapsed run build",
+      "build:app": "pnpm build && pnpm install && pnpm -C playground run build",
+      "test:chrome": "pnpm -C packages/vue-collapsed run test:chrome",
+      "test:firefox": "pnpm -C packages/vue-collapsed run test:firefox",
+      "test:gui": "pnpm -C packages/vue-collapsed run test:gui",
+      "prepare": "husky install"
    },
    "devDependencies": {
-      "@rollup/plugin-terser": "^0.4.4",
-      "@types/node": "^20.8.7",
-      "@vitejs/plugin-vue": "^4.4.0",
       "concurrently": "^8.2.2",
-      "cypress": "^13.3.2",
-      "cypress-wait-frames": "^0.9.4",
       "husky": "^8.0.3",
-      "lint-staged": "^15.0.2",
-      "prettier": "^3.0.3",
-      "typescript": "^5.2.2",
-      "vite": "^4.5.0",
-      "vite-plugin-dts": "^3.6.0",
-      "vue": "^3.3.4",
-      "vue-tsc": "^1.8.19"
+      "lint-staged": "^15.2.0",
+      "prettier": "^3.1.0"
+   },
+   "lint-staged": {
+      "*.{js,ts,vue,json,css,md}": "prettier --write"
    }
 }

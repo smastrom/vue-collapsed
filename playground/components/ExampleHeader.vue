@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ title: string; href: string; hint?: string }>()
+defineProps<{ title: string; href?: string; hint?: string }>()
 </script>
 
 <template>
@@ -20,12 +20,17 @@ defineProps<{ title: string; href: string; hint?: string }>()
             >
                <circle cx="12" cy="12" r="10"></circle>
                <line x1="12" y1="16" x2="12" y2="12"></line>
-               <line x1="12" y1="8" x2="12.01" y2="8"></line></svg
-            >{{ hint }}
+               <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            {{ hint }}
          </p>
       </div>
+
+      <slot />
+
       <a
-         :href="`https://github.com/smastrom/vue-collapsed/blob/main/demo/${href}`"
+         v-if="!$slots.default"
+         :href="`https://github.com/smastrom/vue-collapsed/blob/main/playground/components/${href}`"
          class="CodeLink"
          target="_blank"
          >View Code</a

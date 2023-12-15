@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { reactive } from 'vue'
-
-import ExampleHeader from './ExampleHeader.vue'
+import { Collapse } from 'vue-collapsed'
 
 const nested = reactive({
    first: true, // Initial value
@@ -66,4 +64,4 @@ wedding ring off his cold, dead finger.
    </article>
 </template>
 
-<!-- Check styles in App.vue -->
+<!-- Check styles in assets/style.css -->

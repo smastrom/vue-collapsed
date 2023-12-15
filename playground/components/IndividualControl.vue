@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-
-import ExampleHeader from './ExampleHeader.vue'
-
-import fakeData from './fakeData.json'
+import { Collapse } from 'vue-collapsed'
 
 const questions = ref(
    fakeData.map(({ title, answer }, index) => ({
@@ -64,4 +60,4 @@ const collapseAttrs = computed(() =>
    </article>
 </template>
 
-<!-- Check styles in App.vue -->
+<!-- Check styles in assets/style.css -->

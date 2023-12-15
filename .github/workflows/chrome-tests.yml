@@ -19,4 +19,4 @@ jobs:
               version: 8
               run_install: true
          - name: Chrome tests
-           run: pnpm run test:chrome
+           run: pnpm test:chrome

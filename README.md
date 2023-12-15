@@ -8,15 +8,23 @@ Dynamic CSS height transition from _any to auto_ and vice versa. Accordion ready
 
 <br />
 
-Check out my other packages for Vue 3:
+Check out my other packages for Vue and Nuxt:
 
 > 🔔 **Notivue**  
 > _Fully-featured notification system for Vue and Nuxt._  
 > [Visit repo ➔ ](https://github.com/smastrom/notivue)
 
+> 🌀 **Vue Global Loader**  
+> _Global loaders made easy for Vue and Nuxt._  
+> [Visit repo ➔ ](https://github.com/smastrom/vue-global-loader)
+
 > 👌 **Vue Use Active Scroll**  
 > _Accurate TOC/sidebar links without compromises._  
 > [Visit repo ➔ ](https://github.com/smastrom/vue-use-active-scroll)
+
+> 🔥 **Vue Use Fixed Header**  
+> _Turn your boring fixed header into a smart one with three lines of code._  
+> [Visit repo ➔ ](https://github.com/smastrom/vue-use-fixed-header)
 
 <br />
 

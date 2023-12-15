@@ -52,7 +52,18 @@ const baseHeight = toRef(props, 'baseHeight')
 
 // Computed from props
 
+/**
+ * Styles applied in order to trigger both expanding and collapsing transitions.
+ *
+ * - Expand - applied in the previous frame that triggers the transition.
+ * - Collapse - applied in the same frame that triggers the transition.
+ */
 const baseHeightStyles = computed(() => ({ overflow: 'hidden', height: `${baseHeight.value}px` }))
+
+/**
+ * Styles applied when the element is collapsed, either on initial render
+ * or when the transition is finished.
+ */
 const collapsedStyles = computed(() => ({
    ...SAFE_STYLES,
    ...(baseHeight.value === 0 ? { display: 'none' } : baseHeightStyles.value),
@@ -65,7 +76,26 @@ const collapseRef = ref<HTMLElement | null>(null)
 const state = ref<TransitionState>(isExpanded.value ? 'expanded' : 'collapsed')
 const setState = (newState: TransitionState) => (state.value = newState)
 
-const style = shallowRef<CSS>({})
+function getInitialRenderStyles(): CSS {
+   if (!isExpanded.value) {
+      /**
+       * If collapse should be rendered with display: none, hide it in a way that
+       * we can access the scrollHeight in an 'onMounted' hook to calculate the autoDuration.
+       */
+      if (baseHeight.value === 0) return VISUALLY_HIDDEN
+
+      /**
+       * If baseHeight > 0, element is not rendered with display: none
+       * and the autoDuration will be calculated smoothly in the 'onMounted' hook.
+       * In this case we can already apply the collapsed styles.
+       */
+      return collapsedStyles.value
+   }
+
+   return SAFE_STYLES // ...if expanded, just force the padding to be 0
+}
+
+const style = shallowRef<CSS>(getInitialRenderStyles())
 const replaceStyles = (newStyles: CSS) => (style.value = newStyles)
 const addStyles = (newStyles: CSS) => replaceStyles({ ...style.value, ...newStyles })
 
@@ -86,21 +116,25 @@ function onCollapsed() {
    emit('collapsed')
 }
 
-// Lifecycle / Watchers
+// Auto duration
 
 onMounted(() => {
    if (!collapseRef.value) return
-   if (!isExpanded.value && baseHeight.value === 0) replaceStyles(VISUALLY_HIDDEN)
-
    const _autoDuration = getAutoDuration(collapseRef.value.scrollHeight - baseHeight.value)
 
    /**
-    * Autoduration cannot be calculated if collapseRef or any ancestor
-    * has 'display:none' on mount. In this case we cast it to 300ms.
+    * Autoduration cannot be calculated if any ancestor of the collapse has 'display:none' on mount.
+    * In this case 0 is returned from 'getAutoDuration'. The autoduraion will fallback to the initial ref value.
     */
-   setAutoDuration(_autoDuration <= 0 ? FALLBACK_DURATION : _autoDuration)
-   replaceStyles(isExpanded.value ? SAFE_STYLES : collapsedStyles.value)
+   if (_autoDuration > 0) setAutoDuration(_autoDuration)
+
+   /**
+    * Now we're ready to set the collapsedStyles (display: none) and get rid of VISUALLY_HIDDEN.
+    */
+   if (!isExpanded.value && baseHeight.value === 0) replaceStyles(collapsedStyles.value)
 })
+
+// Collapse / Expand handler
 
 watch(isExpanded, (isExpanding) => {
    if (isExpanding) {
@@ -164,6 +198,7 @@ watch(isExpanded, (isExpanding) => {
 })
 
 // If while collapsed, baseHeight dynamically changes
+
 watch(baseHeight, (newBaseHeight) => {
    if (!isExpanded.value) {
       if (newBaseHeight > 0) {
@@ -174,7 +209,7 @@ watch(baseHeight, (newBaseHeight) => {
    }
 })
 
-// Event handlers
+// Transition events
 
 function onTransitionEnd(e: TransitionEvent) {
    if (e.target === collapseRef.value && e.propertyName === 'height') {

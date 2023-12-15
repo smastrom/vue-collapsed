@@ -19,4 +19,4 @@ jobs:
               version: 8
               run_install: true
          - name: Firefox tests
-           run: pnpm run test:firefox
+           run: pnpm test:firefox

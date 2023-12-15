@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-
-import ExampleHeader from './ExampleHeader.vue'
+import { Collapse } from 'vue-collapsed'
 
 const isExpanded = ref(false)
 
@@ -59,4 +57,4 @@ const collapseAttrs = {
    </article>
 </template>
 
-<!-- Check styles in App.vue -->
+<!-- Check styles in assets/style.css -->

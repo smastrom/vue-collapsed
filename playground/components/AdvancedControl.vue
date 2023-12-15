@@ -1,9 +1,15 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { Collapse } from 'vue-collapsed'
 
-import ExampleHeader from './ExampleHeader.vue'
+// Used for demo purposes only...
+const props = withDefaults(
+   defineProps<{
+      initialState: boolean
+   }>(),
+   { initialState: true }
+)
 
-const isExpanded = ref(true)
+const isExpanded = ref(props.initialState) // ...you should set directly to `false` or `true` in your app
 
 function handleCollapse() {
    isExpanded.value = !isExpanded.value
@@ -13,7 +19,7 @@ function handleCollapse() {
 <template>
    <article class="Wrapper">
       <ExampleHeader
-         title="Advanced Control"
+         :title="`Advanced - ${props.initialState ? 'Expanded' : 'Collapsed'}`"
          href="AdvancedControl.vue"
          hint="BaseHeight, state and data-collapse"
       />
@@ -32,7 +38,9 @@ function handleCollapse() {
 .AdvancedCollapse {
    --easing-dur: calc(var(--vc-auto-duration) * 1.5) cubic-bezier(0.33, 1, 0.68, 1);
 
-   transition: height var(--easing-dur), background-color var(--easing-dur),
+   transition:
+      height var(--easing-dur),
+      background-color var(--easing-dur),
       border-radius var(--easing-dur);
 }
 

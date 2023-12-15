@@ -11,7 +11,7 @@ export function getComputedHeight(el: RefEl) {
 
 export function getHeightProp(el: RefEl) {
    return {
-      height: `${el.value?.scrollHeight ?? 0}px`,
+      height: `${el.value?.scrollHeight || 0}px`,
    }
 }
 
@@ -32,6 +32,7 @@ export function isReducedOrDisabled(el: RefEl) {
    const { transition } = getComputedStyle(el.value)
 
    return (
+      typeof window.requestAnimationFrame === 'undefined' ||
       matchMedia('(prefers-reduced-motion: reduce)').matches ||
       transition.includes('none') ||
       transition.includes('height 0s')
