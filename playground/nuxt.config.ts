@@ -5,5 +5,8 @@ export default defineNuxtConfig({
    app: {
       head: getHead(),
    },
+   nitro: {
+      preset: 'netlify',
+   },
    css: ['@/assets/style.css'],
 })

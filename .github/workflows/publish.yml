@@ -30,8 +30,8 @@ jobs:
          - name: Build
            run: pnpm build
          - name: Pack
-           run: cd packages/vue-collasped && rm -rf *.tgz && npm pack
+           run: cd packages/vue-collapsed && rm -rf *.tgz && npm pack
          - name: Publish
-           run: cd packages/vue-collasped && npm publish *.tgz --provenance
+           run: cd packages/vue-collapsed && npm publish *.tgz --provenance
            env:
               NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
