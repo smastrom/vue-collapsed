@@ -38,4 +38,4 @@ function handleAccordion(selectedIndex: number) {
    </article>
 </template>
 
-<!-- Check styles in App.vue -->
+<!-- Check styles in assets/style.css -->

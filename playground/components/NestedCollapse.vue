@@ -64,4 +64,4 @@ wedding ring off his cold, dead finger.
    </article>
 </template>
 
-<!-- Check styles in App.vue -->
+<!-- Check styles in assets/style.css -->
