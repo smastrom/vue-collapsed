@@ -11,7 +11,7 @@ export function getComputedHeight(el: RefEl) {
 
 export function getHeightProp(el: RefEl) {
    return {
-      height: `${el.value?.scrollHeight ?? 0}px`,
+      height: `${el.value?.scrollHeight || 0}px`,
    }
 }
 
