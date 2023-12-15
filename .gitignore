@@ -1,9 +1,0 @@
-pnpm-lock.yaml
-node_modules
-.DS_Store
-dist
-/cypress/videos/
-/cypress/screenshots/
-.vscode/*
-!.vscode/extensions.json
-*.tgz

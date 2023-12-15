@@ -1,26 +1,5 @@
 {
-   "name": "vue-collapsed-monorepo",
-   "private": true,
-   "packageManager": "pnpm@8.12.1",
-   "engines": {
-      "node": ">=20.0.0"
-   },
-   "scripts": {
-      "dev": "pnpm build && concurrently \"pnpm -C packages/vue-collapsed run watch\" \"pnpm -C playground install && pnpm -C playground run dev --host\"",
-      "build": "pnpm -C packages/vue-collapsed run build",
-      "build:app": "pnpm build && pnpm install && pnpm -C playground run build",
-      "test:chrome": "pnpm -C packages/vue-collapsed run test:chrome",
-      "test:firefox": "pnpm -C packages/vue-collapsed run test:firefox",
-      "test:gui": "pnpm -C packages/vue-collapsed run test:gui",
-      "prepare": "husky install"
-   },
-   "devDependencies": {
-      "concurrently": "^8.2.2",
-      "husky": "^8.0.3",
-      "lint-staged": "^15.2.0",
-      "prettier": "^3.1.0"
-   },
-   "lint-staged": {
-      "*.{js,ts,vue,json,css,md}": "prettier --write"
-   }
+    "scripts": {
+        "build": "echo \"Will redirect to vue-collapsed.pages.dev\" && exit 0"
+    }
 }
