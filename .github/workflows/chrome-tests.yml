@@ -14,9 +14,10 @@ jobs:
               node-version: '18'
          - uses: pnpm/action-setup@v2
            name: Install pnpm
-           id: pnpm-install
            with:
               version: 8
               run_install: true
+         - name: Install Cypress binaries
+           run: npx cypress install
          - name: Chrome tests
            run: pnpm test:chrome
