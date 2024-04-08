@@ -39,13 +39,6 @@ export function isReducedOrDisabled(el: RefEl) {
 
    const { transition } = getComputedStyle(el.value)
 
-   console.log(
-      typeof window.requestAnimationFrame === 'undefined' ||
-         window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-         transition.includes('none') ||
-         transition.includes('height 0s')
-   )
-
    return (
       typeof window.requestAnimationFrame === 'undefined' ||
       window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
