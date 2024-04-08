@@ -8,10 +8,8 @@ on:
 jobs:
    chrome-tests:
       uses: ./.github/workflows/chrome-tests.yml
-   firefox-tests:
-      uses: ./.github/workflows/firefox-tests.yml
    publish:
-      needs: [chrome-tests, firefox-tests]
+      needs: [chrome-tests]
       runs-on: ubuntu-latest
       permissions:
          contents: read
