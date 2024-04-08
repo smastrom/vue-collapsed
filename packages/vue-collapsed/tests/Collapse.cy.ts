@@ -2,18 +2,6 @@ import App from './App.vue'
 import { getRandomIntInclusive, isFirefox } from '../cypress/support/component'
 
 describe('Collapse', () => {
-   beforeEach(() => {
-      /**
-       * For some unknown reason on Cypress Firefox >=124 (only on CI) reduced motion is always set to 'reduce',
-       * using this stub to force it to return true.
-       */
-      if (isFirefox) {
-         cy.stub(window, 'matchMedia').withArgs('(prefers-reduced-motion: reduce)').returns({
-            matches: false,
-         })
-      }
-   })
-
    it('Should be able to set different tag name', () => {
       cy.mount(App, {
          props: {
