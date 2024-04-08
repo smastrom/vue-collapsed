@@ -212,18 +212,18 @@ watch(baseHeight, (newBaseHeight) => {
 // Transition events
 
 function onTransitionEnd(e: TransitionEvent) {
-   if (e.target === collapseRef.value && e.propertyName === 'height') {
+   if (e.target && e.target === collapseRef.value && e.propertyName === 'height') {
       /**
        * Reset styles to the initial style state,
        * we also make sure callbacks are triggered only once
        * when transitions are 100% finished.
        */
       if (isExpanded.value) {
-         if (collapseRef.value?.scrollHeight === getComputedHeight(collapseRef)) {
+         if (Math.abs(collapseRef.value.scrollHeight - getComputedHeight(collapseRef)) < 1) {
             onExpanded()
          }
       } else {
-         if (baseHeight.value === getComputedHeight(collapseRef)) {
+         if (Math.abs(collapseRef.value.scrollHeight - baseHeight.value) < 1) {
             onCollapsed()
          }
       }
