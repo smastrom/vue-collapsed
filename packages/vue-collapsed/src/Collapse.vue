@@ -223,7 +223,7 @@ function onTransitionEnd(e: TransitionEvent) {
             onExpanded()
          }
       } else {
-         if (Math.abs(collapseRef.value.scrollHeight - baseHeight.value) < 1) {
+         if (Math.abs(baseHeight.value - getComputedHeight(collapseRef)) < 1) {
             onCollapsed()
          }
       }
