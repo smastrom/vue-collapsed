@@ -20,6 +20,6 @@ jobs:
          - name: Install deps
            run: pnpm i
          - name: Install Cypress binaries
-           run: npx cypress install
+           run: pnpm dlx cypress install
          - name: Chrome tests
            run: pnpm test:chrome
