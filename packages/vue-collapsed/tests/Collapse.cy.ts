@@ -1,6 +1,18 @@
 import App from './App.vue'
 import { getRandomIntInclusive, isFirefox } from '../cypress/support/component'
 
+beforeEach(() => {
+   /**
+    * For some unknown reason on Cypress Firefox >=124 (only on CI) reduced motion is always set to 'reduce',
+    * using this stub to force it to return true.
+    */
+   if (isFirefox) {
+      cy.stub(window, 'matchMedia').withArgs('(prefers-reduced-motion: reduce)').returns({
+         matches: false,
+      })
+   }
+})
+
 it('Should be able to set different tag name', () => {
    cy.mount(App, {
       props: {
@@ -113,42 +125,39 @@ it('Should update data-collapse attribute properly', () => {
    }
 })
 
-// Bugged CI test, works locally and with any other browser
-if (!isFirefox) {
-   describe('Should execute callbacks properly', () => {
-      function testCallbacks(isLastActionExpand: boolean) {
-         const repeatEven = getRandomIntInclusive(10, 20) * 2
-         for (let i = 0; i < repeatEven; i++) {
-            cy.get('#TriggerButton').click().wait(50)
-         }
-
-         cy.get('#CountExpand')
-            .should('have.text', `${repeatEven / 2}`)
-            .get('#CountExpanded')
-            .should('have.text', isLastActionExpand ? '0' : '1')
-            .get('#CountCollapse')
-            .should('have.text', `${repeatEven / 2}`)
-            .get('#CountCollapsed')
-            .should('have.text', isLastActionExpand ? '1' : '0')
+describe('Should execute callbacks properly', () => {
+   function testCallbacks(isLastActionExpand: boolean) {
+      const repeatEven = getRandomIntInclusive(10, 20) * 2
+      for (let i = 0; i < repeatEven; i++) {
+         cy.get('#TriggerButton').click().wait(50)
       }
 
-      it('Expand as last action', () => {
-         cy.mount(App)
+      cy.get('#CountExpand')
+         .should('have.text', `${repeatEven / 2}`)
+         .get('#CountExpanded')
+         .should('have.text', isLastActionExpand ? '0' : '1')
+         .get('#CountCollapse')
+         .should('have.text', `${repeatEven / 2}`)
+         .get('#CountCollapsed')
+         .should('have.text', isLastActionExpand ? '1' : '0')
+   }
 
-         testCallbacks(true)
-      })
+   it('Expand as last action', () => {
+      cy.mount(App)
 
-      it('Collapse as last action', () => {
-         cy.mount(App, {
-            props: {
-               initialValue: true,
-            },
-         })
-
-         testCallbacks(false)
-      })
+      testCallbacks(true)
    })
-}
+
+   it('Collapse as last action', () => {
+      cy.mount(App, {
+         props: {
+            initialValue: true,
+         },
+      })
+
+      testCallbacks(false)
+   })
+})
 
 describe('With baseHeight > 0', () => {
    it('Should have correct styles if collapsed on mount', () => {
