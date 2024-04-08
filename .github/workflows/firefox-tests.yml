@@ -6,17 +6,19 @@ on:
 
 jobs:
    cypress-ct:
-      runs-on: macos-latest
+      runs-on: ubuntu-latest
       steps:
          - uses: actions/checkout@v3
          - uses: actions/setup-node@v3
            with:
-              node-version: '20'
+              node-version: 20
          - uses: pnpm/action-setup@v2
            name: Install pnpm
            with:
               version: 8
-              run_install: true
+              run_install: false
+         - name: Install deps
+           run: pnpm i
          - name: Install Cypress binaries
            run: npx cypress install
          - name: Firefox tests
