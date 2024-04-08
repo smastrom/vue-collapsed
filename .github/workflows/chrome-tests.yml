@@ -11,13 +11,15 @@ jobs:
          - uses: actions/checkout@v3
          - uses: actions/setup-node@v3
            with:
-              node-version: '18'
+              node-version: 21
          - uses: pnpm/action-setup@v2
            name: Install pnpm
            with:
               version: 8
-              run_install: true
+              run_install: false
+         - name: Install deps
+           run: pnpm i
          - name: Install Cypress binaries
-           run: npx cypress install
+           run: pnpm dlx cypress install
          - name: Chrome tests
            run: pnpm test:chrome

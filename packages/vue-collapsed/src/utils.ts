@@ -41,7 +41,7 @@ export function isReducedOrDisabled(el: RefEl) {
 
    return (
       typeof window.requestAnimationFrame === 'undefined' ||
-      matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
       transition.includes('none') ||
       transition.includes('height 0s')
    )
