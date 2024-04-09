@@ -163,7 +163,7 @@ watch(isExpanded, (isExpanding) => {
       })
 
       requestAnimationFrame(() => {
-         /** If for any unknown edge case the scrollHeight === 0, abort transition force expand */
+         /** If for any unknown edge case the scrollHeight === 0, abort transition and force expand */
          if (collapseRef.value!.scrollHeight === 0) return onExpanded()
 
          /** Set height to scrollHeight and trigger the transition. */
