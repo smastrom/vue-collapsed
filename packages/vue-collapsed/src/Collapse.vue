@@ -137,6 +137,8 @@ onMounted(() => {
 // Collapse / Expand handler
 
 watch(isExpanded, (isExpanding) => {
+   if (!collapseRef.value) return
+
    if (isExpanding) {
       if (isReducedOrDisabled(collapseRef)) return onExpanded()
 
@@ -161,7 +163,11 @@ watch(isExpanded, (isExpanding) => {
       })
 
       requestAnimationFrame(() => {
+         /** If for any unknown edge case the scrollHeight === 0, abort transition force expand */
+         if (collapseRef.value!.scrollHeight === 0) return onExpanded()
+
          /** Set height to scrollHeight and trigger the transition. */
+
          addStyles({
             ...getHeightProp(collapseRef),
             ...getTransitionProp(collapseRef),
@@ -185,6 +191,9 @@ watch(isExpanded, (isExpanding) => {
          ...autoDurationVar.value,
          ...getHeightProp(collapseRef),
       })
+
+      /** Same as for expand, abort transition and force collapse */
+      if (collapseRef.value.scrollHeight === 0) return onCollapsed()
 
       requestAnimationFrame(() => {
          /** Set height to baseHeight and trigger the transition. */
