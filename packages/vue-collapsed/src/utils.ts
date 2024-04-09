@@ -43,7 +43,8 @@ export function isReducedOrDisabled(el: RefEl) {
       typeof window.requestAnimationFrame === 'undefined' ||
       window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
       transition.includes('none') ||
-      transition.includes('height 0s')
+      transition.includes('height 0s') ||
+      el.value.scrollHeight === 0
    )
 }
 
