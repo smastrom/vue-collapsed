@@ -11,12 +11,6 @@ export function getComputedHeight(el: RefEl) {
    return parseFloat(getComputedStyle(el.value).height)
 }
 
-export function getHeightProp(el: RefEl) {
-   return {
-      height: `${el.value?.scrollHeight || 0}px`,
-   }
-}
-
 export function getTransitionProp(el: RefEl) {
    if (!el.value) return {}
 
