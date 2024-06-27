@@ -4,7 +4,7 @@ import { Collapse } from 'vue-collapsed'
 // Used for demo purposes only...
 const props = withDefaults(
    defineProps<{
-      initialState: boolean
+      initialState?: boolean
    }>(),
    { initialState: true }
 )
