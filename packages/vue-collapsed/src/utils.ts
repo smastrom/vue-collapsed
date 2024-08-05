@@ -16,7 +16,7 @@ export function getTransitionProp(el: RefEl) {
 
    // If transition is not defined via CSS, return the default one referencing the auto duration
    if (transition === 'all 0s ease 0s' || transition === 'all') {
-      /* Since Firefox v124 and Chromium v128, their rendering engine transition computes 'all' instead of 'all 0s ease 0s'  */
+      /* Since Firefox v124 and Chromium v128, their rendering engines compute 'all' instead of 'all 0s ease 0s' as default transition */
       return { transition: DEFAULT_TRANSITION }
    }
 
