@@ -6,4 +6,5 @@ dist
 /cypress/screenshots/
 .vscode/*
 !.vscode/extensions.json
+.idea
 *.tgz

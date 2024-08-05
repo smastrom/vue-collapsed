@@ -1,4 +1,5 @@
 import App from './App.vue'
+
 import { getRandomIntInclusive, isFirefox } from '../cypress/support/component'
 
 describe('Collapse', () => {
@@ -275,13 +276,7 @@ describe('Collapse', () => {
 
          const transition = 'height 0.3s cubic-bezier(0.33, 1, 0.68, 1)'
 
-         cy.get('#Collapse').should(
-            'have.css',
-            'transition',
-            isFirefox
-               ? transition // Firefox >= 124 doesn't include '0s' by default anymore
-               : `${transition} 0s`
-         )
+         cy.get('#Collapse').should('have.css', 'transition', transition)
 
          cy.get('#Collapse').and('have.attr', 'style').and('include', '--vc-auto-duration: 300ms')
       })

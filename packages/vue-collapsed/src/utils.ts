@@ -4,17 +4,9 @@ import type { Ref } from 'vue'
 
 type RefEl = Ref<HTMLElement | null>
 
-const isFirefox = () => typeof navigator !== 'undefined' && navigator.userAgent.includes('Firefox')
-
 export function getComputedHeight(el: RefEl) {
    if (!el.value) return 0
    return parseFloat(getComputedStyle(el.value).height)
-}
-
-export function getHeightProp(el: RefEl) {
-   return {
-      height: `${el.value?.scrollHeight || 0}px`,
-   }
 }
 
 export function getTransitionProp(el: RefEl) {
@@ -23,13 +15,10 @@ export function getTransitionProp(el: RefEl) {
    const { transition } = getComputedStyle(el.value)
 
    // If transition is not defined via CSS, return the default one referencing the auto duration
-   if (
-      transition === 'all 0s ease 0s' ||
-      (isFirefox() &&
-         transition ===
-            'all') /* Since Firefox v124, Gecko returns transition 'all' instead of 'all 0s ease 0s' */
-   )
+   if (transition === 'all 0s ease 0s' || transition === 'all') {
+      /* Since Firefox v124 and Chromium v128, their rendering engines compute 'all' instead of 'all 0s ease 0s' as default transition */
       return { transition: DEFAULT_TRANSITION }
+   }
 
    return { transition }
 }

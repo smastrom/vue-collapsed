@@ -11,13 +11,7 @@ import {
 } from 'vue'
 
 import { SAFE_STYLES, VISUALLY_HIDDEN, AUTO_DUR_VAR, FALLBACK_DURATION } from './constants'
-import {
-   getTransitionProp,
-   getComputedHeight,
-   getHeightProp,
-   getAutoDuration,
-   isReducedOrDisabled,
-} from './utils'
+import { getTransitionProp, getComputedHeight, getAutoDuration, isReducedOrDisabled } from './utils'
 
 export type TransitionState = 'expanding' | 'expanded' | 'collapsing' | 'collapsed'
 
@@ -104,6 +98,15 @@ const setAutoDuration = (newDuration: number) => (autoDuration.value = newDurati
 
 const autoDurationVar = computed(() => ({ [AUTO_DUR_VAR]: `${autoDuration.value}ms` }))
 
+/**
+ * In some edge cases, Collapse may have children elements that also expand
+ * their height while expanding.
+ *
+ * When this occurs, the 'scrollHeight' obtained on transition start will be lower than
+ * the same 'scrollHeight' obtained on transition end.
+ */
+let transitionStartScrollHeight = NaN
+
 function onExpanded() {
    replaceStyles(SAFE_STYLES)
    setState('expanded')
@@ -139,6 +142,8 @@ onMounted(() => {
 watch(isExpanded, (isExpanding) => {
    if (!collapseRef.value) return
 
+   transitionStartScrollHeight = NaN
+
    if (isExpanding) {
       if (isReducedOrDisabled(collapseRef)) return onExpanded()
 
@@ -168,9 +173,11 @@ watch(isExpanded, (isExpanding) => {
 
          /** Set height to scrollHeight and trigger the transition. */
 
+         transitionStartScrollHeight = collapseRef.value!.scrollHeight
+
          addStyles({
-            ...getHeightProp(collapseRef),
             ...getTransitionProp(collapseRef),
+            height: `${transitionStartScrollHeight}px`,
             willChange: 'height',
          })
       })
@@ -189,7 +196,7 @@ watch(isExpanded, (isExpanding) => {
 
       addStyles({
          ...autoDurationVar.value,
-         ...getHeightProp(collapseRef),
+         height: `${collapseRef.value!.scrollHeight}px`,
       })
 
       /** Same as for expand, abort transition and force collapse */
@@ -230,6 +237,15 @@ function onTransitionEnd(e: TransitionEvent) {
       if (isExpanded.value) {
          if (Math.abs(collapseRef.value.scrollHeight - getComputedHeight(collapseRef)) < 1) {
             onExpanded()
+         } else if (transitionStartScrollHeight < collapseRef.value.scrollHeight) {
+            /**
+             * A child element expanded its height while Collapse
+             * is transitioning, update the height and trigger
+             * the transition again.
+             */
+            addStyles({
+               height: `${collapseRef.value.scrollHeight}px`,
+            })
          }
       } else {
          if (Math.abs(baseHeight.value - getComputedHeight(collapseRef)) < 1) {
