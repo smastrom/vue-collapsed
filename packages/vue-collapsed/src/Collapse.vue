@@ -168,12 +168,13 @@ watch(isExpanded, (isExpanding) => {
       })
 
       requestAnimationFrame(() => {
+         if (!collapseRef.value) return
          /** If for any unknown edge case the scrollHeight === 0, abort transition and force expand */
-         if (collapseRef.value!.scrollHeight === 0) return onExpanded()
+         if (collapseRef.value.scrollHeight === 0) return onExpanded()
 
          /** Set height to scrollHeight and trigger the transition. */
 
-         transitionStartScrollHeight = collapseRef.value!.scrollHeight
+         transitionStartScrollHeight = collapseRef.value.scrollHeight
 
          addStyles({
             ...getTransitionProp(collapseRef),
@@ -203,6 +204,7 @@ watch(isExpanded, (isExpanding) => {
       if (collapseRef.value.scrollHeight === 0) return onCollapsed()
 
       requestAnimationFrame(() => {
+         if (!collapseRef.value) return
          /** Set height to baseHeight and trigger the transition. */
          addStyles({
             ...baseHeightStyles.value,
@@ -228,6 +230,8 @@ watch(baseHeight, (newBaseHeight) => {
 // Transition events
 
 function onTransitionEnd(e: TransitionEvent) {
+   if (!collapseRef.value) return
+
    if (e.target && e.target === collapseRef.value && e.propertyName === 'height') {
       /**
        * Reset styles to the initial style state,
