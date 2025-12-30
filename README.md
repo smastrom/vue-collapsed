@@ -2,70 +2,29 @@
 
 # Vue Collapsed
 
-Dynamic CSS height transition from _any to auto_ and vice versa. Accordion ready.
+Dynamic CSS height transition from _any value to auto_ and vice versa. Accordion-ready.
 
 [Examples and Demo](https://vue-collapsed.pages.dev) - [Stackblitz](https://stackblitz.com/edit/vue-dmjqey?file=src/App.vue)
-
-<br />
-
-Check out my other packages for Vue and Nuxt:
-
-> 🔔 **Notivue**  
-> _Fully-featured notification system for Vue and Nuxt._  
-> [Visit repo ➔ ](https://github.com/smastrom/notivue)
-
-> 🌀 **Vue Global Loader**  
-> _Global loaders made easy for Vue and Nuxt._  
-> [Visit repo ➔ ](https://github.com/smastrom/vue-global-loader)
-
-> 👌 **Vue Use Active Scroll**  
-> _Accurate TOC/sidebar links without compromises._  
-> [Visit repo ➔ ](https://github.com/smastrom/vue-use-active-scroll)
-
-> 🔥 **Vue Use Fixed Header**  
-> _Turn your boring fixed header into a smart one with three lines of code._  
-> [Visit repo ➔ ](https://github.com/smastrom/vue-use-fixed-header)
-
-<br />
 
 ## Installation
 
 ```shell
 npm i vue-collapsed
-# yarn add vue-collapsed
-# pnpm add vue-collapsed
-# bun add vue-collapsed
 ```
-
-## Props
-
-| Name         | Description                              | Type                          | Required           |
-| ------------ | ---------------------------------------- | ----------------------------- | ------------------ |
-| `when`       | Value to control collapse                | boolean                       | :white_check_mark: |
-| `baseHeight` | Collapsed height in px, defaults to `0`. | number                        | :x:                |
-| `as`         | Tag to use instead of `div`              | _keyof_ HTMLElementTagNameMap | :x:                |
-
-## Emits
-
-| Name         | Description                   | Type       |
-| ------------ | ----------------------------- | ---------- |
-| `@expand`    | Expand transition start       | () => void |
-| `@expanded`  | Expand transition completed   | () => void |
-| `@collapse`  | Collapse transition start     | () => void |
-| `@collapsed` | Collapse transition completed | () => void |
 
 ## Usage
 
 ```vue
 <script setup>
 import { ref } from 'vue'
+
 import { Collapse } from 'vue-collapsed'
 
 const isExpanded = ref(false)
 </script>
 
 <template>
-  <button @click="isExpanded = !isExpanded">Trigger</button>
+  <button @click="isExpanded = !isExpanded">Toggle</button>
 
   <Collapse :when="isExpanded">
     <p>{{ 'Collapsed '.repeat(100) }}</p>
@@ -73,36 +32,52 @@ const isExpanded = ref(false)
 </template>
 ```
 
-## Automatic transition (default behavior)
+## Props
 
-By default, if no height transition is specified the following one is automatically added to the Collapse element:
+| Name         | Type                          | Description                              | Required           |
+| ------------ | ----------------------------- | ---------------------------------------- | ------------------ |
+| `when`       | boolean                       | Controls the collapse/expand state       | :white_check_mark: |
+| `baseHeight` | number                        | Collapsed height in px. Defaults to `0`. | :x:                |
+| `as`         | _keyof_ HTMLElementTagNameMap | Tag to use instead of `div`              | :x:                |
 
-`height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1)`
+## Emits
 
-`--vc-auto-duration` is calculated in background and corresponds to an optimal transition duration based on your content height.
+| Name         | Type       | Description                      |
+| ------------ | ---------- | -------------------------------- |
+| `@expand`    | () => void | Emitted when expansion starts    |
+| `@expanded`  | () => void | Emitted when expansion completes |
+| `@collapse`  | () => void | Emitted when collapse starts     |
+| `@collapsed` | () => void | Emitted when collapse completes  |
 
-This is the recommended way to use this package unless you want to customize the transition.
+## Automatic transition (default)
+
+By default, the following transition is always added to the `Collapse` element:
+
+```css
+transition: height var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
+```
+
+`--vc-auto-duration` is calculated dynamically and corresponds to the optimal transition duration based on the element's height.
 
 ## Custom transition
 
-If you prefer to use a custom duration or easing, add a class to Collapse that transitions the `height` property:
+To use a custom duration or easing, add a class to the `Collapse` component that transitions the `height` property:
+
+```css
+.collapsed-area {
+  transition: height 300ms ease-out;
+}
+```
 
 ```vue
-<Collapse :when="isExpanded" class="v-collapse">
+<Collapse :when="isExpanded" class="collapsed-area">
   <p>{{ 'Collapsed '.repeat(100) }}</p>
 </Collapse>
 ```
 
-```css
-.v-collapse {
-  transition: height 300ms ease-out;
-  /* or transition: height var(--vc-auto-duration) ease-in-out */
-}
-```
-
 ### Multiple transitions
 
-To transition other properties use the attribute `data-collapse`:
+To transition other properties, use the `data-collapse` attribute:
 
 | Transition | From        | Enter        | Leave       |
 | ---------- | ----------- | ------------ | ----------- |
@@ -110,41 +85,42 @@ To transition other properties use the attribute `data-collapse`:
 | Collapse   | `expanded`  | `collapsing` | `collapsed` |
 
 ```css
-.v-collapse {
-  --dur-easing: var(--vc-auto-duration) cubic-bezier(0.33, 1, 0.68, 1);
+.collapsed-area {
+  --transition-base: 300ms cubic-bezier(0.33, 1, 0.68, 1);
+
   transition:
-    height var(--dur-easing),
-    opacity var(--dur-easing);
+    height var(--transition-base),
+    opacity var(--transition-base);
 }
 
-.v-collapse[data-collapse='expanded'],
-.v-collapse[data-collapse='expanding'] {
+.collapsed-area[data-collapse='expanded'],
+.collapsed-area[data-collapse='expanding'] {
   opacity: 1;
 }
 
-.v-collapse[data-collapse='collapsed'],
-.v-collapse[data-collapse='collapsing'] {
+.collapsed-area[data-collapse='collapsed'],
+.collapsed-area[data-collapse='collapsing'] {
   opacity: 0;
 }
 ```
 
-Or to use different easings/durations for expand and collapse:
+Alternatively, to use different easings or durations for expanding and collapsing:
 
 ```css
-.v-collapse[data-collapse='expanding'] {
+.collapsed-area[data-collapse='expanding'] {
   transition: height 600ms ease-in-out;
 }
 
-.v-collapse[data-collapse='collapsing'] {
+.collapsed-area[data-collapse='collapsing'] {
   transition: height 300ms ease-out;
 }
 ```
 
-Above values can also be accessed using `v-slot`:
+The values of the `data-collapse` attribute can be accessed using `v-slot`:
 
 ```vue
-<Collapse :when="isExpanded" class="v-collapse" v-slot="{ state }">
-  {{ state === 'collapsing' ? 'Collapsing content...' : null }}
+<Collapse :when="isExpanded" v-slot="{ state }">
+  {{ state === 'collapsing' ? 'Collapsing...' : null }}
 </Collapse>
 ```
 
@@ -173,29 +149,21 @@ const questions = reactive([
   }
 ])
 
-function handleAccordion(selectedIndex) {
-  questions.forEach((_, index) => {
-    questions[index].isExpanded = index === selectedIndex ? !questions[index].isExpanded : false
+function onQuestionToggle(toggleIndex) {
+  questions.forEach((_, i) => {
+    questions[i].isExpanded = i === toggleIndex ? !questions[i].isExpanded : false
   })
 }
-
-/**
- * For individual control you might use:
- *
- * function handleMultiple(index) {
- *   questions[index].isExpanded = !questions[index].isExpanded
- * }
- */
 </script>
 
 <template>
-  <div v-for="(question, index) in questions" :key="question.title">
-    <button @click="handleAccordion(index)">
-      {{ question.title }}
+  <div v-for="(q, i) in questions" :key="q.title">
+    <button @click="onQuestionToggle(i)">
+      {{ q.title }}
     </button>
-    <Collapse :when="questions[index].isExpanded">
+    <Collapse :when="q.isExpanded">
       <p>
-        {{ question.answer }}
+        {{ q.answer }}
       </p>
     </Collapse>
   </div>
@@ -204,19 +172,19 @@ function handleAccordion(selectedIndex) {
 
 ## Accessibility
 
-`vue-collapsed` automatically detects if users prefer reduced motion and will disable transitions accordingly while keeping the same API behavior (emitting events and post-transition styles).
+`vue-collapsed` automatically detects if users prefer reduced motion and disables transitions accordingly, while maintaining the same API behavior (emitting events and applying post-transition styles).
 
-You should only add `aria` attributes to the Collapse element according to your use case.
+You should add `aria` attributes to the `Collapse` element based on your specific use case.
 
 ```vue
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, useId } from 'vue'
 import { Collapse } from 'vue-collapsed'
 
 const isExpanded = ref(false)
 
-const TOGGLE_ID = 'toggle-id'
-const COLLAPSE_ID = 'collapse-id'
+const TOGGLE_ID = useId()
+const COLLAPSE_ID = useId()
 
 const toggleAttrs = computed(() => ({
   id: TOGGLE_ID,
@@ -237,7 +205,7 @@ function handleCollapse() {
 
 <template>
   <div>
-    <button v-bind="toggleAttrs" @click="handleCollapse">This a panel.</button>
+    <button v-bind="toggleAttrs" @click="handleCollapse">Toggle panel</button>
     <Collapse v-bind="collapseAttrs" :when="isExpanded">
       <p>{{ 'Collapsed '.repeat(100) }}</p>
     </Collapse>
@@ -249,13 +217,13 @@ function handleCollapse() {
 
 ```vue
 <template>
-  <Collapse :when="isExpanded" class="instant-collapse">
+  <Collapse :when="isExpanded" class="collapsed-area">
     <p>{{ 'Collapsed '.repeat(100) }}</p>
   </Collapse>
 </template>
 
 <style>
-.instant-collapse {
+.collapsed-area {
   transition: none;
 }
 </style>
