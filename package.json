@@ -1,7 +1,7 @@
 {
    "name": "vue-collapsed-monorepo",
    "private": true,
-   "packageManager": "pnpm@8.12.1",
+   "packageManager": "pnpm@10.26.2",
    "engines": {
       "node": ">=20.0.0"
    },
@@ -12,13 +12,13 @@
       "test:chrome": "pnpm -C packages/vue-collapsed run test:chrome",
       "test:firefox": "pnpm -C packages/vue-collapsed run test:firefox",
       "test:gui": "pnpm -C packages/vue-collapsed run test:gui",
-      "prepare": "husky install"
+      "prepare": "husky"
    },
    "devDependencies": {
-      "concurrently": "^8.2.2",
-      "husky": "^8.0.3",
+      "concurrently": "^9.2.1",
+      "husky": "^9.1.7",
       "lint-staged": "^15.2.2",
-      "prettier": "^3.2.5"
+      "prettier": "^3.4.2"
    },
    "lint-staged": {
       "*.{js,ts,vue,json,css,md}": "prettier --write"

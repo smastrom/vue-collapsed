@@ -2,14 +2,11 @@
 import { Collapse } from 'vue-collapsed'
 
 // Used for demo purposes only...
-const props = withDefaults(
-   defineProps<{
-      initialState?: boolean
-   }>(),
-   { initialState: true }
-)
+const { initialState = true } = defineProps<{
+   initialState?: boolean
+}>()
 
-const isExpanded = ref(props.initialState) // ...you should set directly to `false` or `true` in your app
+const isExpanded = ref(initialState) // ...you should set directly to `false` or `true` in your app
 
 function handleCollapse() {
    isExpanded.value = !isExpanded.value
@@ -19,7 +16,7 @@ function handleCollapse() {
 <template>
    <article class="Wrapper">
       <ExampleHeader
-         :title="`Advanced - ${props.initialState ? 'Expanded' : 'Collapsed'}`"
+         :title="`Advanced - ${initialState ? 'Expanded' : 'Collapsed'}`"
          href="AdvancedControl.vue"
          hint="BaseHeight, state and data-collapse"
       />

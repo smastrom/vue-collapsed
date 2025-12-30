@@ -1,14 +1,11 @@
 <script lang="ts" setup>
 import { Collapse } from 'vue-collapsed'
 
-const props = withDefaults(
-   defineProps<{
-      initialState?: boolean
-   }>(),
-   { initialState: true }
-)
+const { initialState = true } = defineProps<{
+   initialState?: boolean
+}>()
 
-const isDisplayed = ref(props.initialState)
+const isDisplayed = ref(initialState)
 const isExpanded = ref(false)
 
 function handleCollapse() {
@@ -18,7 +15,7 @@ function handleCollapse() {
 
 <template>
    <article class="Wrapper">
-      <ExampleHeader :title="props.initialState ? 'Displayed' : 'Hidden'">
+      <ExampleHeader :title="initialState ? 'Displayed' : 'Hidden'">
          <button type="button" class="ActionButton" @click="isDisplayed = !isDisplayed">
             {{ isDisplayed ? 'Hide' : 'Display' }}
          </button>

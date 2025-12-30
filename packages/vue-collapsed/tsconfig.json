@@ -2,7 +2,7 @@
    "compilerOptions": {
       "target": "ES2015",
       "module": "ES2015",
-      "moduleResolution": "Node",
+      "moduleResolution": "bundler",
       "strict": true,
       "isolatedModules": true,
       "lib": ["ESNext", "ES2015", "DOM"],
