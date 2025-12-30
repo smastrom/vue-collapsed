@@ -12,10 +12,10 @@
       "test:chrome": "pnpm -C packages/vue-collapsed run test:chrome",
       "test:firefox": "pnpm -C packages/vue-collapsed run test:firefox",
       "test:gui": "pnpm -C packages/vue-collapsed run test:gui",
-      "prepare": "husky install"
+      "prepare": "husky"
    },
    "devDependencies": {
-      "concurrently": "^9.1.2",
+      "concurrently": "^9.2.1",
       "husky": "^9.1.7",
       "lint-staged": "^15.2.2",
       "prettier": "^3.4.2"
