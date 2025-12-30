@@ -2,29 +2,26 @@
 import { Collapse } from '../dist'
 import { onMounted, ref } from 'vue'
 
-const props = withDefaults(
-   defineProps<{
-      initialValue: boolean
-      as: keyof HTMLElementTagNameMap
-      baseHeight: number
-      hiddenOnMount: boolean
-   }>(),
-   {
-      initialValue: false,
-      hiddenOnMount: false,
-      as: 'div',
-      baseHeight: 0,
-   }
-)
+const {
+   initialValue = false,
+   hiddenOnMount = false,
+   as = 'div',
+   baseHeight: initialBaseHeight = 0,
+} = defineProps<{
+   initialValue?: boolean
+   hiddenOnMount?: boolean
+   as?: keyof HTMLElementTagNameMap
+   baseHeight?: number
+}>()
 
-const isExpanded = ref(props.initialValue)
+const isExpanded = ref(initialValue)
 
-const baseHeight = ref(props.baseHeight)
+const baseHeight = ref(initialBaseHeight)
 
-const isHiddenOnMount = ref(props.hiddenOnMount)
+const isHiddenOnMount = ref(hiddenOnMount)
 
 onMounted(() => {
-   if (props.hiddenOnMount) {
+   if (hiddenOnMount) {
       setTimeout(() => {
          isHiddenOnMount.value = false
       }, 1000)
