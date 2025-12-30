@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useId } from 'vue'
 import { Collapse } from 'vue-collapsed'
 
 const isExpanded = ref(false)
@@ -13,8 +14,8 @@ function handleCollapse() {
  * https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion
  */
 
-const TOGGLE_ID = 'toggle'
-const COLLAPSE_ID = 'collapse'
+const TOGGLE_ID = useId()
+const COLLAPSE_ID = useId()
 
 const toggleAttrs = computed(() => ({
    id: TOGGLE_ID,

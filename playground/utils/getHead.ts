@@ -4,42 +4,42 @@ const title = 'Vue Collapsed'
 export function getHead() {
    return {
       title: 'Vue Collapsed - ' + description,
-      htmlAttrs: {
+      htmlAttributes: {
          lang: 'en',
       },
       meta: [
          {
-            hid: 'description',
+            key: 'description',
             name: 'description',
             content: description,
          },
          {
-            hid: 'og:title',
+            key: 'og:title',
             property: 'og:title',
             content: `${title} - ${description}`,
          },
          {
-            hid: 'og:description',
+            key: 'og:description',
             property: 'og:description',
             content: description,
          },
          {
-            hid: 'og:url',
+            key: 'og:url',
             property: 'og:url',
-            content: 'https://notivue.pages.dev',
+            content: 'https://vue-collapsed.pages.dev',
          },
          {
-            hid: 'twitter:title',
+            key: 'twitter:title',
             name: 'twitter:title',
             content: `${title} - ${description}`,
          },
          {
-            hid: 'twitter:description',
+            key: 'twitter:description',
             name: 'twitter:description',
             content: description,
          },
          {
-            hid: 'twitter:card',
+            key: 'twitter:card',
             name: 'twitter:card',
             content: 'summary_large_image',
          },
